@@ -9,7 +9,10 @@ use gtk::{
     subclass::prelude::*,
 };
 
-use crate::custom_object::tree_tool_object::{TreeToolObject, TreeToolType};
+use crate::{
+    custom_object::tree_tool_object::{TreeToolObject, TreeToolType},
+    ui::custom_object::tool_setting_object::ToolSettingObject,
+};
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window_tool_db.ui")]
@@ -109,6 +112,8 @@ impl ObjectSubclass for WindowToolDB {
     type ParentType = gtk::Window;
 
     fn class_init(klass: &mut Self::Class) {
+        ToolSettingObject::ensure_type();
+
         klass.bind_template();
         klass.bind_template_instance_callbacks();
     }

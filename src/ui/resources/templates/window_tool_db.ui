@@ -81,12 +81,7 @@
                     </object>
                 </child>
                 <child>
-                    <object class="GtkLabel">
-                        <property name="label">Settings...</property>
-                        <property name="width-request">550</property>
-                        <property name="hexpand">true</property>
-                        <property name="vexpand">true</property>
-                    </object>
+                    <object class="ToolSettingObject"></object>
                 </child>
             </object>
         </child>
