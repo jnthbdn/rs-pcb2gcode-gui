@@ -27,8 +27,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkEntry">
-                                <property name="name">tool_general_id</property>
+                            <object class="GtkEntry" id="general_id">
                                 <property name="editable">false</property>
                                 <property name="text">#ID</property>
                                 <layout>
@@ -51,8 +50,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkEntry">
-                                <property name="name">tool_general_name</property>
+                            <object class="GtkEntry" id="general_name">
                                 <property name="hexpand">true</property>
                                 <property name="placeholder-text" translatable="true">Tool name</property>
                                 <layout>
@@ -87,8 +85,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_diameter_shaft</property>
+                            <object class="GtkSpinButton" id="diameter_shaft">
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="snap-to-ticks">true</property>
@@ -120,8 +117,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_diameter_tool</property>
+                            <object class="GtkSpinButton" id="diameter_tool">
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="snap-to-ticks">true</property>
@@ -141,7 +137,7 @@
 
                         <!-- Tool tip diameter (only for V-Bit) -->
                         <child>
-                            <object class="GtkLabel">
+                            <object class="GtkLabel" id="diameter_tip_label">
                                 <property name="hexpand">true</property>
                                 <property name="label" translatable="true">Tool tip diameter</property>
                                 <property name="halign">GTK_ALIGN_START</property>
@@ -152,8 +148,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_diameter_tip</property>
+                            <object class="GtkSpinButton" id="diameter_tip">
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="snap-to-ticks">true</property>
@@ -173,7 +168,7 @@
 
                         <!-- Tool angle (only for V-Bit) -->
                         <child>
-                            <object class="GtkLabel">
+                            <object class="GtkLabel" id="diameter_angle_label">
                                 <property name="hexpand">true</property>
                                 <property name="label" translatable="true">Tool angle</property>
                                 <property name="halign">GTK_ALIGN_START</property>
@@ -184,8 +179,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_diameter_angle</property>
+                            <object class="GtkSpinButton" id="diameter_angle">
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="snap-to-ticks">true</property>
@@ -227,8 +221,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_speed_spindle</property>
+                            <object class="GtkSpinButton" id="speed_spindle">
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="snap-to-ticks">true</property>
@@ -259,8 +252,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_speed_vertical</property>
+                            <object class="GtkSpinButton" id="speed_vertical">
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="snap-to-ticks">true</property>
@@ -292,8 +284,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkSpinButton">
-                                <property name="name">tool_speed_horizontal</property>
+                            <object class="GtkSpinButton" id="speed_horizontal">
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="snap-to-ticks">true</property>
