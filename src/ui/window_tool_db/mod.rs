@@ -1,5 +1,5 @@
 mod imp;
-use gtk::{glib, prelude::IsA};
+use gtk::glib;
 
 glib::wrapper! {
     pub struct WindowToolDB(ObjectSubclass<imp::WindowToolDB>)

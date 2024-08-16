@@ -1,7 +1,5 @@
 #![allow(unreachable_code)]
 
-use std::ops::Deref;
-
 use gtk::{
     gio,
     glib::{self},
