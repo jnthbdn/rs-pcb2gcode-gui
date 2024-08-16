@@ -20,7 +20,7 @@ impl WindowMain {
         let win_tool_db = &self.imp().win_tool_db;
 
         if win_tool_db.borrow().is_none() || win_tool_db.borrow().as_ref().unwrap().is_active() {
-            let win = WindowToolDB::new(self);
+            let win = WindowToolDB::new();
             self.imp().win_tool_db.replace(Some(win));
         }
 

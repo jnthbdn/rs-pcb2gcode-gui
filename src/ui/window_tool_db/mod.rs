@@ -8,10 +8,8 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl WindowToolDB {
-    pub fn new<P: IsA<gtk::Widget>>(parent_widget: &P) -> Self {
-        glib::Object::builder()
-            .property("transient-for", parent_widget)
-            .build()
+    pub fn new() -> Self {
+        glib::Object::builder().build()
     }
 
     // #[template_callback]
