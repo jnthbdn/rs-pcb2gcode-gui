@@ -26,5 +26,5 @@ box#tool_settings_box frame:not(:first-child){
 }
 
 box#tool_settings_box frame grid{
-	margin: 16px;
+	margin: 8px;
 }
