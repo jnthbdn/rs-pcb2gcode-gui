@@ -1,3 +1,7 @@
+label.label_tool_category{
+    font-weight: bold;
+}
+
 treeexpander label{
     margin-right: 16px;
 }
@@ -12,3 +16,19 @@ box#tool_db_button_box button {
 box#tool_db_button_box button:last-child {
     margin-right: 0;
 }
+
+box#tool_settings_box {
+    margin: 8px;
+}
+
+box#tool_settings_box frame:not(:first-child){
+    margin-top: 8px;
+}
+
+box#tool_settings_box frame grid{
+	margin: 16px;
+}
+
+/* box#tool_settings_box frame grid *:not(:last-child){
+	margin-right: 8px;
+} */

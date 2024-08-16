@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="ToolSettingObject" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="width-request">550</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <property name="name">tool_settings_box</property>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">General</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">true</property>
+                        <!-- Database ID -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Database ID</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="name">tool_general_id</property>
+                                <property name="label" translatable="true">ID</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Name -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="hexpand">true</property>
+                                <property name="label" translatable="true">Tool name</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkEntry">
+                                <property name="name">tool_general_name</property>
+                                <property name="hexpand">true</property>
+                                <property name="placeholder-text" translatable="true">Tool name</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Diameters</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">true</property>
+
+                        <!-- Shaft diameter -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Shaft diameter</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSpinButton">
+                                <property name="name">tool_diameter_shaft</property>
+                                <property name="hexpand">true</property>
+                                <property name="digits">2</property>
+                                <property name="snap-to-ticks">true</property>
+                                <property name="adjustment">
+                                    <object class="GtkAdjustment">
+                                        <property name="lower">0.00</property>
+                                        <property name="upper">10.00</property>
+                                        <property name="step-increment">0.10</property>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+
+                        <!-- Tool diameter -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="hexpand">true</property>
+                                <property name="label" translatable="true">Tool diameter</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSpinButton">
+                                <property name="name">tool_diameter_tool</property>
+                                <property name="hexpand">true</property>
+                                <property name="digits">2</property>
+                                <property name="snap-to-ticks">true</property>
+                                <property name="adjustment">
+                                    <object class="GtkAdjustment">
+                                        <property name="lower">0.00</property>
+                                        <property name="upper">10.00</property>
+                                        <property name="step-increment">0.10</property>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Tool angle (only for V-Bit) -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="hexpand">true</property>
+                                <property name="label" translatable="true">Tool angle</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSpinButton">
+                                <property name="name">tool_diameter_angle</property>
+                                <property name="hexpand">true</property>
+                                <property name="digits">0</property>
+                                <property name="snap-to-ticks">true</property>
+                                <property name="adjustment">
+                                    <object class="GtkAdjustment">
+                                        <property name="lower">0</property>
+                                        <property name="upper">90</property>
+                                        <property name="step-increment">1</property>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Speed</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">true</property>
+
+                        <!-- Spindle Speed -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Spindle Speed</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSpinButton">
+                                <property name="name">tool_speed_spindle</property>
+                                <property name="hexpand">true</property>
+                                <property name="digits">0</property>
+                                <property name="snap-to-ticks">true</property>
+                                <property name="adjustment">
+                                    <object class="GtkAdjustment">
+                                        <property name="lower">0</property>
+                                        <property name="upper">50000</property>
+                                        <property name="step-increment">1</property>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Vertical Speed -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="hexpand">true</property>
+                                <property name="label" translatable="true">Vertical speed</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSpinButton">
+                                <property name="name">tool_speed_vertical</property>
+                                <property name="hexpand">true</property>
+                                <property name="digits">0</property>
+                                <property name="snap-to-ticks">true</property>
+                                <property name="adjustment">
+                                    <object class="GtkAdjustment">
+                                        <property name="lower">0</property>
+                                        <property name="upper">10000</property>
+                                        <property name="step-increment">1</property>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+
+
+                        <!-- Horizontal speed -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="hexpand">true</property>
+                                <property name="label" translatable="true">Horizontal speed</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkSpinButton">
+                                <property name="name">tool_speed_horizontal</property>
+                                <property name="hexpand">true</property>
+                                <property name="digits">0</property>
+                                <property name="snap-to-ticks">true</property>
+                                <property name="adjustment">
+                                    <object class="GtkAdjustment">
+                                        <property name="lower">0</property>
+                                        <property name="upper">10000</property>
+                                        <property name="step-increment">1</property>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
