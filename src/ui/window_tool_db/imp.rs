@@ -33,7 +33,7 @@ impl WindowToolDB {
         let child_model = gio::ListStore::new::<TreeToolObject>();
 
         for i in 1..10 {
-            let name = format!("{} #{}", tree_tool.get_name(), i + 1);
+            let name = format!("{} #{}", tree_tool.get_name(), i);
             match tree_tool.get_tool_type() {
                 TreeToolType::Drill => child_model.append(&TreeToolObject::new_drill_tool(name, i)),
                 TreeToolType::Endmill => {
