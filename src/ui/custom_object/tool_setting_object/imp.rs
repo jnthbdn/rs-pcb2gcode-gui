@@ -6,8 +6,30 @@ use gtk::{glib, subclass::prelude::*};
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/tool_setting_object.ui")]
 #[properties(wrapper_type=super::ToolSettingObject)]
 pub struct ToolSettingObject {
-    // #[template_child]
-    // pub tool_list: TemplateChild<gtk::ListView>,
+    #[template_child]
+    general_id: TemplateChild<gtk::Entry>,
+    #[template_child]
+    general_name: TemplateChild<gtk::Entry>,
+
+    #[template_child]
+    diameter_shaft: TemplateChild<gtk::SpinButton>,
+    #[template_child]
+    diameter_tool: TemplateChild<gtk::SpinButton>,
+    #[template_child]
+    diameter_tip_label: TemplateChild<gtk::Label>,
+    #[template_child]
+    diameter_tip: TemplateChild<gtk::SpinButton>,
+    #[template_child]
+    diameter_angle_label: TemplateChild<gtk::Label>,
+    #[template_child]
+    diameter_angle: TemplateChild<gtk::SpinButton>,
+
+    #[template_child]
+    speed_spindle: TemplateChild<gtk::SpinButton>,
+    #[template_child]
+    speed_vertical: TemplateChild<gtk::SpinButton>,
+    #[template_child]
+    speed_horizontal: TemplateChild<gtk::SpinButton>,
 }
 
 impl ToolSettingObject {}
