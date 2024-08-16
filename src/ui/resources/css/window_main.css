@@ -1,0 +1,20 @@
+label#preview_label{
+    font-weight: bold;
+}
+
+label#love_text{
+    font-style: italic;
+}
+
+label.label_tool_category{
+    font-weight: bold;
+}
+
+picture#preview_picture{
+    background-color: white;
+    border-radius: 8px;
+}
+
+notebook#notebook{
+    border-radius: 8px;
+}

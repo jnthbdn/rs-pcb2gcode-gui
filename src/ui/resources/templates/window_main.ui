@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="WindowMain" parent="GtkApplicationWindow">
+        <property name="title">Pcb2Gcode</property>
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                            <object class="GtkNotebook">
+                                <property name="name">notebook</property>
+                                <property name="vexpand">true</property>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Input/Output</property>
+                                    </object>
+                                </child>
+                                <child type="tab">
+                                    <object class="GtkLabel">
+                                        <property name="label" translatable="yes">Input/Output</property>
+                                    </object>
+                                </child>
+        
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Common</property>
+                                    </object>
+                                </child>
+                                <child type="tab">
+                                    <object class="GtkLabel">
+                                        <property name="label" translatable="yes">Common</property>
+                                    </object>
+                                </child>
+        
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Mill</property>
+                                    </object>
+                                </child>
+                                <child type="tab">
+                                    <object class="GtkLabel">
+                                        <property name="label" translatable="yes">Mill</property>
+                                    </object>
+                                </child>
+        
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Drill</property>
+                                    </object>
+                                </child>
+                                <child type="tab">
+                                    <object class="GtkLabel">
+                                        <property name="label" translatable="yes">Drill</property>
+                                    </object>
+                                </child>
+                                
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Outline</property>
+                                    </object>
+                                </child>
+                                <child type="tab">
+                                    <object class="GtkLabel">
+                                        <property name="label" translatable="yes">Outline</property>
+                                    </object>
+                                </child>
+        
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="label">Autoleveller</property>
+                                    </object>
+                                </child>
+                                <child type="tab">
+                                    <object class="GtkLabel">
+                                        <property name="label" translatable="yes">Autoleveller</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Made with ❤️ in Rust &amp; GTK4</property>
+                                <property name="name">love_text</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkBox">
+                        <property name="margin-top">8</property>
+                        <property name="orientation">vertical</property>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="margin-bottom">8</property>
+                                <property name="orientation">horizontal</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="name">preview_label</property>
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="hexpand">true</property>
+                                        <property name="margin-start">8</property>
+                                        <property name="margin-end">8</property>
+                                        <property name="label" translatable="yes">Preview</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkDropDown">
+                                        <property name="margin-start">8</property>
+                                        <property name="margin-end">8</property>
+                                        <property name="model">
+                                        <object class="GtkStringList">
+                                            <items>
+                                            <item translatable="yes">Factory</item>
+                                            <item translatable="yes">Home</item>
+                                            <item translatable="yes">Subway</item>
+                                            </items>
+                                        </object>
+                                        </property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkPicture">
+                                <property name="name">preview_picture</property>
+                                <property name="vexpand">true</property>
+                                <property name="hexpand">true</property>
+                                <property name="margin-start">8</property>
+                                <property name="margin-end">8</property>
+                                <property name="width-request">800</property>
+                                <property name="height-request">600</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="halign">GTK_ALIGN_CENTER</property>
+                                <child>
+                                    <object class="GtkButton">
+                                        <signal name="clicked" handler="open_tool_db" swapped="true"/>
+                                        <property name="vexpand">false</property>
+                                        <property name="hexpand">false</property>
+                                        <property name="halign">GTK_ALIGN_CENTER</property>
+                                        <property name="label" translatable="yes">Tools database</property>
+                                        <property name="margin-top">8</property>
+                                        <property name="margin-bottom">8</property>
+                                        <property name="margin-start">8</property>
+                                        <property name="margin-end">8</property>  
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton">
+                                        <signal name="clicked" handler="run_pcb2gcode" swapped="true"/>
+                                        <property name="vexpand">false</property>
+                                        <property name="hexpand">false</property>
+                                        <property name="halign">GTK_ALIGN_CENTER</property>
+                                        <property name="label" translatable="yes">Run pcb2gcode</property>
+                                        <property name="margin-top">8</property>
+                                        <property name="margin-bottom">8</property>
+                                        <property name="margin-start">8</property>
+                                        <property name="margin-end">8</property>  
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
+
+<!-- <object class="GtkButton" id="button">
+    <signal name="clicked" handler="add_to_counter" swapped="true"/>
+    <property name="label">Press me!</property>
+    <property name="margin-top">12</property>
+    <property name="margin-bottom">12</property>
+    <property name="margin-start">12</property>
+    <property name="margin-end">12</property>  
+</object> -->

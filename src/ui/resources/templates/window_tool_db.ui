@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="WindowToolDB" parent="GtkWindow">
+        <property name="title" translatable="true">Tools database</property>
+        <property name="modal">false</property>
+        <property name="destroy-with-parent">true</property>
+        <child>
+            <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                            <object class="GtkScrolledWindow">
+                                <property name="min-content-height">500</property>
+                                <property name="min-content-width">250</property>
+                                <property name="vexpand">true</property>
+                                <child>
+                                    <object class="GtkListView" id="tool_list">
+                                        <property name="focusable">false</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="name">tool_db_button_box</property>
+                                <property name="orientation">horizontal</property>
+                                <child>
+                                    <object class="GtkButton">
+                                        <property name="tooltip-text" translatable="true">Add new tool</property>
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/com/github/jnthbdn/rs-pcb2gcode-gui/icons/add.png</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton">
+                                        <property name="tooltip-text" translatable="true">Delete select tool</property>
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/com/github/jnthbdn/rs-pcb2gcode-gui/icons/delete.png</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton">
+                                        <property name="tooltip-text" translatable="true">Move select tool up</property>
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/com/github/jnthbdn/rs-pcb2gcode-gui/icons/up.png</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton">
+                                        <property name="tooltip-text" translatable="true">Move select tool down</property>
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/com/github/jnthbdn/rs-pcb2gcode-gui/icons/down.png</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkButton">
+                                        <property name="tooltip-text" translatable="true">Refresh tools from database</property>
+                                        <child>
+                                            <object class="GtkImage">
+                                                <property name="resource">/com/github/jnthbdn/rs-pcb2gcode-gui/icons/refresh.png</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+                <child>
+                    <object class="GtkLabel">
+                        <property name="label">Settings...</property>
+                        <property name="width-request">550</property>
+                        <property name="hexpand">true</property>
+                        <property name="vexpand">true</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>

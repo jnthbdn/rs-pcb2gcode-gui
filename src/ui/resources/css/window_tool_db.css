@@ -1,0 +1,14 @@
+treeexpander label{
+    margin-right: 16px;
+}
+
+box#tool_db_button_box {
+    margin: 8px;
+}
+
+box#tool_db_button_box button {
+    margin-right: 8px;
+}
+box#tool_db_button_box button:last-child {
+    margin-right: 0;
+}
