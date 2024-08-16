@@ -6,10 +6,6 @@ label#love_text{
     font-style: italic;
 }
 
-label.label_tool_category{
-    font-weight: bold;
-}
-
 picture#preview_picture{
     background-color: white;
     border-radius: 8px;
