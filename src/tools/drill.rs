@@ -1,11 +1,11 @@
 use super::{basetool::BaseTool, tool::Tool};
 
 #[derive(Default, Debug)]
-pub struct Endmill {
+pub struct Drill {
     pub base_tool: BaseTool,
 }
 
-impl Endmill {
+impl Drill {
     pub fn new(
         id: u32,
         name: String,
@@ -33,7 +33,7 @@ impl Endmill {
     }
 }
 
-impl Tool for Endmill {
+impl Tool for Drill {
     // fn name(&self) -> String {
     //     self.base_tool.name.clone()
     // }
