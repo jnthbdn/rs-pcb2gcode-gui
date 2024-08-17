@@ -1,4 +1,6 @@
 // mod custom_object;
+mod database;
+mod dirs;
 mod tools;
 mod ui;
 // mod window_main;
