@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <template class="WindowToolDB" parent="GtkWindow">
+    <menu id="add-tool-menu">
+        <section>
+            <item>
+                <attribute name="use-markup">true</attribute>
+                <attribute name="label" translatable="yes">New &lt;u&gt;_E&lt;/u&gt;ndmill</attribute>
+                <attribute name="action">win.new_endmill</attribute>
+            </item>
+            <item>
+                <attribute name="use-markup">true</attribute>
+                <attribute name="label" translatable="yes">New &lt;u&gt;_D&lt;/u&gt;rill</attribute>
+                <attribute name="action">win.new_drill</attribute>
+            </item>
+            <item>
+                <attribute name="use-markup">true</attribute>
+                <attribute name="label" translatable="yes">New &lt;u&gt;_V&lt;/u&gt;-Bit</attribute>
+                <attribute name="action">win.new_vbit</attribute>
+            </item>
+        </section>
+    </menu>
+    <template class="WindowToolDB" parent="GtkApplicationWindow">
         <property name="title" translatable="true">Tools database</property>
         <property name="modal">false</property>
         <property name="destroy-with-parent">true</property>
@@ -27,7 +46,10 @@
                                 <property name="name">tool_db_button_box</property>
                                 <property name="orientation">horizontal</property>
                                 <child>
-                                    <object class="GtkButton">
+                                    <object class="GtkMenuButton" id="add_menu_button">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="direction">GTK_ARROW_UP</property>
+                                        <property name="menu-model">add-tool-menu</property>
                                         <property name="tooltip-text" translatable="true">Add new tool</property>
                                         <child>
                                             <object class="GtkImage">
@@ -68,6 +90,7 @@
                                 </child>
                                 <child>
                                     <object class="GtkButton">
+                                        <signal name="clicked" handler="refresh_tools" swapped="true" />
                                         <property name="tooltip-text" translatable="true">Refresh tools from database</property>
                                         <child>
                                             <object class="GtkImage">

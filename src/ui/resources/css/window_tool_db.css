@@ -10,7 +10,7 @@ box#tool_db_button_box {
     margin: 8px;
 }
 
-box#tool_db_button_box button {
+box#tool_db_button_box button, box#tool_db_button_box menubutton {
     margin-right: 8px;
 }
 box#tool_db_button_box button:last-child {
