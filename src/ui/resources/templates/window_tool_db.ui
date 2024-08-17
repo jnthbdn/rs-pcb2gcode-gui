@@ -22,7 +22,7 @@
     <template class="WindowToolDB" parent="GtkApplicationWindow">
         <property name="title" translatable="true">Tools database</property>
         <property name="modal">false</property>
-        <property name="destroy-with-parent">true</property>
+        <property name="hide-on-close">true</property>
         <child>
             <object class="GtkBox">
                 <property name="orientation">horizontal</property>
