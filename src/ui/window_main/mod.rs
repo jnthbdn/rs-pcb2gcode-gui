@@ -19,7 +19,8 @@ impl WindowMain {
     pub fn open_tool_db(&self, _button: &gtk::Button) {
         let win_tool_db = &self.imp().win_tool_db;
 
-        if win_tool_db.borrow().is_none() || win_tool_db.borrow().as_ref().unwrap().is_active() {
+        if win_tool_db.borrow().is_none() || win_tool_db.borrow().as_ref().unwrap().ref_count() == 1
+        {
             let win = WindowToolDB::new();
             self.imp().win_tool_db.replace(Some(win));
         }
