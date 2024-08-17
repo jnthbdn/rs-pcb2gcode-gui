@@ -25,6 +25,8 @@ pub struct ToolSettingObject {
     diameter_angle: TemplateChild<gtk::SpinButton>,
 
     #[template_child]
+    pass_depth: TemplateChild<gtk::SpinButton>,
+    #[template_child]
     speed_spindle: TemplateChild<gtk::SpinButton>,
     #[template_child]
     speed_vertical: TemplateChild<gtk::SpinButton>,
