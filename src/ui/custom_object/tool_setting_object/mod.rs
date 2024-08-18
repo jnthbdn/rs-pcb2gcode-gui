@@ -1,5 +1,5 @@
 mod imp;
-use gtk::{self, glib, prelude::IsA};
+use gtk::{self, glib};
 
 glib::wrapper! {
     pub struct ToolSettingObject(ObjectSubclass<imp::ToolSettingObject>)
@@ -9,7 +9,7 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl ToolSettingObject {
-    pub fn new<P: IsA<gtk::Widget>>() -> Self {
+    pub fn new() -> Self {
         glib::Object::builder().build()
     }
 }
