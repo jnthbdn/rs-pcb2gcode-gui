@@ -3,17 +3,12 @@ mod imp;
 use glib::Object;
 use gtk::{glib, subclass::prelude::ObjectSubclassIsExt};
 
-#[derive(Debug, Clone)]
-pub enum TreeToolType {
-    Drill,
-    Endmill,
-    VBit,
-}
+use crate::tools::ToolType;
 
 #[derive(Debug)]
 pub enum TreeObjectType {
-    Category(TreeToolType),
-    Tool(TreeToolType, u32),
+    Category(ToolType),
+    Tool(ToolType, u32),
 }
 
 glib::wrapper! {
@@ -21,7 +16,7 @@ glib::wrapper! {
 }
 
 impl TreeToolObject {
-    pub fn new_category(name: String, tool_type: TreeToolType) -> Self {
+    pub fn new_category(name: String, tool_type: ToolType) -> Self {
         let s: TreeToolObject = Object::builder().property("name", name).build();
 
         let _ = s.imp().tool_type.set(TreeObjectType::Category(tool_type));
@@ -35,7 +30,7 @@ impl TreeToolObject {
         let _ = s
             .imp()
             .tool_type
-            .set(TreeObjectType::Tool(TreeToolType::Drill, db_id));
+            .set(TreeObjectType::Tool(ToolType::Drill, db_id));
 
         s
     }
@@ -46,7 +41,7 @@ impl TreeToolObject {
         let _ = s
             .imp()
             .tool_type
-            .set(TreeObjectType::Tool(TreeToolType::Endmill, db_id));
+            .set(TreeObjectType::Tool(ToolType::Endmill, db_id));
 
         s
     }
@@ -57,7 +52,7 @@ impl TreeToolObject {
         let _ = s
             .imp()
             .tool_type
-            .set(TreeObjectType::Tool(TreeToolType::VBit, db_id));
+            .set(TreeObjectType::Tool(ToolType::VBit, db_id));
 
         s
     }
@@ -80,7 +75,7 @@ impl TreeToolObject {
         self.imp().get_name()
     }
 
-    pub fn get_tool_type(&self) -> TreeToolType {
+    pub fn get_tool_type(&self) -> ToolType {
         match self.imp().tool_type.get().unwrap() {
             TreeObjectType::Category(tool_type) | TreeObjectType::Tool(tool_type, _) => {
                 tool_type.clone()
