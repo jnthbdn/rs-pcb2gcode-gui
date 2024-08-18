@@ -4,6 +4,7 @@
     <file compressed="true" preprocess="xml-stripblanks">templates/window_main.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/window_tool_db.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/tool_setting_object.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/db_label_object.ui</file>
 
     <file compressed="true" alias="icons/up.png">icons/arrow-upward.png</file>
     <file compressed="true" alias="icons/down.png">icons/arrow-downward.png</file>
