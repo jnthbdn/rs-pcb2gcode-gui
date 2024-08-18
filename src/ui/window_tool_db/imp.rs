@@ -10,9 +10,10 @@ use gtk::{
 };
 
 use crate::{
-    custom_object::tree_tool_object::{TreeToolObject, TreeToolType},
+    custom_object::tree_tool_object::TreeToolObject,
     database::database::Database,
-    ui::custom_object::tool_setting_object::ToolSettingObject,
+    tools::ToolType,
+    ui::custom_object::{db_label_object::DBLabelObject, tool_setting_object::ToolSettingObject},
 };
 
 #[derive(gtk::CompositeTemplate, glib::Properties)]
@@ -40,7 +41,7 @@ impl WindowToolDB {
         let child_model = gio::ListStore::new::<TreeToolObject>();
 
         match tree_tool.get_tool_type() {
-            TreeToolType::Drill => {
+            ToolType::Drill => {
                 // TODO Avoid this unwrap
                 for drill in db.get_all_drills().unwrap() {
                     child_model.append(&TreeToolObject::new_drill_tool(
@@ -49,7 +50,7 @@ impl WindowToolDB {
                     ));
                 }
             }
-            TreeToolType::Endmill => {
+            ToolType::Endmill => {
                 // TODO Avoid this unwrap
                 for endmill in db.get_all_endmills().unwrap() {
                     child_model.append(&TreeToolObject::new_endmill_tool(
@@ -58,7 +59,7 @@ impl WindowToolDB {
                     ));
                 }
             }
-            TreeToolType::VBit => {
+            ToolType::VBit => {
                 // TODO Avoid this unwrap
                 for vbit in db.get_all_vbits().unwrap() {
                     child_model.append(&TreeToolObject::new_vbit_tool(
@@ -73,7 +74,7 @@ impl WindowToolDB {
     }
 
     fn factory_setup(_factory: &gtk::SignalListItemFactory, list_item: &glib::Object) {
-        let widget = gtk::Label::new(None);
+        let widget = DBLabelObject::new();
         let tree_expander = gtk::TreeExpander::new();
 
         tree_expander.set_child(Some(&widget));
@@ -81,9 +82,19 @@ impl WindowToolDB {
         tree_expander.connect_notify(Some("has-focus"), |tree, _b| {
             if tree.has_focus() && tree.is_focusable() {
                 println!(
-                    "[{}] HAS FOCUS ! ({:?})",
-                    tree.child().and_downcast::<gtk::Label>().unwrap().label(),
-                    tree
+                    "[{} - #{} - {:?}] HAS FOCUS",
+                    tree.child()
+                        .and_downcast::<DBLabelObject>()
+                        .unwrap()
+                        .label(),
+                    tree.child()
+                        .and_downcast::<DBLabelObject>()
+                        .unwrap()
+                        .db_id(),
+                    tree.child()
+                        .and_downcast::<DBLabelObject>()
+                        .unwrap()
+                        .tool_type()
                 );
             }
         });
@@ -109,8 +120,8 @@ impl WindowToolDB {
 
         let tree_expander_child = tree_expander
             .child()
-            .and_downcast::<gtk::Label>()
-            .expect("Tree expander's child need to be Label");
+            .and_downcast::<DBLabelObject>()
+            .expect("Tree expander's child need to be DBLabel");
 
         let tree_tool_item: TreeToolObject = list_row
             .item()
@@ -119,6 +130,11 @@ impl WindowToolDB {
 
         tree_expander.set_list_row(Some(&list_row));
         tree_expander_child.set_label(&tree_tool_item.name());
+        tree_expander_child.set_tool_type(Some(tree_tool_item.get_tool_type()));
+        match tree_tool_item.get_tool_id() {
+            Ok(id) => tree_expander_child.set_db_id(id),
+            Err(_) => {}
+        };
 
         if tree_tool_item.is_category() {
             tree_expander_child.add_css_class("label_tool_category");
@@ -130,9 +146,9 @@ impl WindowToolDB {
 
     fn generate_tree_model(&self) -> gtk::TreeListModel {
         let vector: Vec<TreeToolObject> = vec![
-            TreeToolObject::new_category("Drill".to_string(), TreeToolType::Drill),
-            TreeToolObject::new_category("Endmill".to_string(), TreeToolType::Endmill),
-            TreeToolObject::new_category("V bit".to_string(), TreeToolType::VBit),
+            TreeToolObject::new_category("Drill".to_string(), ToolType::Drill),
+            TreeToolObject::new_category("Endmill".to_string(), ToolType::Endmill),
+            TreeToolObject::new_category("V bit".to_string(), ToolType::VBit),
         ];
 
         let model = gio::ListStore::new::<TreeToolObject>();
