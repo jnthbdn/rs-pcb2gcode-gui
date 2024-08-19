@@ -1,11 +1,11 @@
 #![allow(unreachable_code)]
-
-use std::str::FromStr;
-use std::{cell::Cell, sync::OnceLock};
+use std::{cell::Cell, str::FromStr, sync::OnceLock};
 
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
+use crate::database::database::DatabaseColumn;
 use crate::tools::{basetool::BaseTool, drill::Drill, endmill::Endmill, vbit::VBit, ToolType};
+use crate::ui::custom_object::entry_object::EntryObject;
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/tool_setting_object.ui")]
@@ -14,7 +14,7 @@ pub struct ToolSettingObject {
     #[template_child]
     general_id: TemplateChild<gtk::Entry>,
     #[template_child]
-    general_name: TemplateChild<gtk::Entry>,
+    general_name: TemplateChild<EntryObject>,
     #[template_child]
     general_note: TemplateChild<gtk::TextView>,
 
@@ -58,21 +58,6 @@ impl ToolSettingObject {
         self.speed_horizontal.set_value(base_tool.feed_rate);
     }
 
-    fn get_text_child(entry: &gtk::Entry) -> Option<gtk::Text> {
-        let mut child = entry.first_child();
-
-        while child.is_some() {
-            let widget = child.unwrap();
-            if widget.downcast_ref::<gtk::Text>().is_some() {
-                return Some(widget.downcast::<gtk::Text>().unwrap());
-            }
-
-            child = widget.next_sibling();
-        }
-
-        None
-    }
-
     pub fn show_endmill(&self, endmill: &Endmill) {
         self.current_tool.set(Some(ToolType::Endmill));
         self.show_base_tool(&endmill.base_tool);
@@ -105,6 +90,18 @@ impl ToolSettingObject {
         self.diameter_angle.set_value(vbit.tool_angle);
         self.diameter_tip.set_value(vbit.tip_diameter);
     }
+
+    pub fn current_tooltype(&self) -> Option<ToolType> {
+        self.current_tool.get()
+    }
+
+    pub fn current_id(&self) -> u32 {
+        u32::from_str(&self.general_id.text()).unwrap_or(0)
+    }
+
+    pub fn check_setting_change(&self) {
+        self.general_name.imp().has_changed();
+    }
 }
 
 #[glib::object_subclass]
@@ -127,20 +124,23 @@ impl ObjectSubclass for ToolSettingObject {
 impl ObjectImpl for ToolSettingObject {
     fn constructed(&self) {
         self.parent_constructed();
+        EntryObject::ensure_type();
 
-        Self::get_text_child(&self.general_name)
-            .unwrap()
-            .connect_notify(Some("has-focus"), |entry, _param| {
-                entry
-                    .ancestor(ToolSettingObject::type_())
-                    .unwrap()
-                    .emit_by_name::<()>("setting-changed", &[]);
-            });
+        self.general_id.add_css_class("read-only");
     }
 
     fn signals() -> &'static [glib::subclass::Signal] {
         static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
-        SIGNALS.get_or_init(|| vec![glib::subclass::Signal::builder("setting-changed").build()])
+        SIGNALS.get_or_init(|| {
+            vec![glib::subclass::Signal::builder("setting-changed")
+                .param_types([
+                    ToolType::static_type(),
+                    DatabaseColumn::static_type(),
+                    glib::GString::static_type(),
+                    u32::static_type(),
+                ])
+                .build()]
+        })
     }
 }
 impl WidgetImpl for ToolSettingObject {}
