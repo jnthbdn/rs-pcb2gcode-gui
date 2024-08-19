@@ -1,7 +1,10 @@
 mod imp;
-use gtk::{gio, glib, prelude::ActionMapExtManual, subclass::prelude::ObjectSubclassIsExt};
+use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt, template_callbacks};
 
-use crate::tools::{drill::Drill, endmill::Endmill, vbit::VBit, ToolType};
+use crate::{
+    database::database::DatabaseColumn,
+    tools::{drill::Drill, endmill::Endmill, vbit::VBit, ToolType},
+};
 
 glib::wrapper! {
     pub struct WindowToolDB(ObjectSubclass<imp::WindowToolDB>)
@@ -21,12 +24,43 @@ impl WindowToolDB {
     }
 
     #[template_callback]
-    fn setting_changed(&self) {
-        println!("Setting changed");
+    fn setting_changed(
+        &self,
+        tool_type: ToolType,
+        col: DatabaseColumn,
+        new_value: glib::GString,
+        id: u32,
+    ) {
+        println!("Setting changed => {:?} {:?} = {new_value}", tool_type, col);
+        let result = match tool_type {
+            ToolType::Drill => self
+                .imp()
+                .database
+                .set_drill_column(col, new_value.to_string(), id),
+            ToolType::Endmill => {
+                self.imp()
+                    .database
+                    .set_endmill_column(col, new_value.to_string(), id)
+            }
+            ToolType::VBit => self
+                .imp()
+                .database
+                .set_vbit_column(col, new_value.to_string(), id),
+        };
+
+        if result.is_err() {
+            eprintln!(
+                "[setting_changed] Failed to update setting ({})",
+                result.err().unwrap()
+            );
+        } else {
+            self.imp().refresh_model();
+        }
     }
 
     #[template_callback]
     fn row_selected(&self, db_id: u32, tool_type: ToolType) {
+        self.imp().tool_settings.set_visible(true);
         match tool_type {
             ToolType::Drill => match self.imp().database.get_drill(db_id) {
                 Ok(tool) => match tool {
@@ -52,6 +86,12 @@ impl WindowToolDB {
                 Err(e) => eprintln!("[row_selected] Fail to get VBit ({e})"),
             },
         };
+    }
+
+    #[template_callback]
+    fn close_request(&self, _win: gtk::ApplicationWindow) -> bool {
+        self.imp().tool_settings.imp().check_setting_change();
+        false
     }
 
     fn setup_actions(&self) {
