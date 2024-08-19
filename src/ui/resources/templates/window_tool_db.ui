@@ -32,16 +32,6 @@
                         <child>
                             <object class="TreeToolObject" id="tree_tool">
                             </object>
-                            <!-- <object class="GtkScrolledWindow">
-                                <property name="min-content-height">500</property>
-                                <property name="min-content-width">250</property>
-                                <property name="vexpand">true</property>
-                                <child>
-                                    <object class="GtkListView" id="tool_list">
-                                        <property name="focusable">false</property>
-                                    </object>
-                                </child>
-                            </object> -->
                         </child>
                         <child>
                             <object class="GtkBox">
