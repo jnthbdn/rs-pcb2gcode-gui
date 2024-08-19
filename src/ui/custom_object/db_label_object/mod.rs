@@ -1,6 +1,6 @@
 mod imp;
 
-use gtk::{glib, subclass::prelude::ObjectSubclassIsExt};
+use gtk::{glib, prelude::WidgetExt, subclass::prelude::ObjectSubclassIsExt};
 
 use crate::tools::ToolType;
 
@@ -36,5 +36,9 @@ impl DBLabelObject {
 
     pub fn label(&self) -> glib::GString {
         self.imp().label.label()
+    }
+
+    pub fn add_css_class(&self, class: &str) {
+        self.imp().label.add_css_class(class);
     }
 }
