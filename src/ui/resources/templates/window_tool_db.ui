@@ -23,8 +23,11 @@
         <property name="title" translatable="true">Tools database</property>
         <property name="modal">false</property>
         <property name="hide-on-close">true</property>
+        <signal name="close-request" handler="close_request" swapped="true"/>
         <child>
             <object class="GtkBox">
+                <property name="width-request">730</property>
+                <property name="height-request">640</property>
                 <property name="orientation">horizontal</property>
                 <child>
                     <object class="GtkBox">

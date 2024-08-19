@@ -2,6 +2,11 @@ label.label_tool_category{
     font-weight: bold;
 }
 
+entry.read-only{
+	color: grey;
+	background-color: #EEE;
+}
+
 treeexpander label{
     margin-right: 16px;
 }

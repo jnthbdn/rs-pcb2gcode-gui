@@ -50,7 +50,8 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkEntry" id="general_name">
+                            <object class="EntryObject" id="general_name">
+                                <signal name="value-changed" handler="entry_changed" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="placeholder-text" translatable="true">Tool name</property>
                                 <layout>
