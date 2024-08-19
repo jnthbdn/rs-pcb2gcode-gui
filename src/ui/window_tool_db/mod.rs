@@ -1,7 +1,7 @@
 mod imp;
 use gtk::{gio, glib, prelude::ActionMapExtManual, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::tools::{drill::Drill, endmill::Endmill, vbit::VBit};
+use crate::tools::{drill::Drill, endmill::Endmill, vbit::VBit, ToolType};
 
 glib::wrapper! {
     pub struct WindowToolDB(ObjectSubclass<imp::WindowToolDB>)
@@ -18,6 +18,11 @@ impl WindowToolDB {
     #[template_callback]
     fn refresh_tools(&self, _: gtk::Button) {
         self.imp().refresh_model();
+    }
+
+    #[template_callback]
+    fn row_selected(&self, db_id: u32, tool_type: ToolType) {
+        println!("Row seledted: {:?} #{db_id}", tool_type);
     }
 
     fn setup_actions(&self) {
