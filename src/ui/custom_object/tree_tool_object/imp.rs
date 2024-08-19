@@ -6,7 +6,6 @@ use gtk::subclass::prelude::*;
 use gtk::{gio, glib, prelude::*};
 
 use crate::database::database::Database;
-use crate::tools::tool::Tool;
 use crate::tools::ToolType;
 use crate::ui::custom_object::db_label_object::DBLabelObject;
 use crate::ui::custom_object::tree_tool_row::TreeToolRow;
