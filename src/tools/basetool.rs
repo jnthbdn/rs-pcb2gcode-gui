@@ -4,14 +4,14 @@ pub struct BaseTool {
     pub name: String,
     pub note: String,
 
-    pub shaft_diameter: f32,
-    pub tool_diameter: f32,
+    pub shaft_diameter: f64,
+    pub tool_diameter: f64,
 
-    pub spindle_speed: f32,
-    pub pass_depth: f32,
+    pub spindle_speed: f64,
+    pub pass_depth: f64,
 
-    pub plunge_rate: f32,
-    pub feed_rate: f32,
+    pub plunge_rate: f64,
+    pub feed_rate: f64,
 }
 
 impl BaseTool {
@@ -19,12 +19,12 @@ impl BaseTool {
         id: u32,
         name: String,
         note: String,
-        shaft_diameter: f32,
-        tool_diameter: f32,
-        spindle_speed: f32,
-        pass_depth: f32,
-        plunge_rate: f32,
-        feed_rate: f32,
+        shaft_diameter: f64,
+        tool_diameter: f64,
+        spindle_speed: f64,
+        pass_depth: f64,
+        plunge_rate: f64,
+        feed_rate: f64,
     ) -> Self {
         Self {
             id,

@@ -1,9 +1,9 @@
 pub trait Tool {
     // fn name(&self) -> String;
-    fn offset(&self, depth_cut: f32) -> f32;
-    // fn shaft_diameter(&self) -> f32;
-    // fn single_pass_depth(&self) -> f32;
-    // fn spindle_speed(&self) -> f32;
-    // fn vertical_speed(&self) -> f32;
-    // fn horizontal_speed(&self) -> f32;
+    fn offset(&self, depth_cut: f64) -> f64;
+    // fn shaft_diameter(&self) -> f64;
+    // fn single_pass_depth(&self) -> f64;
+    // fn spindle_speed(&self) -> f64;
+    // fn vertical_speed(&self) -> f64;
+    // fn horizontal_speed(&self) -> f64;
 }

@@ -1,4 +1,4 @@
-mod basetool;
+pub mod basetool;
 pub mod drill;
 pub mod endmill;
 pub mod tool;
