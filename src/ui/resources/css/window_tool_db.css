@@ -37,4 +37,5 @@ box#tool_settings_box frame grid{
 textview{
 	border: 1px solid rgb(205, 199, 194);
 	border-radius: 4px;
+	padding: 4px 8px;
 }
