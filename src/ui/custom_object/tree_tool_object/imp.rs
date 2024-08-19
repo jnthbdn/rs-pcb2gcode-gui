@@ -1,11 +1,12 @@
 #![allow(unreachable_code)]
 use std::cell::RefCell;
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib, prelude::*};
 
 use crate::database::database::Database;
+use crate::tools::tool::Tool;
 use crate::tools::ToolType;
 use crate::ui::custom_object::db_label_object::DBLabelObject;
 use crate::ui::custom_object::tree_tool_row::TreeToolRow;
@@ -75,21 +76,17 @@ impl TreeToolObject {
 
         tree_expander.connect_notify(Some("has-focus"), |tree, _b| {
             if tree.has_focus() && tree.is_focusable() {
-                println!(
-                    "[{} - #{} - {:?}] HAS FOCUS",
-                    tree.child()
-                        .and_downcast::<DBLabelObject>()
-                        .unwrap()
-                        .label(),
-                    tree.child()
-                        .and_downcast::<DBLabelObject>()
-                        .unwrap()
-                        .db_id(),
-                    tree.child()
-                        .and_downcast::<DBLabelObject>()
-                        .unwrap()
-                        .tool_type()
-                );
+                let label: DBLabelObject = tree
+                    .child()
+                    .and_downcast()
+                    .expect("[connect_notify] child need to be DBLabelObject");
+
+                tree.ancestor(TreeToolObject::type_())
+                    .unwrap()
+                    .emit_by_name::<()>(
+                        "row_selected",
+                        &[&label.db_id(), &label.tool_type().unwrap()],
+                    );
             }
         });
 
@@ -167,7 +164,6 @@ impl ObjectSubclass for TreeToolObject {
 
     fn class_init(klass: &mut Self::Class) {
         klass.bind_template();
-        // klass.bind_template_instance_callbacks();
     }
 
     fn instance_init(obj: &glib::subclass::InitializingObject<Self>) {
@@ -191,6 +187,15 @@ impl ObjectImpl for TreeToolObject {
 
         tool_list.set_model(Some(&self.model_selection));
         tool_list.set_factory(Some(&factory));
+    }
+
+    fn signals() -> &'static [glib::subclass::Signal] {
+        static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
+        SIGNALS.get_or_init(|| {
+            vec![glib::subclass::Signal::builder("row-selected")
+                .param_types([u32::static_type(), ToolType::static_type()])
+                .build()]
+        })
     }
 }
 
