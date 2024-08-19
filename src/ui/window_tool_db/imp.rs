@@ -69,6 +69,8 @@ impl ObjectImpl for WindowToolDB {
 
         self.obj().setup_actions();
 
+        self.tool_settings.set_visible(false);
+
         self.tree_tool.imp().set_root_elements(
             vec![
                 TreeToolRow::new_category("Drill".to_string(), ToolType::Drill),
