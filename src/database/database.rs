@@ -1,11 +1,29 @@
-use rusqlite::Connection;
+use rusqlite::{Connection, Error, Row};
 
 use crate::{
     dirs::get_config_path_to,
     tools::{drill::Drill, endmill::Endmill, vbit::VBit},
 };
 
+use gtk::glib;
 static DB_FILE_NAME: &str = "tool_database.db";
+
+#[derive(glib::Enum, Clone, Copy, Debug)]
+#[enum_type(name = "DatabaseColumn")]
+pub enum DatabaseColumn {
+    ID,
+    NAME,
+    NOTE,
+    SHAFT_DIAMETER,
+    TOOL_DIAMETER,
+    SPINDLE_SPEED,
+    PASS_DEPTH,
+    PLUGNE_RATE,
+    FEED_RATE,
+
+    TOOL_ANGLE,
+    TIP_DIAMETER,
+}
 
 pub struct Database {
     connection: Connection,
@@ -115,19 +133,7 @@ impl Database {
     pub fn get_all_endmills(&self) -> Result<Vec<Endmill>, rusqlite::Error> {
         let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate FROM endmill")?;
 
-        let results = stmt.query_map([], |row| {
-            Ok(Endmill::new(
-                row.get(0)?,
-                row.get(1)?,
-                row.get(2)?,
-                row.get(3)?,
-                row.get(4)?,
-                row.get(5)?,
-                row.get(6)?,
-                row.get(7)?,
-                row.get(8)?,
-            ))
-        })?;
+        let results = stmt.query_map([], Self::map_endmill)?;
 
         results.collect()
     }
@@ -135,19 +141,7 @@ impl Database {
     pub fn get_all_drills(&self) -> Result<Vec<Drill>, rusqlite::Error> {
         let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate FROM drill")?;
 
-        let results = stmt.query_map([], |row| {
-            Ok(Drill::new(
-                row.get(0)?,
-                row.get(1)?,
-                row.get(2)?,
-                row.get(3)?,
-                row.get(4)?,
-                row.get(5)?,
-                row.get(6)?,
-                row.get(7)?,
-                row.get(8)?,
-            ))
-        })?;
+        let results = stmt.query_map([], Self::map_drill)?;
 
         results.collect()
     }
@@ -155,22 +149,165 @@ impl Database {
     pub fn get_all_vbits(&self) -> Result<Vec<VBit>, rusqlite::Error> {
         let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, angle, tip_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate FROM vbit")?;
 
-        let results = stmt.query_map([], |row| {
-            Ok(VBit::new(
-                row.get(0)?,
-                row.get(1)?,
-                row.get(2)?,
-                row.get(3)?,
-                row.get(4)?,
-                row.get(5)?,
-                row.get(6)?,
-                row.get(7)?,
-                row.get(8)?,
-                row.get(9)?,
-                row.get(10)?,
-            ))
-        })?;
+        let results = stmt.query_map([], Self::map_vbit)?;
 
         results.collect()
+    }
+
+    pub fn get_endmill(&self, id: u32) -> Result<Option<Endmill>, rusqlite::Error> {
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate FROM endmill WHERE id=?1")?;
+
+        let results = stmt.query_map([id], Self::map_endmill)?;
+
+        let mut results: Vec<Endmill> =
+            results.collect::<Result<Vec<Endmill>, rusqlite::Error>>()?;
+
+        if results.len() == 0 {
+            Ok(None)
+        } else {
+            Ok(Some(results.pop().unwrap()))
+        }
+    }
+
+    pub fn get_drill(&self, id: u32) -> Result<Option<Drill>, rusqlite::Error> {
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate FROM drill WHERE id=?1")?;
+
+        let results = stmt.query_map([id], Self::map_drill)?;
+
+        let mut results: Vec<Drill> = results.collect::<Result<Vec<Drill>, rusqlite::Error>>()?;
+
+        if results.len() == 0 {
+            Ok(None)
+        } else {
+            Ok(Some(results.pop().unwrap()))
+        }
+    }
+
+    pub fn get_vbit(&self, id: u32) -> Result<Option<VBit>, rusqlite::Error> {
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, angle, tip_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate FROM vbit WHERE id=?1")?;
+
+        let results = stmt.query_map([id], Self::map_vbit)?;
+
+        let mut results: Vec<VBit> = results.collect::<Result<Vec<VBit>, rusqlite::Error>>()?;
+
+        if results.len() == 0 {
+            Ok(None)
+        } else {
+            Ok(Some(results.pop().unwrap()))
+        }
+    }
+
+    pub fn set_drill_column(
+        &self,
+        col: DatabaseColumn,
+        value: String,
+        id: u32,
+    ) -> Result<(), Error> {
+        self.connection
+            .execute(
+                format!(
+                    "UPDATE drill SET {} = ? WHERE id = ?",
+                    Self::database_column_to_str(col)
+                )
+                .as_str(),
+                [Self::database_column_to_str(col), value, id.to_string()],
+            )
+            .map(|_| ())
+    }
+
+    pub fn set_endmill_column(
+        &self,
+        col: DatabaseColumn,
+        value: String,
+        id: u32,
+    ) -> Result<(), Error> {
+        self.connection
+            .execute(
+                format!(
+                    "UPDATE endmill SET {} = ? WHERE id = ?",
+                    Self::database_column_to_str(col)
+                )
+                .as_str(),
+                [value, id.to_string()],
+            )
+            .map(|_| ())
+    }
+
+    pub fn set_vbit_column(
+        &self,
+        col: DatabaseColumn,
+        value: String,
+        id: u32,
+    ) -> Result<(), Error> {
+        self.connection
+            .execute(
+                format!(
+                    "UPDATE vbit SET {} = ? WHERE id = ?",
+                    Self::database_column_to_str(col)
+                )
+                .as_str(),
+                [Self::database_column_to_str(col), value, id.to_string()],
+            )
+            .map(|_| ())
+    }
+
+    fn map_endmill(row: &Row) -> Result<Endmill, Error> {
+        Ok(Endmill::new(
+            row.get(0)?,
+            row.get(1)?,
+            row.get(2)?,
+            row.get(3)?,
+            row.get(4)?,
+            row.get(5)?,
+            row.get(6)?,
+            row.get(7)?,
+            row.get(8)?,
+        ))
+    }
+
+    fn map_drill(row: &Row) -> Result<Drill, Error> {
+        Ok(Drill::new(
+            row.get(0)?,
+            row.get(1)?,
+            row.get(2)?,
+            row.get(3)?,
+            row.get(4)?,
+            row.get(5)?,
+            row.get(6)?,
+            row.get(7)?,
+            row.get(8)?,
+        ))
+    }
+
+    fn map_vbit(row: &Row) -> Result<VBit, Error> {
+        Ok(VBit::new(
+            row.get(0)?,
+            row.get(1)?,
+            row.get(2)?,
+            row.get(3)?,
+            row.get(4)?,
+            row.get(5)?,
+            row.get(6)?,
+            row.get(7)?,
+            row.get(8)?,
+            row.get(9)?,
+            row.get(10)?,
+        ))
+    }
+
+    fn database_column_to_str(col: DatabaseColumn) -> String {
+        match col {
+            DatabaseColumn::ID => "id".to_string(),
+            DatabaseColumn::NAME => "name".to_string(),
+            DatabaseColumn::NOTE => "note".to_string(),
+            DatabaseColumn::SHAFT_DIAMETER => "shaft_diameter".to_string(),
+            DatabaseColumn::TOOL_DIAMETER => "tool_diameter".to_string(),
+            DatabaseColumn::SPINDLE_SPEED => "spindle_speed".to_string(),
+            DatabaseColumn::PASS_DEPTH => "pass_depth".to_string(),
+            DatabaseColumn::PLUGNE_RATE => "plunge_rate".to_string(),
+            DatabaseColumn::FEED_RATE => "feed_rate".to_string(),
+            DatabaseColumn::TOOL_ANGLE => "angle".to_string(),
+            DatabaseColumn::TIP_DIAMETER => "tip_diameter".to_string(),
+        }
     }
 }
