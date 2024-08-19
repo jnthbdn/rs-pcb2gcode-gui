@@ -1,6 +1,5 @@
 #![allow(unreachable_code)]
-use std::borrow::Borrow;
-use std::cell::{Cell, RefCell};
+use std::cell::RefCell;
 use std::sync::Arc;
 
 use gtk::subclass::prelude::*;
