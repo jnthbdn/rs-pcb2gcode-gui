@@ -31,6 +31,10 @@ impl Endmill {
             ),
         }
     }
+
+    pub fn new_from_base_tool(base_tool: BaseTool) -> Self {
+        Self { base_tool }
+    }
 }
 
 impl Tool for Endmill {

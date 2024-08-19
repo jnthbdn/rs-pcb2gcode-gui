@@ -37,6 +37,14 @@ impl VBit {
             tip_diameter,
         }
     }
+
+    pub fn new_from_base_tool(base_tool: BaseTool, tool_angle: f64, tip_diameter: f64) -> Self {
+        Self {
+            base_tool,
+            tool_angle,
+            tip_diameter,
+        }
+    }
 }
 
 impl Tool for VBit {
