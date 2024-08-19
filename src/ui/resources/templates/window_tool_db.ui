@@ -97,7 +97,9 @@
                     </object>
                 </child>
                 <child>
-                    <object class="ToolSettingObject" id="tool_settings"></object>
+                    <object class="ToolSettingObject" id="tool_settings">
+                        <signal name="setting-changed" handler="setting_changed" swapped="true"/>
+                    </object>
                 </child>
             </object>
         </child>

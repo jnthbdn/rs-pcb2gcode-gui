@@ -21,8 +21,37 @@ impl WindowToolDB {
     }
 
     #[template_callback]
+    fn setting_changed(&self) {
+        println!("Setting changed");
+    }
+
+    #[template_callback]
     fn row_selected(&self, db_id: u32, tool_type: ToolType) {
-        println!("Row seledted: {:?} #{db_id}", tool_type);
+        match tool_type {
+            ToolType::Drill => match self.imp().database.get_drill(db_id) {
+                Ok(tool) => match tool {
+                    Some(tool) => self.imp().tool_settings.show_drill(&tool),
+                    None => eprintln!("[row_selected] No drill with id #{db_id}"),
+                },
+                Err(e) => eprintln!("[row_selected] Fail to get drill ({e})"),
+            },
+
+            ToolType::Endmill => match self.imp().database.get_endmill(db_id) {
+                Ok(tool) => match tool {
+                    Some(tool) => self.imp().tool_settings.show_endmill(&tool),
+                    None => eprintln!("[row_selected] No endmill with id #{db_id}"),
+                },
+                Err(e) => eprintln!("[row_selected] Fail to get endmill ({e})"),
+            },
+
+            ToolType::VBit => match self.imp().database.get_vbit(db_id) {
+                Ok(tool) => match tool {
+                    Some(tool) => self.imp().tool_settings.show_vbit(&tool),
+                    None => eprintln!("[row_selected] No VBit with id #{db_id}"),
+                },
+                Err(e) => eprintln!("[row_selected] Fail to get VBit ({e})"),
+            },
+        };
     }
 
     fn setup_actions(&self) {
