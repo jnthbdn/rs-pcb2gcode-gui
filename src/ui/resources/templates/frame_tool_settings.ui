@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <template class="ToolSettingObject" parent="GtkBox">
+    <template class="FrameToolSettings" parent="GtkBox">
         <property name="orientation">vertical</property>
         <property name="width-request">480</property>
         <property name="hexpand">true</property>

@@ -10,9 +10,9 @@ use crate::ui::custom_object::spin_button_object::SpinButtonObject;
 use crate::ui::custom_object::textview_object::TextViewObject;
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/tool_setting_object.ui")]
-#[properties(wrapper_type=super::ToolSettingObject)]
-pub struct ToolSettingObject {
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame_tool_settings.ui")]
+#[properties(wrapper_type=super::FrameToolSettings)]
+pub struct FrameToolSettings {
     #[template_child]
     general_id: TemplateChild<gtk::Entry>,
     #[template_child]
@@ -45,7 +45,7 @@ pub struct ToolSettingObject {
     current_tool: Cell<Option<ToolType>>,
 }
 
-impl ToolSettingObject {
+impl FrameToolSettings {
     fn show_base_tool(&self, base_tool: &BaseTool) {
         self.general_id.set_text(&base_tool.id.to_string());
         self.general_name.set_text(&base_tool.name);
@@ -127,9 +127,9 @@ impl ToolSettingObject {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for ToolSettingObject {
-    const NAME: &'static str = "ToolSettingObject";
-    type Type = super::ToolSettingObject;
+impl ObjectSubclass for FrameToolSettings {
+    const NAME: &'static str = "FrameToolSettings";
+    type Type = super::FrameToolSettings;
     type ParentType = gtk::Box;
 
     fn class_init(klass: &mut Self::Class) {
@@ -143,7 +143,7 @@ impl ObjectSubclass for ToolSettingObject {
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for ToolSettingObject {
+impl ObjectImpl for FrameToolSettings {
     fn constructed(&self) {
         self.parent_constructed();
         EntryObject::ensure_type();
@@ -167,5 +167,5 @@ impl ObjectImpl for ToolSettingObject {
         })
     }
 }
-impl WidgetImpl for ToolSettingObject {}
-impl BoxImpl for ToolSettingObject {}
+impl WidgetImpl for FrameToolSettings {}
+impl BoxImpl for FrameToolSettings {}

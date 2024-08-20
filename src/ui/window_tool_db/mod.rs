@@ -32,7 +32,7 @@ impl WindowToolDB {
         new_value: glib::GString,
         id: u32,
     ) {
-        println!("Setting changed => {:?} {:?} = {new_value}", tool_type, col);
+        log::info!("Setting changed => {:?} {:?} = {new_value}", tool_type, col);
         let result = match tool_type {
             ToolType::Drill => self
                 .imp()
@@ -50,7 +50,7 @@ impl WindowToolDB {
         };
 
         if result.is_err() {
-            eprintln!(
+            log::error!(
                 "[setting_changed] Failed to update setting ({})",
                 result.err().unwrap()
             );
@@ -73,25 +73,25 @@ impl WindowToolDB {
             ToolType::Drill => match self.imp().database.get_drill(db_id) {
                 Ok(tool) => match tool {
                     Some(tool) => self.imp().tool_settings.show_drill(&tool),
-                    None => eprintln!("[row_selected] No drill with id #{db_id}"),
+                    None => log::error!("[row_selected] No drill with id #{db_id}"),
                 },
-                Err(e) => eprintln!("[row_selected] Fail to get drill ({e})"),
+                Err(e) => log::error!("[row_selected] Fail to get drill ({e})"),
             },
 
             ToolType::Endmill => match self.imp().database.get_endmill(db_id) {
                 Ok(tool) => match tool {
                     Some(tool) => self.imp().tool_settings.show_endmill(&tool),
-                    None => eprintln!("[row_selected] No endmill with id #{db_id}"),
+                    None => log::error!("[row_selected] No endmill with id #{db_id}"),
                 },
-                Err(e) => eprintln!("[row_selected] Fail to get endmill ({e})"),
+                Err(e) => log::error!("[row_selected] Fail to get endmill ({e})"),
             },
 
             ToolType::VBit => match self.imp().database.get_vbit(db_id) {
                 Ok(tool) => match tool {
                     Some(tool) => self.imp().tool_settings.show_vbit(&tool),
-                    None => eprintln!("[row_selected] No VBit with id #{db_id}"),
+                    None => log::error!("[row_selected] No VBit with id #{db_id}"),
                 },
-                Err(e) => eprintln!("[row_selected] Fail to get VBit ({e})"),
+                Err(e) => log::error!("[row_selected] Fail to get VBit ({e})"),
             },
         };
     }
@@ -118,7 +118,7 @@ impl WindowToolDB {
                 )) {
                     Ok(_) => win.imp().refresh_model(),
                     // TODO Improve this error (AlertDialog ?)
-                    Err(e) => eprintln!("action_add_endmill error : {}", e),
+                    Err(e) => log::error!("action_add_endmill error : {}", e),
                 };
             })
             .build();
@@ -138,7 +138,7 @@ impl WindowToolDB {
                 )) {
                     Ok(_) => win.imp().refresh_model(),
                     // TODO Improve this error (AlertDialog ?)
-                    Err(e) => eprintln!("action_add_drill error : {}", e),
+                    Err(e) => log::error!("action_add_drill error : {}", e),
                 };
             })
             .build();
@@ -160,7 +160,7 @@ impl WindowToolDB {
                 )) {
                     Ok(_) => win.imp().refresh_model(),
                     // TODO Improve this error (AlertDialog ?)
-                    Err(e) => eprintln!("action_add_vbit error : {}", e),
+                    Err(e) => log::error!("action_add_vbit error : {}", e),
                 };
             })
             .build();

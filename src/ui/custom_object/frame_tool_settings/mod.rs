@@ -31,13 +31,13 @@ static MAP_NAME_COLUMN: [(&str, DatabaseColumn); 11] = [
 ];
 
 glib::wrapper! {
-    pub struct ToolSettingObject(ObjectSubclass<imp::ToolSettingObject>)
+    pub struct FrameToolSettings(ObjectSubclass<imp::FrameToolSettings>)
         @extends gtk::Widget, gtk::Box,
         @implements gtk::Accessible, gtk::Buildable, gtk::ConstraintTarget, gtk::Orientable;
 }
 
 #[gtk::template_callbacks]
-impl ToolSettingObject {
+impl FrameToolSettings {
     pub fn new() -> Self {
         glib::Object::builder().build()
     }
@@ -56,8 +56,6 @@ impl ToolSettingObject {
 
     #[template_callback]
     fn entry_changed(&self, obj: EntryObject) {
-        println!("Entry changed ({:?})", obj.buildable_id());
-
         if obj.buildable_id().is_none() {
             return;
         }
@@ -82,8 +80,6 @@ impl ToolSettingObject {
 
     #[template_callback]
     fn textview_changed(&self, obj: TextViewObject) {
-        println!("textview changed ({:?})", obj.buildable_id());
-
         if obj.buildable_id().is_none() {
             return;
         }
@@ -108,8 +104,6 @@ impl ToolSettingObject {
 
     #[template_callback]
     fn spin_changed(&self, obj: SpinButtonObject) {
-        println!("spinbuttonobject changed ({:?})", obj.buildable_id());
-
         if obj.buildable_id().is_none() {
             return;
         }

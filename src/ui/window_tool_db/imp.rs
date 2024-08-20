@@ -12,7 +12,7 @@ use crate::{
     custom_object::tree_tool_row::TreeToolRow,
     database::database::Database,
     tools::ToolType,
-    ui::custom_object::{tool_setting_object::ToolSettingObject, tree_tool_object::TreeToolObject},
+    ui::custom_object::{frame_tool_settings::FrameToolSettings, tree_tool_object::TreeToolObject},
 };
 
 #[derive(gtk::CompositeTemplate, glib::Properties)]
@@ -22,7 +22,7 @@ pub struct WindowToolDB {
     #[template_child]
     pub tree_tool: TemplateChild<TreeToolObject>,
     #[template_child]
-    pub tool_settings: TemplateChild<ToolSettingObject>,
+    pub tool_settings: TemplateChild<FrameToolSettings>,
 
     pub database: Arc<Database>,
 }
@@ -50,7 +50,7 @@ impl ObjectSubclass for WindowToolDB {
     type ParentType = gtk::ApplicationWindow;
 
     fn class_init(klass: &mut Self::Class) {
-        ToolSettingObject::ensure_type();
+        FrameToolSettings::ensure_type();
         TreeToolObject::ensure_type();
 
         klass.bind_template();
