@@ -11,20 +11,23 @@ use crate::{
     tools::{drill::Drill, endmill::Endmill, vbit::VBit},
 };
 
-use super::entry_object::EntryObject;
+use super::{
+    entry_object::EntryObject, spin_button_object::SpinButtonObject,
+    textview_object::TextViewObject,
+};
 
-static LOOKUPO_NAME_COLUMN: [(&str, DatabaseColumn); 11] = [
+static MAP_NAME_COLUMN: [(&str, DatabaseColumn); 11] = [
     ("general_id", DatabaseColumn::ID),
-    ("general_name", DatabaseColumn::NAME),
-    ("general_note", DatabaseColumn::NOTE),
-    ("diameter_shaft", DatabaseColumn::SHAFT_DIAMETER),
-    ("diameter_tool", DatabaseColumn::TOOL_DIAMETER),
-    ("diameter_tip", DatabaseColumn::TIP_DIAMETER),
-    ("diameter_angle", DatabaseColumn::TOOL_ANGLE),
-    ("pass_depth", DatabaseColumn::PASS_DEPTH),
-    ("speed_spindle", DatabaseColumn::SPINDLE_SPEED),
-    ("speed_vertical", DatabaseColumn::PLUGNE_RATE),
-    ("speed_horizontal", DatabaseColumn::FEED_RATE),
+    ("general_name", DatabaseColumn::Name),
+    ("general_note", DatabaseColumn::Note),
+    ("diameter_shaft", DatabaseColumn::ShaftDiameter),
+    ("diameter_tool", DatabaseColumn::ToolDiameter),
+    ("diameter_tip", DatabaseColumn::TipDiameter),
+    ("diameter_angle", DatabaseColumn::ToolAngle),
+    ("pass_depth", DatabaseColumn::PassDepth),
+    ("speed_spindle", DatabaseColumn::SpindleSpeed),
+    ("speed_vertical", DatabaseColumn::PlungeRate),
+    ("speed_horizontal", DatabaseColumn::FeedRate),
 ];
 
 glib::wrapper! {
@@ -60,7 +63,7 @@ impl ToolSettingObject {
         }
 
         let id = obj.buildable_id().unwrap();
-        let col = LOOKUPO_NAME_COLUMN.iter().find(|x| x.0 == id).take();
+        let col = MAP_NAME_COLUMN.iter().find(|x| x.0 == id).take();
 
         if col.is_some() {
             let col = col.unwrap();
@@ -71,6 +74,58 @@ impl ToolSettingObject {
                     &self.imp().current_tooltype().unwrap(),
                     &col.1,
                     &obj.text().to_value(),
+                    &self.imp().current_id(),
+                ],
+            )
+        }
+    }
+
+    #[template_callback]
+    fn textview_changed(&self, obj: TextViewObject) {
+        println!("textview changed ({:?})", obj.buildable_id());
+
+        if obj.buildable_id().is_none() {
+            return;
+        }
+
+        let id = obj.buildable_id().unwrap();
+        let col = MAP_NAME_COLUMN.iter().find(|x| x.0 == id).take();
+
+        if col.is_some() {
+            let col = col.unwrap();
+
+            self.emit_by_name(
+                "setting-changed",
+                &[
+                    &self.imp().current_tooltype().unwrap(),
+                    &col.1,
+                    &obj.all_text().to_value(),
+                    &self.imp().current_id(),
+                ],
+            )
+        }
+    }
+
+    #[template_callback]
+    fn spin_changed(&self, obj: SpinButtonObject) {
+        println!("spinbuttonobject changed ({:?})", obj.buildable_id());
+
+        if obj.buildable_id().is_none() {
+            return;
+        }
+
+        let id = obj.buildable_id().unwrap();
+        let col = MAP_NAME_COLUMN.iter().find(|x| x.0 == id).take();
+
+        if col.is_some() {
+            let col = col.unwrap();
+
+            self.emit_by_name(
+                "setting-changed",
+                &[
+                    &self.imp().current_tooltype().unwrap(),
+                    &col.1,
+                    &obj.value_str().to_value(),
                     &self.imp().current_id(),
                 ],
             )

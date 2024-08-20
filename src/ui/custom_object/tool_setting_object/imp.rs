@@ -6,6 +6,8 @@ use gtk::{glib, prelude::*, subclass::prelude::*};
 use crate::database::database::DatabaseColumn;
 use crate::tools::{basetool::BaseTool, drill::Drill, endmill::Endmill, vbit::VBit, ToolType};
 use crate::ui::custom_object::entry_object::EntryObject;
+use crate::ui::custom_object::spin_button_object::SpinButtonObject;
+use crate::ui::custom_object::textview_object::TextViewObject;
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/tool_setting_object.ui")]
@@ -16,29 +18,29 @@ pub struct ToolSettingObject {
     #[template_child]
     general_name: TemplateChild<EntryObject>,
     #[template_child]
-    general_note: TemplateChild<gtk::TextView>,
+    general_note: TemplateChild<TextViewObject>,
 
     #[template_child]
-    diameter_shaft: TemplateChild<gtk::SpinButton>,
+    diameter_shaft: TemplateChild<SpinButtonObject>,
     #[template_child]
-    diameter_tool: TemplateChild<gtk::SpinButton>,
+    diameter_tool: TemplateChild<SpinButtonObject>,
     #[template_child]
     diameter_tip_label: TemplateChild<gtk::Label>,
     #[template_child]
-    diameter_tip: TemplateChild<gtk::SpinButton>,
+    diameter_tip: TemplateChild<SpinButtonObject>,
     #[template_child]
     diameter_angle_label: TemplateChild<gtk::Label>,
     #[template_child]
-    diameter_angle: TemplateChild<gtk::SpinButton>,
+    diameter_angle: TemplateChild<SpinButtonObject>,
 
     #[template_child]
-    pass_depth: TemplateChild<gtk::SpinButton>,
+    pass_depth: TemplateChild<SpinButtonObject>,
     #[template_child]
-    speed_spindle: TemplateChild<gtk::SpinButton>,
+    speed_spindle: TemplateChild<SpinButtonObject>,
     #[template_child]
-    speed_vertical: TemplateChild<gtk::SpinButton>,
+    speed_vertical: TemplateChild<SpinButtonObject>,
     #[template_child]
-    speed_horizontal: TemplateChild<gtk::SpinButton>,
+    speed_horizontal: TemplateChild<SpinButtonObject>,
 
     current_tool: Cell<Option<ToolType>>,
 }
@@ -47,7 +49,7 @@ impl ToolSettingObject {
     fn show_base_tool(&self, base_tool: &BaseTool) {
         self.general_id.set_text(&base_tool.id.to_string());
         self.general_name.set_text(&base_tool.name);
-        self.general_note.buffer().set_text(&base_tool.note);
+        self.general_note.set_text(&base_tool.note);
 
         self.diameter_shaft.set_value(base_tool.shaft_diameter);
         self.diameter_tool.set_value(base_tool.tool_diameter);
@@ -100,7 +102,27 @@ impl ToolSettingObject {
     }
 
     pub fn check_setting_change(&self) {
-        self.general_name.imp().has_changed();
+        self.general_name.grab_focus();
+
+        self.general_name.imp().check_change();
+        self.general_note.imp().check_change();
+        self.diameter_shaft.imp().check_change();
+        self.diameter_tool.imp().check_change();
+        self.pass_depth.imp().check_change();
+        self.speed_spindle.imp().check_change();
+        self.speed_vertical.imp().check_change();
+        self.speed_horizontal.imp().check_change();
+
+        match self.current_tool.get() {
+            Some(tool) => match tool {
+                ToolType::VBit => {
+                    self.diameter_tip.imp().check_change();
+                    self.diameter_angle.imp().check_change();
+                }
+                _ => (),
+            },
+            None => (),
+        }
     }
 }
 
@@ -125,6 +147,8 @@ impl ObjectImpl for ToolSettingObject {
     fn constructed(&self) {
         self.parent_constructed();
         EntryObject::ensure_type();
+        TextViewObject::ensure_type();
+        SpinButtonObject::ensure_type();
 
         self.general_id.add_css_class("read-only");
     }
