@@ -30,7 +30,7 @@ impl EntryObject {
         None
     }
 
-    pub fn has_changed(&self) {
+    pub fn check_change(&self) {
         let current_text = self.obj().text();
 
         if !self.old_text.borrow().eq(&current_text) {
@@ -64,7 +64,7 @@ impl ObjectImpl for EntryObject {
                         .downcast_ref::<super::EntryObject>()
                         .unwrap()
                         .imp()
-                        .has_changed();
+                        .check_change();
                 }
             });
     }
