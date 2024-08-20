@@ -2,9 +2,11 @@
 
 use std::cell::RefCell;
 
-use gtk::{glib, subclass::prelude::*};
+use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
 
-use crate::window_tool_db::WindowToolDB;
+use crate::{
+    ui::custom_object::frame_input_output::FrameInputOutput, window_tool_db::WindowToolDB,
+};
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window_main.ui")]
@@ -22,6 +24,8 @@ impl ObjectSubclass for WindowMain {
     type ParentType = gtk::ApplicationWindow;
 
     fn class_init(klass: &mut Self::Class) {
+        FrameInputOutput::ensure_type();
+
         klass.bind_template();
         klass.bind_template_instance_callbacks();
     }

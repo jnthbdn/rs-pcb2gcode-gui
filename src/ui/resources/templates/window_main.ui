@@ -13,8 +13,7 @@
                                 <property name="name">notebook</property>
                                 <property name="vexpand">true</property>
                                 <child>
-                                    <object class="GtkLabel">
-                                        <property name="label">Input/Output</property>
+                                    <object class="FrameInputOutput">
                                     </object>
                                 </child>
                                 <child type="tab">
