@@ -149,8 +149,6 @@ impl ObjectImpl for FrameToolSettings {
         EntryObject::ensure_type();
         TextViewObject::ensure_type();
         SpinButtonObject::ensure_type();
-
-        self.general_id.add_css_class("read-only");
     }
 
     fn signals() -> &'static [glib::subclass::Signal] {

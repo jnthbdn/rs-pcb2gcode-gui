@@ -32,6 +32,9 @@
                             <object class="GtkEntry" id="general_id">
                                 <property name="editable">false</property>
                                 <property name="text">#ID</property>
+                                <style>
+                                    <class name="readonly"/>
+                                </style>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">0</property>
