@@ -3,10 +3,7 @@
 use std::cell::Cell;
 use std::sync::OnceLock;
 
-use gtk::glib;
-use gtk::prelude::*;
-use gtk::subclass::prelude::*;
-use gtk::CompositeTemplate;
+use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 
 // Object holding the state
 #[derive(Default, glib::Properties, CompositeTemplate)]
@@ -117,25 +114,19 @@ impl ObjectImpl for SpinButtonObject {
 
         self.old_value.set(self.spin_button.value());
 
+        let clone_self = self.obj().clone();
         self.get_text_child()
             .unwrap()
-            .connect_has_focus_notify(|text| {
+            .connect_has_focus_notify(move |text| {
                 if !text.has_focus() {
-                    text.ancestor(SpinButtonObject::type_())
-                        .unwrap()
-                        .downcast_ref::<super::SpinButtonObject>()
-                        .unwrap()
-                        .imp()
-                        .check_change();
+                    clone_self.imp().check_change();
                 }
             });
 
-        self.spin_button.connect_value_changed(|spin| {
-            let parent = spin.ancestor(SpinButtonObject::type_()).unwrap();
-            let parent = parent.downcast_ref::<super::SpinButtonObject>().unwrap();
-
-            if !parent.imp().has_focus() {
-                // parent.imp().check_change();
+        let clone_self = self.obj().clone();
+        self.spin_button.connect_value_changed(move |_spin| {
+            if !clone_self.imp().has_focus() {
+                clone_self.imp().check_change();
             }
         });
     }
