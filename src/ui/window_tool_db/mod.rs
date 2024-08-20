@@ -1,5 +1,6 @@
 mod imp;
-use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt, template_callbacks};
+
+use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
 use crate::{
     database::database::DatabaseColumn,
@@ -54,7 +55,14 @@ impl WindowToolDB {
                 result.err().unwrap()
             );
         } else {
-            self.imp().refresh_model();
+            match col {
+                DatabaseColumn::Name => {
+                    self.imp()
+                        .tree_tool
+                        .update_name_model(tool_type, id, &new_value);
+                }
+                _ => (),
+            };
         }
     }
 
