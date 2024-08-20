@@ -12,17 +12,17 @@ static DB_FILE_NAME: &str = "tool_database.db";
 #[enum_type(name = "DatabaseColumn")]
 pub enum DatabaseColumn {
     ID,
-    NAME,
-    NOTE,
-    SHAFT_DIAMETER,
-    TOOL_DIAMETER,
-    SPINDLE_SPEED,
-    PASS_DEPTH,
-    PLUGNE_RATE,
-    FEED_RATE,
+    Name,
+    Note,
+    ShaftDiameter,
+    ToolDiameter,
+    SpindleSpeed,
+    PassDepth,
+    PlungeRate,
+    FeedRate,
 
-    TOOL_ANGLE,
-    TIP_DIAMETER,
+    ToolAngle,
+    TipDiameter,
 }
 
 pub struct Database {
@@ -210,7 +210,7 @@ impl Database {
                     Self::database_column_to_str(col)
                 )
                 .as_str(),
-                [Self::database_column_to_str(col), value, id.to_string()],
+                [value, id.to_string()],
             )
             .map(|_| ())
     }
@@ -246,7 +246,7 @@ impl Database {
                     Self::database_column_to_str(col)
                 )
                 .as_str(),
-                [Self::database_column_to_str(col), value, id.to_string()],
+                [value, id.to_string()],
             )
             .map(|_| ())
     }
@@ -298,16 +298,16 @@ impl Database {
     fn database_column_to_str(col: DatabaseColumn) -> String {
         match col {
             DatabaseColumn::ID => "id".to_string(),
-            DatabaseColumn::NAME => "name".to_string(),
-            DatabaseColumn::NOTE => "note".to_string(),
-            DatabaseColumn::SHAFT_DIAMETER => "shaft_diameter".to_string(),
-            DatabaseColumn::TOOL_DIAMETER => "tool_diameter".to_string(),
-            DatabaseColumn::SPINDLE_SPEED => "spindle_speed".to_string(),
-            DatabaseColumn::PASS_DEPTH => "pass_depth".to_string(),
-            DatabaseColumn::PLUGNE_RATE => "plunge_rate".to_string(),
-            DatabaseColumn::FEED_RATE => "feed_rate".to_string(),
-            DatabaseColumn::TOOL_ANGLE => "angle".to_string(),
-            DatabaseColumn::TIP_DIAMETER => "tip_diameter".to_string(),
+            DatabaseColumn::Name => "name".to_string(),
+            DatabaseColumn::Note => "note".to_string(),
+            DatabaseColumn::ShaftDiameter => "shaft_diameter".to_string(),
+            DatabaseColumn::ToolDiameter => "tool_diameter".to_string(),
+            DatabaseColumn::SpindleSpeed => "spindle_speed".to_string(),
+            DatabaseColumn::PassDepth => "pass_depth".to_string(),
+            DatabaseColumn::PlungeRate => "plunge_rate".to_string(),
+            DatabaseColumn::FeedRate => "feed_rate".to_string(),
+            DatabaseColumn::ToolAngle => "angle".to_string(),
+            DatabaseColumn::TipDiameter => "tip_diameter".to_string(),
         }
     }
 }
