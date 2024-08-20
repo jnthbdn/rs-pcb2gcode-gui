@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-    <template class="TreeToolObject" parent="GtkBox">
+    <template class="FrameTreeTools" parent="GtkBox">
         <child>
             <object class="GtkScrolledWindow">
                 <property name="min-content-height">500</property>

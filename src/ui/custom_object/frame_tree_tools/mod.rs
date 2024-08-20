@@ -7,11 +7,11 @@ use crate::{tools::ToolType, ui::custom_object::tree_tool_row::TreeToolRow};
 use super::db_label_object::DBLabelObject;
 
 glib::wrapper! {
-    pub struct TreeToolObject(ObjectSubclass<imp::TreeToolObject>)
+    pub struct FrameTreeTools(ObjectSubclass<imp::FrameTreeTools>)
         @extends gtk::Widget, gtk::Box;
 }
 
-impl TreeToolObject {
+impl FrameTreeTools {
     pub fn new() -> Self {
         glib::Object::builder().build()
     }

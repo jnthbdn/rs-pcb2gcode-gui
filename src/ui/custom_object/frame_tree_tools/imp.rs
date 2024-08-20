@@ -12,9 +12,9 @@ use crate::ui::custom_object::tree_tool_row::TreeToolRow;
 
 // Object holding the state
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/tree_tool_object.ui")]
-#[properties(wrapper_type = super::TreeToolObject)]
-pub struct TreeToolObject {
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame_tree_tools.ui")]
+#[properties(wrapper_type = super::FrameTreeTools)]
+pub struct FrameTreeTools {
     #[template_child]
     pub tool_list: TemplateChild<gtk::ListView>,
 
@@ -23,7 +23,7 @@ pub struct TreeToolObject {
     pub selected_tree: RefCell<Option<gtk::TreeExpander>>,
 }
 
-impl TreeToolObject {
+impl FrameTreeTools {
     fn tree_model_callback(obj: &glib::Object, db: &Database) -> Option<gio::ListModel> {
         let tree_tool: &TreeToolRow = obj
             .downcast_ref()
@@ -81,14 +81,14 @@ impl TreeToolObject {
                     .and_downcast()
                     .expect("[connect_notify] child need to be DBLabelObject");
 
-                match tree.ancestor(TreeToolObject::type_()) {
+                match tree.ancestor(FrameTreeTools::type_()) {
                     Some(widget) => {
                         widget.emit_by_name::<()>(
                             "row_selected",
                             &[&label.db_id(), &label.tool_type().unwrap()],
                         );
                         widget
-                            .downcast_ref::<super::TreeToolObject>()
+                            .downcast_ref::<super::FrameTreeTools>()
                             .unwrap()
                             .imp()
                             .selected_tree
@@ -166,9 +166,9 @@ impl TreeToolObject {
 }
 
 #[glib::object_subclass]
-impl ObjectSubclass for TreeToolObject {
-    const NAME: &'static str = "TreeToolObject";
-    type Type = super::TreeToolObject;
+impl ObjectSubclass for FrameTreeTools {
+    const NAME: &'static str = "FrameTreeTools";
+    type Type = super::FrameTreeTools;
     type ParentType = gtk::Box;
 
     fn class_init(klass: &mut Self::Class) {
@@ -181,13 +181,13 @@ impl ObjectSubclass for TreeToolObject {
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for TreeToolObject {
+impl ObjectImpl for FrameTreeTools {
     fn constructed(&self) {
         self.parent_constructed();
 
         let factory = gtk::SignalListItemFactory::new();
-        factory.connect_setup(TreeToolObject::factory_setup);
-        factory.connect_bind(TreeToolObject::factory_bind);
+        factory.connect_setup(FrameTreeTools::factory_setup);
+        factory.connect_bind(FrameTreeTools::factory_bind);
 
         let tool_list: &gtk::ListView = self
             .tool_list
@@ -208,5 +208,5 @@ impl ObjectImpl for TreeToolObject {
     }
 }
 
-impl WidgetImpl for TreeToolObject {}
-impl BoxImpl for TreeToolObject {}
+impl WidgetImpl for FrameTreeTools {}
+impl BoxImpl for FrameTreeTools {}

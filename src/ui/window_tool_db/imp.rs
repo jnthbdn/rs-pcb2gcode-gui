@@ -12,7 +12,7 @@ use crate::{
     custom_object::tree_tool_row::TreeToolRow,
     database::database::Database,
     tools::ToolType,
-    ui::custom_object::{frame_tool_settings::FrameToolSettings, tree_tool_object::TreeToolObject},
+    ui::custom_object::{frame_tool_settings::FrameToolSettings, frame_tree_tools::FrameTreeTools},
 };
 
 #[derive(gtk::CompositeTemplate, glib::Properties)]
@@ -20,7 +20,7 @@ use crate::{
 #[properties(wrapper_type=super::WindowToolDB)]
 pub struct WindowToolDB {
     #[template_child]
-    pub tree_tool: TemplateChild<TreeToolObject>,
+    pub tree_tool: TemplateChild<FrameTreeTools>,
     #[template_child]
     pub tool_settings: TemplateChild<FrameToolSettings>,
 
@@ -51,7 +51,7 @@ impl ObjectSubclass for WindowToolDB {
 
     fn class_init(klass: &mut Self::Class) {
         FrameToolSettings::ensure_type();
-        TreeToolObject::ensure_type();
+        FrameTreeTools::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();
