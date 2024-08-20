@@ -16,6 +16,12 @@
 	margin: 8px;
 }
 
+entry.readonly{
+	font-style: italic;
+	color: #333;
+	background-color: #EEE;
+}
+
 /*
  * =========================================================
  * ====================== MAIN WINDOW ======================
@@ -47,11 +53,6 @@ notebook#notebook{
 
 label.label_tool_category{
     font-weight: bold;
-}
-
-entry.read-only{
-	color: grey;
-	background-color: #EEE;
 }
 
 treeexpander label{
