@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="SpinButtonObject" parent="GtkBox">
+        <child>
+            <object class="GtkSpinButton" id="spin_button">
+                <property name="hexpand">true</property>
+                <property name="numeric">true</property>
+                <property name="snap-to-ticks">false</property>
+                <property name="adjustment">
+                    <object class="GtkAdjustment">
+                    </object>
+                </property>
+            </object>
+        </child>
+    </template>
+</interface>
