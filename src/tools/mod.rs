@@ -6,7 +6,7 @@ pub mod vbit;
 
 use crate::glib;
 
-#[derive(Debug, Clone, Copy, gtk::glib::Enum)]
+#[derive(Debug, Clone, Copy, gtk::glib::Enum, PartialEq)]
 #[enum_type(name = "ToolType")]
 pub enum ToolType {
     Drill,

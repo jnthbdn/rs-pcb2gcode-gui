@@ -20,6 +20,7 @@ pub struct TreeToolObject {
 
     root_rows: RefCell<Vec<TreeToolRow>>,
     model_selection: gtk::SingleSelection,
+    pub selected_tree: RefCell<Option<gtk::TreeExpander>>,
 }
 
 impl TreeToolObject {
@@ -80,12 +81,21 @@ impl TreeToolObject {
                     .and_downcast()
                     .expect("[connect_notify] child need to be DBLabelObject");
 
-                tree.ancestor(TreeToolObject::type_())
-                    .unwrap()
-                    .emit_by_name::<()>(
-                        "row_selected",
-                        &[&label.db_id(), &label.tool_type().unwrap()],
-                    );
+                match tree.ancestor(TreeToolObject::type_()) {
+                    Some(widget) => {
+                        widget.emit_by_name::<()>(
+                            "row_selected",
+                            &[&label.db_id(), &label.tool_type().unwrap()],
+                        );
+                        widget
+                            .downcast_ref::<super::TreeToolObject>()
+                            .unwrap()
+                            .imp()
+                            .selected_tree
+                            .set(Some(tree.clone()));
+                    }
+                    None => (),
+                };
             }
         });
 
