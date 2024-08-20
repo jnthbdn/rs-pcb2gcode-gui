@@ -27,7 +27,6 @@ fn main() -> glib::ExitCode {
     app.connect_activate(|app| {
         let win_main = window_main::WindowMain::new(app);
         win_main.present();
-        win_main.open_tool_db(&gtk::Button::new());
     });
 
     app.run()
