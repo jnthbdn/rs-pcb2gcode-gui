@@ -1,0 +1,76 @@
+/*
+ * =========================================================
+ * ======================== COMMON =========================
+ * =========================================================
+*/
+
+.main_container {
+    margin: 8px;
+}
+
+.main_container frame:not(:first-child){
+    margin-top: 8px;
+}
+
+.main_container frame grid{
+	margin: 8px;
+}
+
+/*
+ * =========================================================
+ * ====================== MAIN WINDOW ======================
+ * =========================================================
+*/
+
+label#preview_label{
+    font-weight: bold;
+}
+
+label#love_text{
+    font-style: italic;
+}
+
+picture#preview_picture{
+    background-color: white;
+    border-radius: 8px;
+}
+
+notebook#notebook{
+    border-radius: 8px;
+}
+
+/*
+ * =========================================================
+ * ==================== TOOL DB WINDOW =====================
+ * =========================================================
+*/
+
+label.label_tool_category{
+    font-weight: bold;
+}
+
+entry.read-only{
+	color: grey;
+	background-color: #EEE;
+}
+
+treeexpander label{
+    margin-right: 16px;
+}
+
+box#tool_db_button_box {
+    margin: 8px;
+}
+
+box#tool_db_button_box button, box#tool_db_button_box menubutton {
+    margin-right: 8px;
+}
+box#tool_db_button_box button:last-child {
+    margin-right: 0;
+}
+
+textview{
+	border: 1px solid rgb(205, 199, 194);
+	border-radius: 4px;
+	padding: 4px 8px;
+}

@@ -34,8 +34,7 @@ fn main() -> glib::ExitCode {
 
 fn load_css() {
     let provider = CssProvider::new();
-    provider.load_from_resource("/com/github/jnthbdn/rs-pcb2gcode-gui/css/window_main.css");
-    provider.load_from_resource("/com/github/jnthbdn/rs-pcb2gcode-gui/css/window_tool_db.css");
+    provider.load_from_resource("/com/github/jnthbdn/rs-pcb2gcode-gui/css/style.css");
 
     // Add the provider to the default screen
     gtk::style_context_add_provider_for_display(

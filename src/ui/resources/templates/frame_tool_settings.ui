@@ -5,7 +5,9 @@
         <property name="width-request">480</property>
         <property name="hexpand">true</property>
         <property name="vexpand">true</property>
-        <property name="name">tool_settings_box</property>
+        <style>
+            <class name="main_container"/>
+        </style>
         <child>
             <object class="GtkFrame">
                 <property name="label" translatable="true">General</property>
