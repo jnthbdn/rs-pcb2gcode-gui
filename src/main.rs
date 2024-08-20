@@ -12,6 +12,12 @@ use ui::{custom_object, window_main, window_tool_db};
 const APP_ID: &str = "com.github.jnthbdn.rs-pcb2gcode-gui";
 
 fn main() -> glib::ExitCode {
+    flexi_logger::Logger::try_with_env_or_str("info")
+        .expect("Failed init logger")
+        .format(flexi_logger::opt_format)
+        .start()
+        .expect("Fail start logger");
+
     gio::resources_register_include!("rs-pcb2gcode-gui.gresource")
         .expect("[main] Failed to register resources.");
 
