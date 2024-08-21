@@ -3,6 +3,7 @@
 // pub mod window_tool_db;
 
 pub mod frame {
+    pub mod frame_common;
     pub mod frame_input_output;
     pub mod frame_tool_settings;
     pub mod frame_tree_tools;

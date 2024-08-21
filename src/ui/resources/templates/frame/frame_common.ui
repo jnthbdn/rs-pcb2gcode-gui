@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="FrameCommon" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <style>
+            <class name="main_container"/>
+        </style>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Units</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Input units -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Input units</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                    <object class="GtkCheckButton" id="input_unit">
+                                        <property name="hexpand">true</property>
+                                        <property name="halign">GTK_ALIGN_CENTER</property>
+                                        <property name="active">true</property>
+                                        <property name="label">Metric</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton">
+                                        <property name="hexpand">true</property>
+                                        <property name="halign">GTK_ALIGN_CENTER</property>
+                                        <property name="label">Imperial</property>
+                                        <property name="group">input_unit</property>
+                                    </object>
+                                </child>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Back -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Output units</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                    <object class="GtkCheckButton" id="output_unit">
+                                        <property name="hexpand">true</property>
+                                        <property name="halign">GTK_ALIGN_CENTER</property>
+                                        <property name="active">true</property>
+                                        <property name="label">Metric</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkCheckButton">
+                                        <property name="hexpand">true</property>
+                                        <property name="halign">GTK_ALIGN_CENTER</property>
+                                        <property name="label">Imperial</property>
+                                        <property name="group">output_unit</property>
+                                    </object>
+                                </child>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Height</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Safe z -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Mouvement height (Safe height)</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">2</property>
+                                <property name="min">0.0</property>
+                                <property name="max">100.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">2.0</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Tool change height -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Tool change height</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">2</property>
+                                <property name="min">0.0</property>
+                                <property name="max">100.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">10.0</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Tool change height as machine coord. -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Use "Tool change height"  as machine coordinate</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckButton">
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Production</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Tolerance -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Maximum tolerance</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">5</property>
+                                <property name="min">0.0</property>
+                                <property name="max">10.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">0.01</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Optimisazation value -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Optimisation value</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">8</property>
+                                <property name="min">0.0</property>
+                                <property name="max">10.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">0.00000254</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Multiple PCB -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Make multiple PCBs</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="label" translatable="true">x</property>
+                                        <property name="margin-end">8</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="SpinButtonObject">
+                                        <property name="hexpand">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="min">1</property>
+                                        <property name="max">100</property>
+                                        <property name="step">1</property>
+                                        <property name="value">1</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">8</property>
+                                        <property name="label" translatable="true">y</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="SpinButtonObject">
+                                        <property name="hexpand">true</property>
+                                        <property name="digits">0</property>
+                                        <property name="min">1</property>
+                                        <property name="max">100</property>
+                                        <property name="step">1</property>
+                                        <property name="value">1</property>
+                                    </object>
+                                </child>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Alignment</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Origin offset -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Origin offset</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="label" translatable="true">x</property>
+                                        <property name="margin-end">8</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="SpinButtonObject">
+                                        <property name="hexpand">true</property>
+                                        <property name="digits">2</property>
+                                        <property name="min">0</property>
+                                        <property name="max">1000.0</property>
+                                        <property name="step">0.1</property>
+                                        <property name="value">0.00</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">8</property>
+                                        <property name="label" translatable="true">y</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="SpinButtonObject">
+                                        <property name="hexpand">true</property>
+                                        <property name="digits">2</property>
+                                        <property name="min">0</property>
+                                        <property name="max">1000.0</property>
+                                        <property name="step">0.1</property>
+                                        <property name="value">0.00</property>
+                                    </object>
+                                </child>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Mirror axis -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Mirror axis</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="orientation">horizontal</property>
+                                <property name="hexpand">true</property>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="label" translatable="true">x</property>
+                                        <property name="margin-end">8</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="SpinButtonObject">
+                                        <property name="hexpand">true</property>
+                                        <property name="digits">2</property>
+                                        <property name="min">0</property>
+                                        <property name="max">1000.0</property>
+                                        <property name="step">0.1</property>
+                                        <property name="value">0.00</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkLabel">
+                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="margin-start">32</property>
+                                        <property name="margin-end">8</property>
+                                        <property name="label" translatable="true">y</property>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="SpinButtonObject">
+                                        <property name="hexpand">true</property>
+                                        <property name="digits">2</property>
+                                        <property name="min">0</property>
+                                        <property name="max">1000.0</property>
+                                        <property name="step">0.1</property>
+                                        <property name="value">0.00</property>
+                                    </object>
+                                </child>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- zero_start -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Start at (0, 0)</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckButton">
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
