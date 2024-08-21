@@ -1,6 +1,9 @@
 #![allow(unreachable_code)]
 
-use std::{cell::RefCell, cmp::min};
+use std::{
+    cell::{Cell, RefCell},
+    cmp::min,
+};
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
@@ -21,29 +24,39 @@ pub struct BrowseFileObject {
     #[property(set = Self::set_file_patterns_name, get)]
     file_pattern_name: RefCell<Vec<String>>,
 
+    #[property(set, get)]
+    select_directory: Cell<bool>,
+
     dialog: RefCell<gtk::FileDialog>,
 }
 
 impl BrowseFileObject {
     pub fn open_dialog(&self) {
+        let parent_window = self
+            .obj()
+            .ancestor(gtk::Window::static_type())
+            .and_downcast::<gtk::Window>();
+
         let clone_self = self.obj().clone();
-        self.dialog.borrow().open(
-            Some(
-                &self
-                    .obj()
-                    .ancestor(gtk::Window::static_type())
-                    .and_downcast::<gtk::Window>()
-                    .unwrap(),
-            ),
-            None::<&gio::Cancellable>,
-            move |result| match result {
-                Ok(file) => clone_self
-                    .imp()
-                    .entry
-                    .set_text(file.path().unwrap().to_str().unwrap()),
-                Err(e) => log::warn!("{}", e),
-            },
-        );
+        let callback = move |result: Result<gio::File, glib::Error>| match result {
+            Ok(file) => clone_self
+                .imp()
+                .entry
+                .set_text(file.path().unwrap().to_str().unwrap()),
+            Err(e) => log::warn!("{}", e),
+        };
+
+        if self.select_directory.get() {
+            self.dialog.borrow().select_folder(
+                parent_window.as_ref(),
+                None::<&gio::Cancellable>,
+                callback,
+            );
+        } else {
+            self.dialog
+                .borrow()
+                .open(parent_window.as_ref(), None::<&gio::Cancellable>, callback);
+        }
     }
     fn get_dialog_title(&self) -> String {
         self.dialog.borrow().title().into()
