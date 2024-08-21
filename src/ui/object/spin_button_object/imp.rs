@@ -23,6 +23,8 @@ pub struct SpinButtonObject {
     max: Cell<f64>,
     #[property(set = Self::set_step, get)]
     step: Cell<f64>,
+    #[property(set = Self::set_value, get = Self::get_value)]
+    _value: Cell<f64>,
 
     pub old_value: Cell<f64>,
 }
@@ -39,6 +41,10 @@ impl SpinButtonObject {
     pub fn set_value(&self, value: f64) {
         self.old_value.set(value);
         self.spin_button.set_value(value);
+    }
+
+    pub fn get_value(&self) -> f64 {
+        self.spin_button.value()
     }
 
     pub fn set_digits(&self, value: u32) {

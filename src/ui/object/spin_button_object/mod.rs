@@ -10,10 +10,6 @@ glib::wrapper! {
 
 #[template_callbacks]
 impl SpinButtonObject {
-    pub fn set_value(&self, value: f64) {
-        self.imp().set_value(value);
-    }
-
     pub fn value_str(&self) -> String {
         self.imp().value_str()
     }
