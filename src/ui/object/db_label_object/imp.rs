@@ -8,7 +8,7 @@ use crate::tools::ToolType;
 
 // Object holding the state
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/db_label_object.ui")]
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/object/db_label_object.ui")]
 #[properties(wrapper_type = super::DBLabelObject)]
 pub struct DBLabelObject {
     pub db_id: Cell<u32>,

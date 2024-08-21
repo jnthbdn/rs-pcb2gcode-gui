@@ -1,10 +1,10 @@
 #![allow(unreachable_code)]
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::ui::custom_object::browse_file_object::BrowseFileObject;
+use crate::ui::object::browse_file_object::BrowseFileObject;
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame_input_output.ui")]
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame/frame_input_output.ui")]
 #[properties(wrapper_type=super::FrameInputOutput)]
 pub struct FrameInputOutput {}
 

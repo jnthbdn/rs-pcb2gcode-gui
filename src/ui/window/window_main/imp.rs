@@ -5,11 +5,11 @@ use std::cell::RefCell;
 use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
 
 use crate::{
-    ui::custom_object::frame_input_output::FrameInputOutput, window_tool_db::WindowToolDB,
+    ui::frame::frame_input_output::FrameInputOutput, ui::window::window_tool_db::WindowToolDB,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window_main.ui")]
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window/window_main.ui")]
 #[properties(wrapper_type=super::WindowMain)]
 pub struct WindowMain {
     pub win_tool_db: RefCell<Option<WindowToolDB>>,

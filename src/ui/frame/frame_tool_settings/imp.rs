@@ -5,12 +5,14 @@ use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::database::database::DatabaseColumn;
 use crate::tools::{basetool::BaseTool, drill::Drill, endmill::Endmill, vbit::VBit, ToolType};
-use crate::ui::custom_object::entry_object::EntryObject;
-use crate::ui::custom_object::spin_button_object::SpinButtonObject;
-use crate::ui::custom_object::textview_object::TextViewObject;
+use crate::ui::object::entry_object::EntryObject;
+use crate::ui::object::spin_button_object::SpinButtonObject;
+use crate::ui::object::textview_object::TextViewObject;
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame_tool_settings.ui")]
+#[template(
+    resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame/frame_tool_settings.ui"
+)]
 #[properties(wrapper_type=super::FrameToolSettings)]
 pub struct FrameToolSettings {
     #[template_child]

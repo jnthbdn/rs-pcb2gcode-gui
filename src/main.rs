@@ -7,7 +7,7 @@ mod ui;
 // mod window_tool_db;
 
 use gtk::{gdk::Display, gio, glib, prelude::*, Application, CssProvider};
-use ui::{custom_object, window_main, window_tool_db};
+use ui::{window::window_main, window::window_tool_db};
 
 const APP_ID: &str = "com.github.jnthbdn.rs-pcb2gcode-gui";
 

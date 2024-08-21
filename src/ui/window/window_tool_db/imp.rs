@@ -9,14 +9,14 @@ use gtk::{
 };
 
 use crate::{
-    custom_object::tree_tool_row::TreeToolRow,
     database::database::Database,
     tools::ToolType,
-    ui::custom_object::{frame_tool_settings::FrameToolSettings, frame_tree_tools::FrameTreeTools},
+    ui::frame::{frame_tool_settings::FrameToolSettings, frame_tree_tools::FrameTreeTools},
+    ui::object::tree_tool_row::TreeToolRow,
 };
 
 #[derive(gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window_tool_db.ui")]
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window/window_tool_db.ui")]
 #[properties(wrapper_type=super::WindowToolDB)]
 pub struct WindowToolDB {
     #[template_child]

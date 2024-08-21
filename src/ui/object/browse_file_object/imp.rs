@@ -9,7 +9,9 @@ use gtk::{gio, glib, prelude::*, subclass::prelude::*};
 
 // Object holding the state
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/browse_file_object.ui")]
+#[template(
+    resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/object/browse_file_object.ui"
+)]
 #[properties(wrapper_type = super::BrowseFileObject)]
 pub struct BrowseFileObject {
     #[template_child]

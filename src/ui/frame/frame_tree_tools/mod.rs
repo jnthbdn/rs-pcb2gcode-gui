@@ -2,9 +2,9 @@ mod imp;
 
 use gtk::{glib, prelude::CastNone, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::{tools::ToolType, ui::custom_object::tree_tool_row::TreeToolRow};
+use crate::{tools::ToolType, ui::object::tree_tool_row::TreeToolRow};
 
-use super::db_label_object::DBLabelObject;
+use crate::ui::object::db_label_object::DBLabelObject;
 
 glib::wrapper! {
     pub struct FrameTreeTools(ObjectSubclass<imp::FrameTreeTools>)

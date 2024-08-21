@@ -7,12 +7,12 @@ use gtk::{gio, glib, prelude::*};
 
 use crate::database::database::Database;
 use crate::tools::ToolType;
-use crate::ui::custom_object::db_label_object::DBLabelObject;
-use crate::ui::custom_object::tree_tool_row::TreeToolRow;
+use crate::ui::object::db_label_object::DBLabelObject;
+use crate::ui::object::tree_tool_row::TreeToolRow;
 
 // Object holding the state
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame_tree_tools.ui")]
+#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame/frame_tree_tools.ui")]
 #[properties(wrapper_type = super::FrameTreeTools)]
 pub struct FrameTreeTools {
     #[template_child]

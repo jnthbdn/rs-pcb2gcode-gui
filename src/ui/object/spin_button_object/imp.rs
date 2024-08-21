@@ -7,7 +7,9 @@ use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 
 // Object holding the state
 #[derive(Default, glib::Properties, CompositeTemplate)]
-#[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/spin_button_object.ui")]
+#[template(
+    resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/object/spin_button_object.ui"
+)]
 #[properties(wrapper_type = super::SpinButtonObject)]
 pub struct SpinButtonObject {
     #[template_child]

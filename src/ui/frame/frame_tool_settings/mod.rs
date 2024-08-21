@@ -11,7 +11,7 @@ use crate::{
     tools::{drill::Drill, endmill::Endmill, vbit::VBit},
 };
 
-use super::{
+use crate::ui::object::{
     entry_object::EntryObject, spin_button_object::SpinButtonObject,
     textview_object::TextViewObject,
 };
