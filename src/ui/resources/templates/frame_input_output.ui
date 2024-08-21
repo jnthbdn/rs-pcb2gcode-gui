@@ -30,16 +30,14 @@
                         <child>
                             <object class="BrowseFileObject">
                                 <property name="hexpand">true</property>
-                                <property name="title">Plop plop</property>
-                                <property name="file_pattern_name">
-                                    AAA
-                                    BBB
-                                    CCC
+                                <property name="title" translatable="true">Select front file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    Gerber files
+                                    All files
                                 </property>
                                 <property name="file_pattern">
-                                    *.txt
                                     *.grb
-                                    *.GRB
+                                    *
                                 </property>
                                 <layout>
                                     <property name="column">1</property>
@@ -62,6 +60,15 @@
                         <child>
                             <object class="BrowseFileObject">
                                 <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select back file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    Gerber files
+                                    All files
+                                </property>
+                                <property name="file_pattern">
+                                    *.grb
+                                    *
+                                </property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">1</property>
@@ -83,6 +90,15 @@
                         <child>
                             <object class="BrowseFileObject">
                                 <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select outline file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    Gerber files
+                                    All files
+                                </property>
+                                <property name="file_pattern">
+                                    *.grb
+                                    *
+                                </property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">2</property>
@@ -104,6 +120,17 @@
                         <child>
                             <object class="BrowseFileObject">
                                 <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select drill file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    Excellon file
+                                    Gerber file
+                                    All files
+                                </property>
+                                <property name="file_pattern">
+                                    *.drl
+                                    *.grb
+                                    *
+                                </property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">3</property>
@@ -118,6 +145,101 @@
             <object class="GtkFrame">
                 <property name="label" translatable="true">Pre/Postamble files</property>
                 <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">4</property>
+
+                        <!-- Preamble text -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Preamble text</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="BrowseFileObject">
+                                <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select preamble text file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    Text file
+                                    All files
+                                </property>
+                                <property name="file_pattern">
+                                    *.txt
+                                    *
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Preamble GCODE -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Preamble</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="BrowseFileObject">
+                                <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select preamble file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    G-Code files
+                                    All files
+                                </property>
+                                <property name="file_pattern">
+                                    *.gcode, *.nc
+                                    *
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Postamble gcode -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Postamble</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="BrowseFileObject">
+                                <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select postamble file</property>
+                                <property name="file_pattern_name" translatable="true">
+                                    G-Code files
+                                    All files
+                                </property>
+                                <property name="file_pattern">
+                                    *.gcode, *.nc
+                                    *
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
                 </child>
             </object>
         </child>
@@ -125,6 +247,34 @@
             <object class="GtkFrame">
                 <property name="label" translatable="true">Output</property>
                 <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">4</property>
+
+                        <!-- Preamble text -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Output</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="BrowseFileObject">
+                                <property name="hexpand">true</property>
+                                <property name="title" translatable="true">Select output directory</property>
+                                <property name="select_directory">true</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
                 </child>
             </object>
         </child>
