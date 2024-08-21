@@ -23,8 +23,7 @@
                                 </child>
         
                                 <child>
-                                    <object class="GtkLabel">
-                                        <property name="label">Common</property>
+                                    <object class="FrameCommon">
                                     </object>
                                 </child>
                                 <child type="tab">

@@ -5,7 +5,8 @@ use std::cell::RefCell;
 use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
 
 use crate::{
-    ui::frame::frame_input_output::FrameInputOutput, ui::window::window_tool_db::WindowToolDB,
+    ui::frame::{frame_common::FrameCommon, frame_input_output::FrameInputOutput},
+    ui::window::window_tool_db::WindowToolDB,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -25,6 +26,7 @@ impl ObjectSubclass for WindowMain {
 
     fn class_init(klass: &mut Self::Class) {
         FrameInputOutput::ensure_type();
+        FrameCommon::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();
