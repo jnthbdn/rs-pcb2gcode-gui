@@ -24,6 +24,7 @@ pub struct WindowToolDB {
     #[template_child]
     pub tool_settings: TemplateChild<FrameToolSettings>,
 
+    // FIXME Change this to an option of Mutex to avoid concurrency
     pub database: Arc<Database>,
 }
 
