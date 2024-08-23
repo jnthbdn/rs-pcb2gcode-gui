@@ -9,6 +9,7 @@
     <file compressed="true" preprocess="xml-stripblanks">templates/frame/frame_input_output.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/frame/frame_common.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/frame/frame_mill.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/frame/frame_drill.ui</file>
 
     <file compressed="true" preprocess="xml-stripblanks">templates/object/db_label_object.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/object/spin_button_object.ui</file>
