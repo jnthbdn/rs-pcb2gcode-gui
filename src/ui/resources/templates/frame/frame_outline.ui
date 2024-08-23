@@ -76,9 +76,9 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkDropDown" id="dropdown">
+                            <object class="GtkDropDown">
                                 <property name="model">
-                                    <object class="GtkStringList" id="model">
+                                    <object class="GtkStringList">
                                         <items>
                                             <item translatable="true">Auto</item>
                                             <item translatable="true">Front</item>
