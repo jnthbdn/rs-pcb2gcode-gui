@@ -5,10 +5,7 @@ use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::{
     database::database::Database,
-    ui::object::{
-        browse_file_object::BrowseFileObject, select_tool_object::SelectToolObject,
-        spin_button_object::SpinButtonObject, textview_object::TextViewObject,
-    },
+    ui::object::{select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject},
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -16,7 +13,9 @@ use crate::{
 #[properties(wrapper_type=super::FrameDrill)]
 pub struct FrameDrill {}
 
-impl FrameDrill {}
+impl FrameDrill {
+    pub fn set_database(db: Mutex<Database>) {}
+}
 
 #[glib::object_subclass]
 impl ObjectSubclass for FrameDrill {
@@ -25,6 +24,9 @@ impl ObjectSubclass for FrameDrill {
     type ParentType = gtk::Box;
 
     fn class_init(klass: &mut Self::Class) {
+        SpinButtonObject::ensure_type();
+        SelectToolObject::ensure_type();
+
         klass.bind_template();
         klass.bind_template_instance_callbacks();
     }
