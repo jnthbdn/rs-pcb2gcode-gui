@@ -53,8 +53,7 @@
                                 </child>
                                 
                                 <child>
-                                    <object class="GtkLabel">
-                                        <property name="label">Outline</property>
+                                    <object class="FrameOutline">
                                     </object>
                                 </child>
                                 <child type="tab">
