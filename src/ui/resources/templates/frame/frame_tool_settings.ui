@@ -123,6 +123,7 @@
                                 <property name="min">0.00</property>
                                 <property name="max">10.00</property>
                                 <property name="step">0.10</property>
+                                <property name="postfix">mm/inch</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">0</property>
@@ -151,6 +152,7 @@
                                 <property name="min">0.00</property>
                                 <property name="max">10.00</property>
                                 <property name="step">0.10</property>
+                                <property name="postfix">mm/inch</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">1</property>
@@ -178,6 +180,7 @@
                                 <property name="min">0.00</property>
                                 <property name="max">10.00</property>
                                 <property name="step">0.10</property>
+                                <property name="postfix">mm/inch</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">2</property>
@@ -205,6 +208,7 @@
                                 <property name="min">0</property>
                                 <property name="max">90</property>
                                 <property name="step">1</property>
+                                <property name="postfix" translatable="true">degree</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">3</property>
@@ -243,6 +247,7 @@
                                 <property name="min">0.00</property>
                                 <property name="max">100.00</property>
                                 <property name="step">0.10</property>
+                                <property name="postfix">mm/inch</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">0</property>
@@ -269,6 +274,7 @@
                                 <property name="min">0</property>
                                 <property name="max">100000</property>
                                 <property name="step">1</property>
+                                <property name="postfix">RPM</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">1</property>
@@ -296,6 +302,7 @@
                                 <property name="min">0</property>
                                 <property name="max">10000</property>
                                 <property name="step">1</property>
+                                <property name="postfix">mm/inch / min</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">2</property>
@@ -324,6 +331,7 @@
                                 <property name="min">0</property>
                                 <property name="max">10000</property>
                                 <property name="step">1</property>
+                                <property name="postfix">mm/inch / min</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">3</property>
