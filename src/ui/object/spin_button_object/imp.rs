@@ -1,6 +1,6 @@
 #![allow(unreachable_code)]
 
-use std::cell::Cell;
+use std::cell::{Cell, RefCell};
 use std::sync::OnceLock;
 
 use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
@@ -14,6 +14,8 @@ use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 pub struct SpinButtonObject {
     #[template_child]
     spin_button: TemplateChild<gtk::SpinButton>,
+    #[template_child]
+    label_postfix: TemplateChild<gtk::Label>,
 
     #[property(set = Self::set_digits, get)]
     digits: Cell<u32>,
@@ -25,6 +27,8 @@ pub struct SpinButtonObject {
     step: Cell<f64>,
     #[property(set = Self::set_value, get = Self::get_value)]
     _value: Cell<f64>,
+    #[property(set, get)]
+    postfix: RefCell<String>,
 
     pub old_value: Cell<f64>,
 }
@@ -137,6 +141,11 @@ impl ObjectImpl for SpinButtonObject {
                 clone_self.imp().check_change();
             }
         });
+
+        self.obj()
+            .bind_property::<gtk::Label>("postfix", self.label_postfix.as_ref(), "label")
+            .bidirectional()
+            .build();
     }
 
     fn signals() -> &'static [glib::subclass::Signal] {

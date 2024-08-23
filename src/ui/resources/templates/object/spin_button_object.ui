@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
     <template class="SpinButtonObject" parent="GtkBox">
+        <property name="orientation">horizontal</property>
         <child>
             <object class="GtkSpinButton" id="spin_button">
                 <property name="hexpand">true</property>
@@ -10,6 +11,11 @@
                     <object class="GtkAdjustment">
                     </object>
                 </property>
+            </object>
+        </child>
+        <child>
+            <object class="GtkLabel" id="label_postfix">
+                <property name="margin-start">8</property>
             </object>
         </child>
     </template>
