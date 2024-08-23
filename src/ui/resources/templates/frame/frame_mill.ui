@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="FrameMill" parent="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="hexpand">true</property>
+        <property name="vexpand">true</property>
+        <style>
+            <class name="main_container"/>
+        </style>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">General</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Select tool -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Tool</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SelectToolObject">
+                                <property name="hexpand">true</property>
+                                <property name="show_drill">false</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Overlap -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Overlap</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">0</property>
+                                <property name="min">0.0</property>
+                                <property name="max">100.0</property>
+                                <property name="step">1</property>
+                                <property name="value">50</property>
+                                <property name="postfix">%</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Depth -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Depth</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">3</property>
+                                <property name="min">0.0</property>
+                                <property name="max">10.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">0.1</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Direction -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Direction</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkDropDown" id="dropdown">
+                                <property name="model">
+                                    <object class="GtkStringList" id="model">
+                                        <items>
+                                            <item translatable="true">Conventional</item>
+                                            <item translatable="true">Climb</item>
+                                        </items>
+                                    </object>
+                                </property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Isolation width -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Isolation width</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">4</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
+                                <property name="digits">3</property>
+                                <property name="min">0.0</property>
+                                <property name="max">10.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">0.0</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">4</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Invert Gerber -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Invert Gerbers</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">5</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckButton">
+                                <property name="active">false</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">5</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Voronoi</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Use voronoi -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Use voronoi regions</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckButton">
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Thermal regions -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Preserve Thermal reliefs</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckButton">
+                                <property name="active">true</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkFrame">
+                <property name="label" translatable="true">Pre/Post G-Code</property>
+                <child>
+                    <object class="GtkGrid">
+                        <property name="row-homogeneous">false</property>
+                        <property name="column-spacing">8</property>
+                        <property name="row-spacing">8</property>
+
+                        <!-- Pre milling gcode -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Pre Milling G-Code</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="TextViewObject">
+                                <property name="hexpand">true</property>
+                                <property name="monospace">true</property>
+                                <property name="height-request">100</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Post milling gcode -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Post Milling G-Code</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="TextViewObject">
+                                <property name="hexpand">true</property>
+                                <property name="monospace">true</property>
+                                <property name="height-request">100</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
