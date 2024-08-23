@@ -31,7 +31,7 @@ pub struct SpinButtonObject {
     step: Cell<f64>,
 
     #[property(set, get)]
-    _value: Cell<f64>,
+    value: Cell<f64>,
 
     #[property(set, get)]
     postfix: RefCell<String>,

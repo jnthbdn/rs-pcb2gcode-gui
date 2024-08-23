@@ -9,6 +9,9 @@
                 <property name="snap-to-ticks">false</property>
                 <property name="adjustment">
                     <object class="GtkAdjustment">
+                        <property name="lower">-1.7976931348623157E+308f64</property>
+                        <property name="upper">1.7976931348623157E+308f64</property>
+                        <property name="step-increment">2.2204460492503131E-16f64</property>
                     </object>
                 </property>
             </object>
