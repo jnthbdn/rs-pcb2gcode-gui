@@ -3,6 +3,7 @@ pub mod frame {
     pub mod frame_drill;
     pub mod frame_input_output;
     pub mod frame_mill;
+    pub mod frame_outline;
     pub mod frame_tool_settings;
     pub mod frame_tree_tools;
 }
