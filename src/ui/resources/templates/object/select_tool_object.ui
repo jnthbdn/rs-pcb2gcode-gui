@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="SelectToolObject" parent="GtkBox">
+        <child>
+            <object class="GtkDropDown" id="dropdown">
+                <property name="model">
+                    <object class="GtkStringList" id="model">
+                    </object>
+                </property>
+            </object>
+        </child>
+    </template>
+</interface>
