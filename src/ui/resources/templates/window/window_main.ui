@@ -43,8 +43,7 @@
                                 </child>
         
                                 <child>
-                                    <object class="GtkLabel">
-                                        <property name="label">Drill</property>
+                                    <object class="FrameDrill">
                                     </object>
                                 </child>
                                 <child type="tab">

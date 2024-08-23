@@ -6,7 +6,8 @@ use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
 
 use crate::ui::{
     frame::{
-        frame_common::FrameCommon, frame_input_output::FrameInputOutput, frame_mill::FrameMill,
+        frame_common::FrameCommon, frame_drill::FrameDrill, frame_input_output::FrameInputOutput,
+        frame_mill::FrameMill,
     },
     window::window_tool_db::WindowToolDB,
 };
@@ -30,6 +31,7 @@ impl ObjectSubclass for WindowMain {
         FrameInputOutput::ensure_type();
         FrameCommon::ensure_type();
         FrameMill::ensure_type();
+        FrameDrill::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();
