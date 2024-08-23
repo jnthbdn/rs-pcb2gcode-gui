@@ -17,12 +17,14 @@
     <file compressed="true" preprocess="xml-stripblanks">templates/object/spin_button_object.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/object/browse_file_object.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/object/select_tool_object.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/object/info_tooltip_object.ui</file>
 
     <file compressed="true" alias="icons/up.png">icons/arrow-upward.png</file>
     <file compressed="true" alias="icons/down.png">icons/arrow-downward.png</file>
     <file compressed="true" alias="icons/refresh.png">icons/autorenew.png</file>
     <file compressed="true" alias="icons/add.png">icons/add-circle.png</file>
     <file compressed="true" alias="icons/delete.png">icons/cancel.png</file>
+    <file compressed="true" alias="icons/help.png">icons/help.png</file>
 
     <file compressed="true">css/style.css</file>
   </gresource>

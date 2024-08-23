@@ -15,6 +15,7 @@ pub mod object {
     pub mod browse_file_object;
     pub mod db_label_object;
     pub mod entry_object;
+    pub mod info_tooltip_object;
     pub mod select_tool_object;
     pub mod spin_button_object;
     pub mod textview_object;
