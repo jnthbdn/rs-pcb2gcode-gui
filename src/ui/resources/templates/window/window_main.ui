@@ -33,8 +33,7 @@
                                 </child>
         
                                 <child>
-                                    <object class="GtkLabel">
-                                        <property name="label">Mill</property>
+                                    <object class="FrameMill">
                                     </object>
                                 </child>
                                 <child type="tab">
