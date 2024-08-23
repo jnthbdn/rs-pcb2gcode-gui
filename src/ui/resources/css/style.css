@@ -22,6 +22,10 @@ entry.readonly{
 	background-color: #EEE;
 }
 
+.monospace{
+    font-family: monospace;
+}
+
 /*
  * =========================================================
  * ====================== MAIN WINDOW ======================
