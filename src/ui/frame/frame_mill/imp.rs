@@ -6,8 +6,9 @@ use gtk::{glib, prelude::*, subclass::prelude::*};
 use crate::{
     database::database::Database,
     ui::object::{
-        browse_file_object::BrowseFileObject, select_tool_object::SelectToolObject,
-        spin_button_object::SpinButtonObject, textview_object::TextViewObject,
+        browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
+        select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject,
+        textview_object::TextViewObject,
     },
 };
 
@@ -31,6 +32,7 @@ impl ObjectSubclass for FrameMill {
         SpinButtonObject::ensure_type();
         SelectToolObject::ensure_type();
         TextViewObject::ensure_type();
+        InfoToolTipObject::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();

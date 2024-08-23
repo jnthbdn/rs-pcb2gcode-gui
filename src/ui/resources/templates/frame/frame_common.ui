@@ -53,6 +53,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Use metric/imperial units for parameters. does not affect gcode output</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Back -->
                         <child>
@@ -87,6 +96,15 @@
                                 </child>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">use metric/imperial units for output</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -129,6 +147,16 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Safety height (Z-coordinate during rapid moves)</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Common#--zsafe</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Tool change height -->
                         <child>
@@ -155,6 +183,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Tool changing height</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Tool change height as machine coord. -->
                         <child>
@@ -171,6 +208,15 @@
                             <object class="GtkCheckButton">
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Use zchange as a machine coordinates  height (G53)</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">2</property>
                                 </layout>
                             </object>
@@ -213,6 +259,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Maximum toolpath tolerance</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Optimisazation value -->
                         <child>
@@ -235,6 +290,16 @@
                                 <property name="value">0.00000254</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Reduce output file size by up to 40% while accepting a little loss of precision.  Larger values reduce file sizes and processing time even further.&#013;&lt;i&gt;Set to 0 to disable.&lt;/i&gt;</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Optimizations#--optimise</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -292,6 +357,16 @@
                                 </child>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Number of tiling columns/rows</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Common#tiling</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">2</property>
                                 </layout>
                             </object>
@@ -365,6 +440,16 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Offset the origin in the x/y-axis by this length</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Alignment-for-two-sided-PCB-and-offsets#offsets</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Mirror axis -->
                         <child>
@@ -378,55 +463,34 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkBox">
-                                <property name="orientation">horizontal</property>
+                            <object class="SpinButtonObject">
                                 <property name="hexpand">true</property>
-                                <child>
-                                    <object class="GtkLabel">
-                                        <property name="halign">GTK_ALIGN_START</property>
-                                        <property name="label" translatable="true">x</property>
-                                        <property name="margin-end">8</property>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="SpinButtonObject">
-                                        <property name="hexpand">true</property>
-                                        <property name="digits">2</property>
-                                        <property name="min">0</property>
-                                        <property name="max">1000.0</property>
-                                        <property name="step">0.1</property>
-                                        <property name="value">0.00</property>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkLabel">
-                                        <property name="halign">GTK_ALIGN_START</property>
-                                        <property name="margin-start">32</property>
-                                        <property name="margin-end">8</property>
-                                        <property name="label" translatable="true">y</property>
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="SpinButtonObject">
-                                        <property name="hexpand">true</property>
-                                        <property name="digits">2</property>
-                                        <property name="min">0</property>
-                                        <property name="max">1000.0</property>
-                                        <property name="step">0.1</property>
-                                        <property name="value">0.00</property>
-                                    </object>
-                                </child>
+                                <property name="digits">3</property>
+                                <property name="min">0</property>
+                                <property name="max">10000.0</property>
+                                <property name="step">0.1</property>
+                                <property name="value">0.00</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">For two-sided boards, the PCB needs to be flipped along the axis x=VALUE</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Alignment-for-two-sided-PCB-and-offsets#mirror-axis</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
 
-                        <!-- zero_start -->
+                        <!-- mirror Y instead X -->
                         <child>
                             <object class="GtkLabel">
-                                <property name="label" translatable="true">Start at (0, 0)</property>
+                                <property name="label" translatable="true">Mirror Y-axis instead of X-axis</property>
                                 <property name="halign">GTK_ALIGN_START</property>
                                 <layout>
                                     <property name="column">0</property>
@@ -439,6 +503,45 @@
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">For two-sided boards, the PCB needs to be flipped along the y axis instead</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- zero_start -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Start at (0, 0)</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkCheckButton">
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">set the starting point of the project at (0,0)</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Alignment-for-two-sided-PCB-and-offsets#zero-start</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">3</property>
                                 </layout>
                             </object>
                         </child>

@@ -2,7 +2,10 @@
 
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::ui::object::{entry_object::EntryObject, spin_button_object::SpinButtonObject};
+use crate::ui::object::{
+    entry_object::EntryObject, info_tooltip_object::InfoToolTipObject,
+    spin_button_object::SpinButtonObject,
+};
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame/frame_autoleveling.ui")]
@@ -20,6 +23,7 @@ impl ObjectSubclass for FrameAutoleveling {
     fn class_init(klass: &mut Self::Class) {
         SpinButtonObject::ensure_type();
         EntryObject::ensure_type();
+        InfoToolTipObject::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();

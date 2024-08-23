@@ -38,6 +38,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Select the tool use for drilling</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Depth -->
                         <child>
@@ -59,6 +68,15 @@
                                 <property name="step">0.1</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Drilling depth</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -88,6 +106,15 @@
                                 </property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Which side, front or back, should be up while drilling</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">2</property>
                                 </layout>
                             </object>
@@ -124,6 +151,16 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Enable or not the milldrilling operation</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Drilling#drill-vs-milldrill</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Tool milldrilling -->
                         <child>
@@ -143,6 +180,15 @@
                                 <property name="show_vbit">false</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Select the tool use for milldrilling</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -172,6 +218,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Minimum hole width for milldrilling. Holes smaller than this are drilled.</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Milldrilling Depth -->
                         <child>
@@ -193,6 +248,15 @@
                                 <property name="step">0.1</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Milldrilling depth</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">3</property>
                                 </layout>
                             </object>
@@ -230,6 +294,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Do not explicitly set G91.1 in drill headers</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- No G81 -->
                         <child>
@@ -247,6 +320,15 @@
                                 <property name="active">true</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Replace G81 with G0+G1</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>

@@ -2,7 +2,8 @@
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::ui::object::{
-    browse_file_object::BrowseFileObject, spin_button_object::SpinButtonObject,
+    browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
+    spin_button_object::SpinButtonObject,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -21,6 +22,7 @@ impl ObjectSubclass for FrameCommon {
     fn class_init(klass: &mut Self::Class) {
         BrowseFileObject::ensure_type();
         SpinButtonObject::ensure_type();
+        InfoToolTipObject::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();

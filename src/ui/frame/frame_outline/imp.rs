@@ -5,7 +5,10 @@ use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::{
     database::database::Database,
-    ui::object::{select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject},
+    ui::object::{
+        info_tooltip_object::InfoToolTipObject, select_tool_object::SelectToolObject,
+        spin_button_object::SpinButtonObject,
+    },
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -26,6 +29,7 @@ impl ObjectSubclass for FrameOutline {
     fn class_init(klass: &mut Self::Class) {
         SpinButtonObject::ensure_type();
         SelectToolObject::ensure_type();
+        InfoToolTipObject::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();

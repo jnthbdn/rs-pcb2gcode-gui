@@ -1,7 +1,9 @@
 #![allow(unreachable_code)]
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::ui::object::browse_file_object::BrowseFileObject;
+use crate::ui::object::{
+    browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
+};
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame/frame_input_output.ui")]
@@ -18,6 +20,7 @@ impl ObjectSubclass for FrameInputOutput {
 
     fn class_init(klass: &mut Self::Class) {
         BrowseFileObject::ensure_type();
+        InfoToolTipObject::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();

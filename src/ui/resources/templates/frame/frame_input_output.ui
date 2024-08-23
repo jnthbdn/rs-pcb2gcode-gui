@@ -45,6 +45,16 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Front side RS274-X .gbr</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Milling#--front-vs---back</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Back -->
                         <child>
@@ -71,6 +81,16 @@
                                 </property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Back side RS274-X .gbr</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Milling#--front-vs---back</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -105,6 +125,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Pcb outline polygon RS274-X .gbr</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Drill -->
                         <child>
@@ -133,6 +162,15 @@
                                 </property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Excellon drill filer</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">3</property>
                                 </layout>
                             </object>
@@ -179,6 +217,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Preamble text file, inserted at the very beginning as a comment.</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Preamble GCODE -->
                         <child>
@@ -205,6 +252,15 @@
                                 </property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">G-Code preamble file, inserted at the very beginning.</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -239,6 +295,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">G-Code postamble file, inserted before M9 and M2.</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
                     </object>
                 </child>
             </object>
@@ -252,7 +317,7 @@
                         <property name="column-spacing">8</property>
                         <property name="row-spacing">4</property>
 
-                        <!-- Preamble text -->
+                        <!-- Output folder -->
                         <child>
                             <object class="GtkLabel">
                                 <property name="label" translatable="true">Output</property>
@@ -270,6 +335,15 @@
                                 <property name="select_directory">true</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Output directory</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">0</property>
                                 </layout>
                             </object>

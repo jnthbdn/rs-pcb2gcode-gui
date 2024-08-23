@@ -49,6 +49,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Enable the z autoleveller for the front/back layer</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Software -->
                         <child>
@@ -75,6 +84,15 @@
                                 </property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Choose the destination software (useful only with the autoleveller). Supported programs are linuxcnc, mach3, mach4 and custom</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -136,6 +154,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Max x/y distance between probes</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Probe feed -->
                         <child>
@@ -158,6 +185,15 @@
                                 <property name="value">0.00</property>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Speed during the probing</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">3</property>
                                 </layout>
                             </object>
@@ -199,6 +235,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Execute this commands to enable the probe tool (default is M0)</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Probe OFF -->
                         <child>
@@ -220,6 +265,15 @@
                                 </style>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Execute this commands to disable the probe tool (default is M0)</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">1</property>
                                 </layout>
                             </object>
@@ -249,6 +303,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Custom probe code (default is G31)</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Probe variable -->
                         <child>
@@ -274,6 +337,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Number of the variable where the result of the probing is saved (default is 2002)</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Probe set zero -->
                         <child>
@@ -295,6 +367,15 @@
                                 </style>
                                 <layout>
                                     <property name="column">1</property>
+                                    <property name="row">4</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">G-Code for setting the actual position as zero (default is G92 Z0)</property>
+                                <layout>
+                                    <property name="column">2</property>
                                     <property name="row">4</property>
                                 </layout>
                             </object>

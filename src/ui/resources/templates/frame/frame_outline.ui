@@ -38,6 +38,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Select tool for outline operation</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- Depth -->
                         <child>
@@ -60,6 +69,15 @@
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">PCB cutting depth</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -92,6 +110,15 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Which side, front or back, should be up while cutting</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
 
                         <!-- fill outline -->
                         <child>
@@ -110,6 +137,16 @@
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">3</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Accept a contour instead of a polygon as outline</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Outline#--fill-outline</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -145,11 +182,21 @@
                                 </layout>
                             </object>
                         </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Enable/Disable bridge while feature</property>
+                                <property name="link">https://github.com/pcb2gcode/pcb2gcode/wiki/Options:-Outline#bridges</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">0</property>
+                                </layout>
+                            </object>
+                        </child>
 
-                        <!-- Bridges number -->
+                        <!-- Bridges width -->
                         <child>
                             <object class="GtkLabel">
-                                <property name="label" translatable="true">Number</property>
+                                <property name="label" translatable="true">Width</property>
                                 <property name="halign">GTK_ALIGN_START</property>
                                 <layout>
                                     <property name="column">0</property>
@@ -160,14 +207,57 @@
                         <child>
                             <object class="SpinButtonObject">
                                 <property name="hexpand">true</property>
+                                <property name="digits">2</property>
+                                <property name="min">0</property>
+                                <property name="max">1000.0</property>
+                                <property name="step">0.1</property>
+                                <layout>
+                                    <property name="column">1</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Add bridges with the given width to the outline cut</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">1</property>
+                                </layout>
+                            </object>
+                        </child>
+
+                        <!-- Bridges number -->
+                        <child>
+                            <object class="GtkLabel">
+                                <property name="label" translatable="true">Number</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <layout>
+                                    <property name="column">0</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="SpinButtonObject">
+                                <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="min">0</property>
                                 <property name="max">100</property>
                                 <property name="step">1</property>
-                                <property name="step">2</property>
+                                <property name="value">2</property>
                                 <layout>
                                     <property name="column">1</property>
-                                    <property name="row">1</property>
+                                    <property name="row">2</property>
+                                </layout>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">Specify how many bridges should be created</property>
+                                <layout>
+                                    <property name="column">2</property>
+                                    <property name="row">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -196,57 +286,12 @@
                                 </layout>
                             </object>
                         </child>
-                    </object>
-                </child>
-            </object>
-        </child>
-        <child>
-            <object class="GtkFrame">
-                <property name="label" translatable="true">G-Code</property>
-                <child>
-                    <object class="GtkGrid">
-                        <property name="row-homogeneous">false</property>
-                        <property name="column-spacing">8</property>
-                        <property name="row-spacing">8</property>
-
-                        <!-- No G91.1 -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">No G91.1</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="InfoToolTipObject">
+                                <property name="text_markup" translatable="true">bridges height (Z-coordinates while engraving bridges)</property>
                                 <layout>
-                                    <property name="column">0</property>
-                                    <property name="row">0</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton">
-                                <property name="active">true</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">0</property>
-                                </layout>
-                            </object>
-                        </child>
-
-                        <!-- No G81 -->
-                        <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">No G81</property>
-                                <property name="halign">GTK_ALIGN_START</property>
-                                <layout>
-                                    <property name="column">0</property>
-                                    <property name="row">1</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton">
-                                <property name="active">true</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">1</property>
+                                    <property name="column">2</property>
+                                    <property name="row">3</property>
                                 </layout>
                             </object>
                         </child>
