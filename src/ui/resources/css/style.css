@@ -26,6 +26,14 @@ entry.readonly{
     font-family: monospace;
 }
 
+.no_padding{
+    padding: 0;
+}
+
+.help_btn:hover{
+	background-color: transparent;
+}
+
 /*
  * =========================================================
  * ====================== MAIN WINDOW ======================
