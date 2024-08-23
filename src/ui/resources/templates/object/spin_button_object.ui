@@ -19,6 +19,7 @@
         <child>
             <object class="GtkLabel" id="label_postfix">
                 <property name="margin-start">8</property>
+                <property name="use-markup">true</property>
             </object>
         </child>
     </template>
