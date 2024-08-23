@@ -14,19 +14,25 @@ use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 pub struct SpinButtonObject {
     #[template_child]
     spin_button: TemplateChild<gtk::SpinButton>,
+
     #[template_child]
     label_postfix: TemplateChild<gtk::Label>,
 
-    #[property(set = Self::set_digits, get)]
+    #[property(set, get)]
     digits: Cell<u32>,
-    #[property(set = Self::set_min, get)]
+
+    #[property(set, get)]
     min: Cell<f64>,
-    #[property(set = Self::set_max, get)]
+
+    #[property(set, get)]
     max: Cell<f64>,
-    #[property(set = Self::set_step, get)]
+
+    #[property(set, get)]
     step: Cell<f64>,
-    #[property(set = Self::set_value, get = Self::get_value)]
+
+    #[property(set, get)]
     _value: Cell<f64>,
+
     #[property(set, get)]
     postfix: RefCell<String>,
 
@@ -40,35 +46,6 @@ impl SpinButtonObject {
             self.digits.get() as usize,
             self.spin_button.value()
         )
-    }
-
-    pub fn set_value(&self, value: f64) {
-        self.old_value.set(value);
-        self.spin_button.set_value(value);
-    }
-
-    pub fn get_value(&self) -> f64 {
-        self.spin_button.value()
-    }
-
-    pub fn set_digits(&self, value: u32) {
-        self.spin_button.set_digits(value.clamp(0, 10));
-        self.digits.set(value.clamp(0, 10));
-    }
-
-    pub fn set_min(&self, value: f64) {
-        self.spin_button.adjustment().set_lower(value);
-        self.min.set(value);
-    }
-
-    pub fn set_max(&self, value: f64) {
-        self.spin_button.adjustment().set_upper(value);
-        self.max.set(value);
-    }
-
-    pub fn set_step(&self, value: f64) {
-        self.spin_button.adjustment().set_step_increment(value);
-        self.step.set(value);
     }
 
     fn get_text_child(&self) -> Option<gtk::Text> {
@@ -143,7 +120,31 @@ impl ObjectImpl for SpinButtonObject {
         });
 
         self.obj()
-            .bind_property::<gtk::Label>("postfix", self.label_postfix.as_ref(), "label")
+            .bind_property::<gtk::Adjustment>("min", &self.spin_button.adjustment(), "lower")
+            .bidirectional()
+            .build();
+        self.obj()
+            .bind_property::<gtk::Adjustment>("max", &self.spin_button.adjustment(), "upper")
+            .bidirectional()
+            .build();
+        self.obj()
+            .bind_property::<gtk::Adjustment>(
+                "step",
+                &self.spin_button.adjustment(),
+                "step_increment",
+            )
+            .bidirectional()
+            .build();
+        self.obj()
+            .bind_property::<gtk::SpinButton>("value", &self.spin_button, "value")
+            .bidirectional()
+            .build();
+        self.obj()
+            .bind_property::<gtk::SpinButton>("digits", &self.spin_button, "digits")
+            .bidirectional()
+            .build();
+        self.obj()
+            .bind_property::<gtk::Label>("postfix", &self.label_postfix, "label")
             .bidirectional()
             .build();
     }
