@@ -6,8 +6,8 @@ use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
 
 use crate::ui::{
     frame::{
-        frame_common::FrameCommon, frame_drill::FrameDrill, frame_input_output::FrameInputOutput,
-        frame_mill::FrameMill, frame_outline::FrameOutline,
+        frame_autoleveling::FrameAutoleveling, frame_common::FrameCommon, frame_drill::FrameDrill,
+        frame_input_output::FrameInputOutput, frame_mill::FrameMill, frame_outline::FrameOutline,
     },
     window::window_tool_db::WindowToolDB,
 };
@@ -33,6 +33,7 @@ impl ObjectSubclass for WindowMain {
         FrameMill::ensure_type();
         FrameDrill::ensure_type();
         FrameOutline::ensure_type();
+        FrameAutoleveling::ensure_type();
 
         klass.bind_template();
         klass.bind_template_instance_callbacks();

@@ -63,13 +63,12 @@
                                 </child>
         
                                 <child>
-                                    <object class="GtkLabel">
-                                        <property name="label">Autoleveller</property>
+                                    <object class="FrameAutoleveling">
                                     </object>
                                 </child>
                                 <child type="tab">
                                     <object class="GtkLabel">
-                                        <property name="label" translatable="yes">Autoleveller</property>
+                                        <property name="label">Autoleveller</property>
                                     </object>
                                 </child>
                             </object>
