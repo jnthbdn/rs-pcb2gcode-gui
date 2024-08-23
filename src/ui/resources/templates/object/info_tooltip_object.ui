@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+    <template class="InfoToolTipObject" parent="GtkBox">
+        <property name="valign">GTK_ALIGN_CENTER</property>
+        <property name="orientation">vertical</property>
+        <child>
+            <object class="GtkButton">
+                <property name="has-frame">false</property>
+                <signal name="clicked" handler="button_clicked" swapped="true" />
+                <style>
+                    <class name="help_btn"/>
+                    <class name="no_padding"/>
+                </style>
+                <child>
+                    <object class="GtkImage" id="image">
+                        <property name="resource">/com/github/jnthbdn/rs-pcb2gcode-gui/icons/help.png</property>
+                    </object>
+                </child>
+            </object>
+        </child>
+        <child>
+            <object class="GtkPopover" id="popover">
+                <child>
+                    <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <child>
+                            <object class="GtkLabel" id="label">
+                                <property name="use-markup">true</property>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkLinkButton" id="link_button">
+                                <style>
+                                    <class name="no_padding"/>
+                                </style>
+                                <property name="margin-top">16px</property>
+                                <property name="halign">GTK_ALIGN_START</property>
+                                <property name="visible">false</property>
+                                 <property name="label" translatable="true">Documentation</property>
+                            </object>
+                        </child>
+                    </object>
+                </child>
+            </object>
+        </child>
+    </template>
+</interface>
