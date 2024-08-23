@@ -3,6 +3,7 @@
     <template class="SelectToolObject" parent="GtkBox">
         <child>
             <object class="GtkDropDown" id="dropdown">
+                <property name="hexpand">true</property>
                 <property name="model">
                     <object class="GtkStringList" id="model">
                     </object>
