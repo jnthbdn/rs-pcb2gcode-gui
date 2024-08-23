@@ -2,6 +2,12 @@
 
 # Usage
 
+# ToDo
+ - [ ] [GENRAL] Improve metric/imperial tools (How to alert user when he using imperial tool, when ouput file are in mm ?...)
+ - [ ] [MILLING] Add `--draw-gerber-lines` support
+ - [ ] [DRILLING] Support multidrill (`--drills-available`)
+
+
 # Credits
 ## Icons & Image
 ### The Noun Project [http://thenounproject.com](http://thenounproject.com)
