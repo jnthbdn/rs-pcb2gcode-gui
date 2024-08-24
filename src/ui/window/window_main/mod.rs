@@ -21,7 +21,7 @@ impl WindowMain {
 
         if win_tool_db.borrow().is_none() || win_tool_db.borrow().as_ref().unwrap().ref_count() == 1
         {
-            let win = WindowToolDB::new(self.imp().databse.clone());
+            let win = WindowToolDB::new(self.imp().database.clone());
             self.imp().win_tool_db.replace(Some(win));
         }
 

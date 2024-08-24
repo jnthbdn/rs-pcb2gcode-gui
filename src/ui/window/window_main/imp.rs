@@ -23,7 +23,7 @@ use crate::{
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window/window_main.ui")]
 #[properties(wrapper_type=super::WindowMain)]
 pub struct WindowMain {
-    pub databse: Arc<Mutex<Database>>,
+    pub database: Arc<Mutex<Database>>,
 
     pub win_tool_db: RefCell<Option<WindowToolDB>>,
 
@@ -72,6 +72,9 @@ impl ObjectImpl for WindowMain {
         self.parent_constructed();
 
         self.obj().output_unit_change(true);
+        self.frame_mill.set_database(self.database.clone());
+        self.frame_drill.set_database(self.database.clone());
+        self.frame_outline.set_database(self.database.clone());
     }
 }
 
