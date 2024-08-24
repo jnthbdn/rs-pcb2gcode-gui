@@ -251,6 +251,27 @@ impl Database {
             .map(|_| ())
     }
 
+    pub fn remove_drill(&self, id: u32) -> Result<(), Error> {
+        self.connection
+            .execute("DELETE FROM drill WHERE id=?1", [id])?;
+
+        Ok(())
+    }
+
+    pub fn remove_endmill(&self, id: u32) -> Result<(), Error> {
+        self.connection
+            .execute("DELETE FROM endmill WHERE id=?1", [id])?;
+
+        Ok(())
+    }
+
+    pub fn remove_vbit(&self, id: u32) -> Result<(), Error> {
+        self.connection
+            .execute("DELETE FROM vbit WHERE id=?1", [id])?;
+
+        Ok(())
+    }
+
     fn map_endmill(row: &Row) -> Result<Endmill, Error> {
         Ok(Endmill::new(
             row.get(0)?,

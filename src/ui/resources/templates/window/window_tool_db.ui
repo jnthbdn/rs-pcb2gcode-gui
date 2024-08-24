@@ -56,6 +56,7 @@
                                 </child>
                                 <child>
                                     <object class="GtkButton">
+                                        <signal name="clicked" handler="delete_selected_tool" swapped="true" />
                                         <property name="tooltip-text" translatable="true">Delete select tool</property>
                                         <child>
                                             <object class="GtkImage">
@@ -64,7 +65,7 @@
                                         </child>
                                     </object>
                                 </child>
-                                <child>
+                                <!-- <child>
                                     <object class="GtkButton">
                                         <property name="tooltip-text" translatable="true">Move select tool up</property>
                                         <child>
@@ -83,7 +84,7 @@
                                             </object>
                                         </child>
                                     </object>
-                                </child>
+                                </child> -->
                                 <child>
                                     <object class="GtkButton">
                                         <signal name="clicked" handler="refresh_tools" swapped="true" />

@@ -125,6 +125,38 @@ impl WindowToolDB {
         false
     }
 
+    #[template_callback]
+    fn delete_selected_tool(&self, _: gtk::Button) {
+        if self.imp().tool_settings.imp().current_tooltype().is_none() {
+            log::info!("No tool selected.");
+            return;
+        }
+
+        let db = self.imp().database.borrow();
+        let db = db.as_ref().unwrap().lock().unwrap();
+
+        let id = self.imp().tool_settings.imp().current_id();
+        let tool = self.imp().tool_settings.imp().current_tooltype().unwrap();
+
+        let result = match tool {
+            ToolType::Drill => db.remove_drill(id),
+            ToolType::Endmill => db.remove_endmill(id),
+            ToolType::VBit => db.remove_vbit(id),
+        };
+
+        if result.is_err() {
+            log::error!(
+                "Failed to delete tool '{:?}' with id #{id} ({:?})",
+                tool,
+                result.err()
+            )
+        }
+
+        drop(db);
+        self.imp().refresh_model();
+        self.emit_by_name::<()>("tools-changed", &[]);
+    }
+
     fn setup_actions(&self) {
         let db = self.imp().database.borrow();
         let db = db.as_ref().unwrap();
