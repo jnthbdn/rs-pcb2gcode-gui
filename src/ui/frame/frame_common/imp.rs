@@ -3,12 +3,9 @@ use std::sync::OnceLock;
 
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::{
-    ui::object::{
-        browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
-        spin_button_object::SpinButtonObject,
-    },
-    units::UnitString,
+use crate::ui::object::{
+    browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
+    spin_button_object::SpinButtonObject,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
