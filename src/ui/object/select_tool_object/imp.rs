@@ -1,6 +1,6 @@
 #![allow(unreachable_code)]
 use std::cell::{Cell, RefCell};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 
 use gtk::glib;
 use gtk::prelude::*;
@@ -30,7 +30,7 @@ pub struct SelectToolObject {
     #[property(get, set)]
     show_vbit: Cell<bool>,
 
-    database: RefCell<Option<Mutex<Database>>>,
+    database: RefCell<Option<Arc<Mutex<Database>>>>,
 }
 
 impl SelectToolObject {
@@ -41,50 +41,25 @@ impl SelectToolObject {
         }
 
         self.clear_model();
+        let db = self.database.borrow();
+        let db = db.as_ref().unwrap().lock().unwrap();
 
         if self.show_drill.get() {
-            for drill in self
-                .database
-                .borrow()
-                .as_ref()
-                .unwrap()
-                .lock()
-                .unwrap()
-                .get_all_drills()
-                .unwrap()
-            {
+            for drill in db.get_all_drills().unwrap() {
                 self.model
                     .append(&format!("[DRILL] {}", drill.base_tool.name));
             }
         }
 
         if self.show_endmill.get() {
-            for endmill in self
-                .database
-                .borrow()
-                .as_ref()
-                .unwrap()
-                .lock()
-                .unwrap()
-                .get_all_endmills()
-                .unwrap()
-            {
+            for endmill in db.get_all_endmills().unwrap() {
                 self.model
                     .append(&format!("[ENDMILL] {}", endmill.base_tool.name));
             }
         }
 
         if self.show_vbit.get() {
-            for vbit in self
-                .database
-                .borrow()
-                .as_ref()
-                .unwrap()
-                .lock()
-                .unwrap()
-                .get_all_vbits()
-                .unwrap()
-            {
+            for vbit in db.get_all_vbits().unwrap() {
                 self.model
                     .append(&format!("[V-BIT] {}", vbit.base_tool.name));
             }
@@ -97,7 +72,7 @@ impl SelectToolObject {
         }
     }
 
-    pub fn set_database(&self, db: Mutex<Database>) {
+    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
         self.database.set(Some(db));
         self.generate_list();
     }
