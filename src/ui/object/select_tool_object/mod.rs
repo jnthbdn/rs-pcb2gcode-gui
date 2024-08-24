@@ -1,6 +1,13 @@
 mod imp;
 
-use gtk::glib;
+use std::sync::{Arc, Mutex};
+
+use gtk::{
+    glib::{self, property::PropertySet},
+    subclass::prelude::ObjectSubclassIsExt,
+};
+
+use crate::database::database::Database;
 
 glib::wrapper! {
     pub struct SelectToolObject(ObjectSubclass<imp::SelectToolObject>)
@@ -11,5 +18,10 @@ glib::wrapper! {
 impl SelectToolObject {
     pub fn new() -> Self {
         glib::Object::builder().build()
+    }
+
+    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
+        self.imp().database.set(Some(db));
+        self.imp().generate_list();
     }
 }

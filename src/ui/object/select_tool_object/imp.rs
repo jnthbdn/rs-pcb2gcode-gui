@@ -30,11 +30,11 @@ pub struct SelectToolObject {
     #[property(get, set)]
     show_vbit: Cell<bool>,
 
-    database: RefCell<Option<Arc<Mutex<Database>>>>,
+    pub database: RefCell<Option<Arc<Mutex<Database>>>>,
 }
 
 impl SelectToolObject {
-    fn generate_list(&self) {
+    pub fn generate_list(&self) {
         if self.database.borrow().is_none() {
             log::error!("No database, unable to generate list");
             return;
@@ -70,11 +70,6 @@ impl SelectToolObject {
         for i in (0..self.model.n_items()).rev() {
             self.model.remove(i);
         }
-    }
-
-    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
-        self.database.set(Some(db));
-        self.generate_list();
     }
 }
 
