@@ -28,7 +28,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="front_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select front file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -68,7 +68,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="back_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select back file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -108,7 +108,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="outline_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select outline file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -147,7 +147,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="drill_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select drill file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -200,7 +200,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="preamble_text_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select preamble text file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -239,7 +239,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="preamble_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select preamble file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -278,7 +278,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="postamble_file">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select postamble file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -329,7 +329,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="BrowseFileObject">
+                            <object class="BrowseFileObject" id="output_folder">
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select output directory</property>
                                 <property name="select_directory">true</property>

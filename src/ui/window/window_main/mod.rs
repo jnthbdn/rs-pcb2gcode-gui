@@ -2,7 +2,7 @@ mod imp;
 
 use gtk::{glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::window_tool_db::WindowToolDB;
+use crate::{units::UnitString, window_tool_db::WindowToolDB};
 
 glib::wrapper! {
     pub struct WindowMain(ObjectSubclass<imp::WindowMain>)
@@ -31,5 +31,19 @@ impl WindowMain {
     #[template_callback]
     fn run_pcb2gcode(&self, _button: &gtk::Button) {
         todo!()
+    }
+
+    #[template_callback]
+    pub fn output_unit_change(&self, is_metric: bool) {
+        let unit = if is_metric {
+            UnitString::new_metric()
+        } else {
+            UnitString::new_imperial()
+        };
+
+        self.imp().frame_common.set_units_postfixes(&unit);
+        self.imp().frame_mill.set_units_postfixes(&unit);
+        self.imp().frame_drill.set_units_postfixes(&unit);
+        self.imp().frame_outline.set_units_postfixes(&unit);
     }
 }

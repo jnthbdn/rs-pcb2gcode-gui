@@ -17,8 +17,21 @@ use crate::ui::{
 #[properties(wrapper_type=super::WindowMain)]
 pub struct WindowMain {
     pub win_tool_db: RefCell<Option<WindowToolDB>>,
-    // #[template_child]
-    // pub button: TemplateChild<gtk::Button>,
+
+    #[template_child]
+    pub frame_common: TemplateChild<FrameCommon>,
+
+    #[template_child]
+    pub frame_mill: TemplateChild<FrameMill>,
+
+    #[template_child]
+    pub frame_drill: TemplateChild<FrameDrill>,
+
+    #[template_child]
+    pub frame_outline: TemplateChild<FrameOutline>,
+
+    #[template_child]
+    pub frame_autolevel: TemplateChild<FrameAutoleveling>,
 }
 
 #[glib::object_subclass]
@@ -45,7 +58,14 @@ impl ObjectSubclass for WindowMain {
 }
 
 #[glib::derived_properties]
-impl ObjectImpl for WindowMain {}
+impl ObjectImpl for WindowMain {
+    fn constructed(&self) {
+        self.parent_constructed();
+
+        self.obj().output_unit_change(true);
+    }
+}
+
 impl WidgetImpl for WindowMain {}
 impl WindowImpl for WindowMain {}
 impl ApplicationWindowImpl for WindowMain {}

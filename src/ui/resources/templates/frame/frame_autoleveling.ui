@@ -32,13 +32,15 @@
                                 <property name="orientation">horizontal</property>
                                 <property name="hexpand">true</property>
                                 <child>
-                                    <object class="GtkCheckButton">
+                                    <object class="GtkCheckButton" id="enable_front">
+                                        <signal name="toggled" handler="enable_autolevel_toggled" swapped="true"/>
                                         <property name="margin-end">8</property>
                                         <property name="label">Front side</property>
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkCheckButton">
+                                    <object class="GtkCheckButton" id="enable_back">
+                                        <signal name="toggled" handler="enable_autolevel_toggled" swapped="true"/>
                                         <property name="margin-end">8</property>
                                         <property name="label">Back side</property>
                                     </object>
@@ -71,7 +73,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkDropDown">
+                            <object class="GtkDropDown" id="software">
                                 <property name="model">
                                     <object class="GtkStringList">
                                         <items>
@@ -98,7 +100,7 @@
                             </object>
                         </child>
 
-                        <!-- Outline side -->
+                        <!-- distance probe -->
                         <child>
                             <object class="GtkLabel">
                                 <property name="label" translatable="true">Distance between probe</property>
@@ -121,7 +123,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="SpinButtonObject">
+                                    <object class="SpinButtonObject" id="distance_probe_x">
                                         <property name="hexpand">true</property>
                                         <property name="digits">2</property>
                                         <property name="min">0</property>
@@ -139,7 +141,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="SpinButtonObject">
+                                    <object class="SpinButtonObject" id="distance_probe_y">
                                         <property name="hexpand">true</property>
                                         <property name="digits">2</property>
                                         <property name="min">0</property>
@@ -176,7 +178,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SpinButtonObject">
+                            <object class="SpinButtonObject" id="feed">
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="min">0</property>
@@ -223,7 +225,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="EntryObject">
+                            <object class="EntryObject" id="probe_on">
                                 <property name="hexpand">true</property>
                                 <property name="text">M0</property>
                                 <style>
@@ -257,7 +259,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="EntryObject">
+                            <object class="EntryObject" id="probe_off">
                                 <property name="hexpand">true</property>
                                 <property name="text">M0</property>
                                 <style>
@@ -291,7 +293,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="EntryObject">
+                            <object class="EntryObject" id="probe_code">
                                 <property name="hexpand">true</property>
                                 <property name="text">G31</property>
                                 <style>
@@ -325,7 +327,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="EntryObject">
+                            <object class="EntryObject" id="probe_variable">
                                 <property name="hexpand">true</property>
                                 <property name="text">2002</property>
                                 <style>
@@ -359,7 +361,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="EntryObject">
+                            <object class="EntryObject" id="probe_set_zero">
                                 <property name="hexpand">true</property>
                                 <property name="text">G92 Z0</property>
                                 <style>

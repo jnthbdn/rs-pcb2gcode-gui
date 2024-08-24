@@ -28,7 +28,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SelectToolObject">
+                            <object class="SelectToolObject" id="drill_tool">
                                 <property name="hexpand">true</property>
                                 <property name="show_endmill">false</property>
                                 <property name="show_vbit">false</property>
@@ -60,7 +60,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SpinButtonObject">
+                            <object class="SpinButtonObject" id="depth">
                                 <property name="hexpand">true</property>
                                 <property name="digits">3</property>
                                 <property name="min">0.0</property>
@@ -94,7 +94,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkDropDown">
+                            <object class="GtkDropDown" id="side">
                                 <property name="model">
                                     <object class="GtkStringList">
                                         <items>
@@ -144,7 +144,8 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkCheckButton">
+                            <object class="GtkCheckButton" id="enable_milldrilling">
+                                <signal name="toggled" handler="enable_endmill_toggled" swapped="true" />
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">0</property>
@@ -174,7 +175,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SelectToolObject">
+                            <object class="SelectToolObject" id="milldrilling_tool">
                                 <property name="hexpand">true</property>
                                 <property name="show_drill">false</property>
                                 <property name="show_vbit">false</property>
@@ -194,7 +195,7 @@
                             </object>
                         </child>
 
-                        <!-- Milldrilling min home diameter -->
+                        <!-- Milldrilling min hole diameter -->
                         <child>
                             <object class="GtkLabel">
                                 <property name="label" translatable="true">Min hole diameter</property>
@@ -206,7 +207,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SpinButtonObject">
+                            <object class="SpinButtonObject" id="milldrilling_min_diameter">
                                 <property name="hexpand">true</property>
                                 <property name="digits">3</property>
                                 <property name="min">0.0</property>
@@ -240,7 +241,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SpinButtonObject">
+                            <object class="SpinButtonObject" id="milldrilling_depth">
                                 <property name="hexpand">true</property>
                                 <property name="digits">3</property>
                                 <property name="min">0.0</property>
@@ -286,7 +287,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkCheckButton">
+                            <object class="GtkCheckButton" id="no_g91_1">
                                 <property name="active">true</property>
                                 <layout>
                                     <property name="column">1</property>
@@ -316,7 +317,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="GtkCheckButton">
+                            <object class="GtkCheckButton" id="no_g81">
                                 <property name="active">true</property>
                                 <layout>
                                     <property name="column">1</property>

@@ -23,7 +23,8 @@
                                 </child>
         
                                 <child>
-                                    <object class="FrameCommon">
+                                    <object class="FrameCommon" id="frame_common">
+                                        <signal name="output-unit-change" handler="output_unit_change" swapped="true"/>
                                     </object>
                                 </child>
                                 <child type="tab">
@@ -33,7 +34,7 @@
                                 </child>
         
                                 <child>
-                                    <object class="FrameMill">
+                                    <object class="FrameMill" id="frame_mill">
                                     </object>
                                 </child>
                                 <child type="tab">
@@ -43,7 +44,7 @@
                                 </child>
         
                                 <child>
-                                    <object class="FrameDrill">
+                                    <object class="FrameDrill" id="frame_drill">
                                     </object>
                                 </child>
                                 <child type="tab">
@@ -53,7 +54,7 @@
                                 </child>
                                 
                                 <child>
-                                    <object class="FrameOutline">
+                                    <object class="FrameOutline" id="frame_outline">
                                     </object>
                                 </child>
                                 <child type="tab">
@@ -63,7 +64,7 @@
                                 </child>
         
                                 <child>
-                                    <object class="FrameAutoleveling">
+                                    <object class="FrameAutoleveling" id="frame_autolevel">
                                     </object>
                                 </child>
                                 <child type="tab">

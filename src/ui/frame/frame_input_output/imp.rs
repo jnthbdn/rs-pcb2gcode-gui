@@ -8,7 +8,31 @@ use crate::ui::object::{
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/frame/frame_input_output.ui")]
 #[properties(wrapper_type=super::FrameInputOutput)]
-pub struct FrameInputOutput {}
+pub struct FrameInputOutput {
+    #[template_child]
+    pub front_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub back_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub drill_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub outline_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub preamble_text_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub preamble_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub postamble_file: TemplateChild<BrowseFileObject>,
+
+    #[template_child]
+    pub output_folder: TemplateChild<BrowseFileObject>,
+}
 
 impl FrameInputOutput {}
 

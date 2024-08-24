@@ -16,10 +16,19 @@
 	margin: 8px;
 }
 
-entry.readonly{
+entry.readonly,
+.readonly spinbutton,
+.readonly dropdown button,
+dropdown.readonly button,
+.readonly check {
 	font-style: italic;
 	color: #333;
 	background-color: #EEE;
+	background-image: image(#EEE);
+}
+
+.readonly check{
+    border-color: #AAA;
 }
 
 .monospace{
