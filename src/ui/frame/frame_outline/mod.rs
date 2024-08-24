@@ -18,6 +18,10 @@ impl FrameOutline {
         glib::Object::builder().build()
     }
 
+    pub fn refresh_tools(&self) {
+        self.imp().tool.refresh_tools();
+    }
+
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
         self.imp().tool.set_database(db.clone());
     }

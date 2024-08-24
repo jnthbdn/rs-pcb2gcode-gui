@@ -22,6 +22,10 @@ impl SelectToolObject {
 
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
         self.imp().database.set(Some(db));
+        self.refresh_tools();
+    }
+
+    pub fn refresh_tools(&self) {
         self.imp().generate_list();
     }
 }

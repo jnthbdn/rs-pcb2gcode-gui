@@ -18,6 +18,11 @@ impl FrameDrill {
         glib::Object::builder().build()
     }
 
+    pub fn refresh_tools(&self) {
+        self.imp().drill_tool.refresh_tools();
+        self.imp().milldrilling_tool.refresh_tools();
+    }
+
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
         self.imp().drill_tool.set_database(db.clone());
         self.imp().milldrilling_tool.set_database(db);

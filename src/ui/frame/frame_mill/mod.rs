@@ -18,6 +18,10 @@ impl FrameMill {
         glib::Object::builder().build()
     }
 
+    pub fn refresh_tools(&self) {
+        self.imp().mill_tool.refresh_tools();
+    }
+
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
         self.imp().mill_tool.set_database(db.clone());
     }
