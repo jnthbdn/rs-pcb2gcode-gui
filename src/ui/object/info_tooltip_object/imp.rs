@@ -1,6 +1,6 @@
 #![allow(unreachable_code)]
 
-use std::cell::{Cell, RefCell};
+use std::cell::RefCell;
 use std::sync::OnceLock;
 
 use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
