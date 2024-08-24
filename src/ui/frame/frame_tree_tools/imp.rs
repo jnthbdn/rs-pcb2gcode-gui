@@ -1,6 +1,6 @@
 #![allow(unreachable_code)]
 use std::cell::RefCell;
-use std::sync::{Arc, OnceLock};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use gtk::subclass::prelude::*;
 use gtk::{gio, glib, prelude::*};
@@ -24,7 +24,10 @@ pub struct FrameTreeTools {
 }
 
 impl FrameTreeTools {
-    fn tree_model_callback(obj: &glib::Object, db: &Database) -> Option<gio::ListModel> {
+    fn tree_model_callback(
+        obj: &glib::Object,
+        mutex_db: &Mutex<Database>,
+    ) -> Option<gio::ListModel> {
         let tree_tool: &TreeToolRow = obj
             .downcast_ref()
             .expect("[create_tree_model] tool need to be TreeToolRow");
@@ -34,6 +37,7 @@ impl FrameTreeTools {
         }
 
         let child_model = gio::ListStore::new::<TreeToolRow>();
+        let db = mutex_db.lock().unwrap();
 
         match tree_tool.get_tool_type() {
             ToolType::Drill => {
@@ -144,22 +148,21 @@ impl FrameTreeTools {
         }
     }
 
-    fn generate_tree_model(&self, database: &Arc<Database>) -> gtk::TreeListModel {
+    fn generate_tree_model(&self, database: Arc<Mutex<Database>>) -> gtk::TreeListModel {
         let model = gio::ListStore::new::<TreeToolRow>();
         model.extend_from_slice(self.root_rows.borrow().as_slice());
 
-        let cb_db = database.clone();
         gtk::TreeListModel::new(model, false, true, move |obj| {
-            Self::tree_model_callback(obj, &cb_db)
+            Self::tree_model_callback(obj, &database)
         })
     }
 
-    pub fn set_root_elements(&self, elems: Vec<TreeToolRow>, database: &Arc<Database>) {
+    pub fn set_root_elements(&self, elems: Vec<TreeToolRow>, database: Arc<Mutex<Database>>) {
         self.root_rows.set(elems);
         self.refresh_tree(database);
     }
 
-    pub fn refresh_tree(&self, database: &Arc<Database>) {
+    pub fn refresh_tree(&self, database: Arc<Mutex<Database>>) {
         self.model_selection
             .set_model(Some(&self.generate_tree_model(database)));
     }

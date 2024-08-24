@@ -1,6 +1,9 @@
 #![allow(unreachable_code)]
 
-use std::sync::Arc;
+use std::{
+    cell::RefCell,
+    sync::{Arc, Mutex},
+};
 
 use gtk::{
     glib::{self},
@@ -10,9 +13,7 @@ use gtk::{
 
 use crate::{
     database::database::Database,
-    tools::ToolType,
     ui::frame::{frame_tool_settings::FrameToolSettings, frame_tree_tools::FrameTreeTools},
-    ui::object::tree_tool_row::TreeToolRow,
 };
 
 #[derive(gtk::CompositeTemplate, glib::Properties)]
@@ -24,13 +25,13 @@ pub struct WindowToolDB {
     #[template_child]
     pub tool_settings: TemplateChild<FrameToolSettings>,
 
-    // FIXME Change this to an option of Mutex to avoid concurrency
-    pub database: Arc<Database>,
+    pub database: RefCell<Option<Arc<Mutex<Database>>>>,
 }
 
 impl WindowToolDB {
     pub fn refresh_model(&self) {
-        self.tree_tool.imp().refresh_tree(&self.database);
+        let db = self.database.borrow().as_ref().unwrap().clone();
+        self.tree_tool.imp().refresh_tree(db);
     }
 }
 
@@ -39,7 +40,7 @@ impl Default for WindowToolDB {
         Self {
             tree_tool: Default::default(),
             tool_settings: Default::default(),
-            database: Arc::new(Database::new().expect("[default] Unable to create database")),
+            database: RefCell::new(None),
         }
     }
 }
@@ -68,18 +69,7 @@ impl ObjectImpl for WindowToolDB {
     fn constructed(&self) {
         self.parent_constructed();
 
-        self.obj().setup_actions();
-
         self.tool_settings.set_visible(false);
-
-        self.tree_tool.imp().set_root_elements(
-            vec![
-                TreeToolRow::new_category("Drill".to_string(), ToolType::Drill),
-                TreeToolRow::new_category("Endmill".to_string(), ToolType::Endmill),
-                TreeToolRow::new_category("V bit".to_string(), ToolType::VBit),
-            ],
-            &self.database,
-        );
     }
 }
 impl WidgetImpl for WindowToolDB {}

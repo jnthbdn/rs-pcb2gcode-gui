@@ -1,21 +1,30 @@
 #![allow(unreachable_code)]
 
-use std::cell::RefCell;
+use std::{
+    cell::RefCell,
+    sync::{Arc, Mutex},
+};
 
 use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
 
-use crate::ui::{
-    frame::{
-        frame_autoleveling::FrameAutoleveling, frame_common::FrameCommon, frame_drill::FrameDrill,
-        frame_input_output::FrameInputOutput, frame_mill::FrameMill, frame_outline::FrameOutline,
+use crate::{
+    database::database::Database,
+    ui::{
+        frame::{
+            frame_autoleveling::FrameAutoleveling, frame_common::FrameCommon,
+            frame_drill::FrameDrill, frame_input_output::FrameInputOutput, frame_mill::FrameMill,
+            frame_outline::FrameOutline,
+        },
+        window::window_tool_db::WindowToolDB,
     },
-    window::window_tool_db::WindowToolDB,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
 #[template(resource = "/com/github/jnthbdn/rs-pcb2gcode-gui/templates/window/window_main.ui")]
 #[properties(wrapper_type=super::WindowMain)]
 pub struct WindowMain {
+    pub databse: Arc<Mutex<Database>>,
+
     pub win_tool_db: RefCell<Option<WindowToolDB>>,
 
     #[template_child]

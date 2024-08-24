@@ -1,10 +1,18 @@
 mod imp;
 
-use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
+use std::sync::{Arc, Mutex};
+
+use gtk::{
+    gio,
+    glib::{self, property::PropertySet},
+    prelude::*,
+    subclass::prelude::ObjectSubclassIsExt,
+};
 
 use crate::{
-    database::database::DatabaseColumn,
+    database::database::{Database, DatabaseColumn},
     tools::{drill::Drill, endmill::Endmill, vbit::VBit, ToolType},
+    ui::object::tree_tool_row::TreeToolRow,
 };
 
 glib::wrapper! {
@@ -15,8 +23,25 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl WindowToolDB {
-    pub fn new() -> Self {
-        glib::Object::builder().build()
+    pub fn new(db_mutex: Arc<Mutex<Database>>) -> Self {
+        let win: WindowToolDB = glib::Object::builder().build();
+
+        win.imp().database.set(Some(db_mutex));
+
+        let clone = win.clone();
+        let db = clone.imp().database.borrow();
+        win.imp().tree_tool.imp().set_root_elements(
+            vec![
+                TreeToolRow::new_category("Drill".to_string(), ToolType::Drill),
+                TreeToolRow::new_category("Endmill".to_string(), ToolType::Endmill),
+                TreeToolRow::new_category("V bit".to_string(), ToolType::VBit),
+            ],
+            db.as_ref().unwrap().clone(),
+        );
+
+        win.setup_actions();
+
+        win
     }
 
     #[template_callback]
@@ -33,20 +58,13 @@ impl WindowToolDB {
         id: u32,
     ) {
         log::info!("Setting changed => {:?} {:?} = {new_value}", tool_type, col);
+        let db = self.imp().database.borrow();
+        let db = db.as_ref().unwrap().lock().unwrap();
+
         let result = match tool_type {
-            ToolType::Drill => self
-                .imp()
-                .database
-                .set_drill_column(col, new_value.to_string(), id),
-            ToolType::Endmill => {
-                self.imp()
-                    .database
-                    .set_endmill_column(col, new_value.to_string(), id)
-            }
-            ToolType::VBit => self
-                .imp()
-                .database
-                .set_vbit_column(col, new_value.to_string(), id),
+            ToolType::Drill => db.set_drill_column(col, new_value.to_string(), id),
+            ToolType::Endmill => db.set_endmill_column(col, new_value.to_string(), id),
+            ToolType::VBit => db.set_vbit_column(col, new_value.to_string(), id),
         };
 
         if result.is_err() {
@@ -68,9 +86,12 @@ impl WindowToolDB {
 
     #[template_callback]
     fn row_selected(&self, db_id: u32, tool_type: ToolType) {
+        let db = self.imp().database.borrow();
+        let db = db.as_ref().unwrap().lock().unwrap();
+
         self.imp().tool_settings.set_visible(true);
         match tool_type {
-            ToolType::Drill => match self.imp().database.get_drill(db_id) {
+            ToolType::Drill => match db.get_drill(db_id) {
                 Ok(tool) => match tool {
                     Some(tool) => self.imp().tool_settings.show_drill(&tool),
                     None => log::error!("[row_selected] No drill with id #{db_id}"),
@@ -78,7 +99,7 @@ impl WindowToolDB {
                 Err(e) => log::error!("[row_selected] Fail to get drill ({e})"),
             },
 
-            ToolType::Endmill => match self.imp().database.get_endmill(db_id) {
+            ToolType::Endmill => match db.get_endmill(db_id) {
                 Ok(tool) => match tool {
                     Some(tool) => self.imp().tool_settings.show_endmill(&tool),
                     None => log::error!("[row_selected] No endmill with id #{db_id}"),
@@ -86,7 +107,7 @@ impl WindowToolDB {
                 Err(e) => log::error!("[row_selected] Fail to get endmill ({e})"),
             },
 
-            ToolType::VBit => match self.imp().database.get_vbit(db_id) {
+            ToolType::VBit => match db.get_vbit(db_id) {
                 Ok(tool) => match tool {
                     Some(tool) => self.imp().tool_settings.show_vbit(&tool),
                     None => log::error!("[row_selected] No VBit with id #{db_id}"),
@@ -103,9 +124,14 @@ impl WindowToolDB {
     }
 
     fn setup_actions(&self) {
+        let db = self.imp().database.borrow();
+        let db = db.as_ref().unwrap();
+
+        let db_clone = db.clone();
         let action_add_endmill = gio::ActionEntry::builder("new_endmill")
-            .activate(|win: &Self, _, _| {
-                match win.imp().database.add_endmill(&Endmill::new(
+            .activate(move |win: &Self, _, _| {
+                let db = db_clone.lock().unwrap();
+                match db.add_endmill(&Endmill::new(
                     0,
                     "New Endmill".to_string(),
                     "".to_string(),
@@ -116,16 +142,21 @@ impl WindowToolDB {
                     0.0,
                     0.0,
                 )) {
-                    Ok(_) => win.imp().refresh_model(),
+                    Ok(_) => {
+                        drop(db);
+                        win.imp().refresh_model()
+                    }
                     // TODO Improve this error (AlertDialog ?)
                     Err(e) => log::error!("action_add_endmill error : {}", e),
                 };
             })
             .build();
 
+        let db_clone = db.clone();
         let action_add_drill = gio::ActionEntry::builder("new_drill")
-            .activate(|win: &Self, _, _| {
-                match win.imp().database.add_drill(&Drill::new(
+            .activate(move |win: &Self, _, _| {
+                let db = db_clone.lock().unwrap();
+                match db.add_drill(&Drill::new(
                     0,
                     "New Drill".to_string(),
                     "".to_string(),
@@ -136,16 +167,21 @@ impl WindowToolDB {
                     0.0,
                     0.0,
                 )) {
-                    Ok(_) => win.imp().refresh_model(),
+                    Ok(_) => {
+                        drop(db);
+                        win.imp().refresh_model()
+                    }
                     // TODO Improve this error (AlertDialog ?)
                     Err(e) => log::error!("action_add_drill error : {}", e),
                 };
             })
             .build();
 
+        let db_clone = db.clone();
         let action_add_vbit = gio::ActionEntry::builder("new_vbit")
-            .activate(|win: &Self, _, _| {
-                match win.imp().database.add_vbit(&VBit::new(
+            .activate(move |win: &Self, _, _| {
+                let db = db_clone.lock().unwrap();
+                match db.add_vbit(&VBit::new(
                     0,
                     "New V-Bit".to_string(),
                     "".to_string(),
@@ -158,7 +194,10 @@ impl WindowToolDB {
                     0.0,
                     0.0,
                 )) {
-                    Ok(_) => win.imp().refresh_model(),
+                    Ok(_) => {
+                        drop(db);
+                        win.imp().refresh_model()
+                    }
                     // TODO Improve this error (AlertDialog ?)
                     Err(e) => log::error!("action_add_vbit error : {}", e),
                 };
