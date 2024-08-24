@@ -53,13 +53,13 @@ impl FrameToolSettings {
         self.general_name.set_text(&base_tool.name);
         self.general_note.set_text(&base_tool.note);
 
-        self.diameter_shaft.set_value(base_tool.shaft_diameter);
-        self.diameter_tool.set_value(base_tool.tool_diameter);
+        self.diameter_shaft.init_value(base_tool.shaft_diameter);
+        self.diameter_tool.init_value(base_tool.tool_diameter);
 
-        self.pass_depth.set_value(base_tool.pass_depth);
-        self.speed_spindle.set_value(base_tool.spindle_speed);
-        self.speed_vertical.set_value(base_tool.plunge_rate);
-        self.speed_horizontal.set_value(base_tool.feed_rate);
+        self.pass_depth.init_value(base_tool.pass_depth);
+        self.speed_spindle.init_value(base_tool.spindle_speed);
+        self.speed_vertical.init_value(base_tool.plunge_rate);
+        self.speed_horizontal.init_value(base_tool.feed_rate);
     }
 
     pub fn show_endmill(&self, endmill: &Endmill) {
@@ -91,8 +91,8 @@ impl FrameToolSettings {
         self.diameter_tip_label.set_visible(true);
         self.diameter_tip.set_visible(true);
 
-        self.diameter_angle.set_value(vbit.tool_angle);
-        self.diameter_tip.set_value(vbit.tip_diameter);
+        self.diameter_angle.init_value(vbit.tool_angle);
+        self.diameter_tip.init_value(vbit.tip_diameter);
     }
 
     pub fn current_tooltype(&self) -> Option<ToolType> {
