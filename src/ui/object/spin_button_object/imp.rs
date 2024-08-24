@@ -101,7 +101,7 @@ impl ObjectImpl for SpinButtonObject {
     fn constructed(&self) {
         self.parent_constructed();
 
-        self.old_value.set(self.spin_button.value());
+        self.old_value.set(self.value.get());
 
         let clone_self = self.obj().clone();
         self.get_text_child()
