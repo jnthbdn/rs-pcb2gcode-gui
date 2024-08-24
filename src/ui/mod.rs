@@ -25,3 +25,5 @@ pub mod window {
     pub mod window_main;
     pub mod window_tool_db;
 }
+
+pub static READONLY_CSS_CLASS: &str = "readonly";
