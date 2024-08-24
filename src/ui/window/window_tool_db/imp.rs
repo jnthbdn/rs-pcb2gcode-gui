@@ -2,7 +2,7 @@
 
 use std::{
     cell::RefCell,
-    sync::{Arc, Mutex},
+    sync::{Arc, Mutex, OnceLock},
 };
 
 use gtk::{
@@ -70,6 +70,11 @@ impl ObjectImpl for WindowToolDB {
         self.parent_constructed();
 
         self.tool_settings.set_visible(false);
+    }
+
+    fn signals() -> &'static [glib::subclass::Signal] {
+        static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
+        SIGNALS.get_or_init(|| vec![glib::subclass::Signal::builder("tools-changed").build()])
     }
 }
 impl WidgetImpl for WindowToolDB {}

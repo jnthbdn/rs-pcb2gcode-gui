@@ -81,6 +81,8 @@ impl WindowToolDB {
                 }
                 _ => (),
             };
+
+            self.emit_by_name::<()>("tools-changed", &[]);
         }
     }
 
@@ -144,7 +146,8 @@ impl WindowToolDB {
                 )) {
                     Ok(_) => {
                         drop(db);
-                        win.imp().refresh_model()
+                        win.imp().refresh_model();
+                        win.emit_by_name::<()>("tools-changed", &[]);
                     }
                     // TODO Improve this error (AlertDialog ?)
                     Err(e) => log::error!("action_add_endmill error : {}", e),
@@ -169,7 +172,8 @@ impl WindowToolDB {
                 )) {
                     Ok(_) => {
                         drop(db);
-                        win.imp().refresh_model()
+                        win.imp().refresh_model();
+                        win.emit_by_name::<()>("tools-changed", &[]);
                     }
                     // TODO Improve this error (AlertDialog ?)
                     Err(e) => log::error!("action_add_drill error : {}", e),
@@ -196,7 +200,8 @@ impl WindowToolDB {
                 )) {
                     Ok(_) => {
                         drop(db);
-                        win.imp().refresh_model()
+                        win.imp().refresh_model();
+                        win.emit_by_name::<()>("tools-changed", &[]);
                     }
                     // TODO Improve this error (AlertDialog ?)
                     Err(e) => log::error!("action_add_vbit error : {}", e),
