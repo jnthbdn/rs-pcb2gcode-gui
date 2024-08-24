@@ -1,17 +1,12 @@
 #![allow(unreachable_code)]
-use std::sync::Mutex;
-
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::{
-    database::database::Database,
-    ui::{
-        object::{
-            info_tooltip_object::InfoToolTipObject, select_tool_object::SelectToolObject,
-            spin_button_object::SpinButtonObject,
-        },
-        READONLY_CSS_CLASS,
+use crate::ui::{
+    object::{
+        info_tooltip_object::InfoToolTipObject, select_tool_object::SelectToolObject,
+        spin_button_object::SpinButtonObject,
     },
+    READONLY_CSS_CLASS,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -44,8 +39,6 @@ pub struct FrameOutline {
 }
 
 impl FrameOutline {
-    pub fn set_database(db: Mutex<Database>) {}
-
     pub fn set_bridge_enable(&self, is_enable: bool) {
         self.bridge_depth.set_can_target(is_enable);
         self.bridge_number.set_can_target(is_enable);

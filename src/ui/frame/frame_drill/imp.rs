@@ -1,17 +1,13 @@
 #![allow(unreachable_code)]
-use std::sync::Mutex;
 
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::{
-    database::database::Database,
-    ui::{
-        object::{
-            info_tooltip_object::InfoToolTipObject, select_tool_object::SelectToolObject,
-            spin_button_object::SpinButtonObject,
-        },
-        READONLY_CSS_CLASS,
+use crate::ui::{
+    object::{
+        info_tooltip_object::InfoToolTipObject, select_tool_object::SelectToolObject,
+        spin_button_object::SpinButtonObject,
     },
+    READONLY_CSS_CLASS,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -47,8 +43,6 @@ pub struct FrameDrill {
 }
 
 impl FrameDrill {
-    pub fn set_database(db: Mutex<Database>) {}
-
     pub fn set_enable_milldrilling(&self, is_enable: bool) {
         self.milldrilling_tool.set_can_target(is_enable);
         self.milldrilling_min_diameter.set_can_target(is_enable);

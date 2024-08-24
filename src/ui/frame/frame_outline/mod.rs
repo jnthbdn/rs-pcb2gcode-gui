@@ -1,8 +1,10 @@
 mod imp;
 
+use std::sync::{Arc, Mutex};
+
 use gtk::{glib, prelude::CheckButtonExt, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::units::UnitString;
+use crate::{database::database::Database, units::UnitString};
 
 glib::wrapper! {
     pub struct FrameOutline(ObjectSubclass<imp::FrameOutline>)
@@ -14,6 +16,10 @@ glib::wrapper! {
 impl FrameOutline {
     pub fn new() -> Self {
         glib::Object::builder().build()
+    }
+
+    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
+        self.imp().tool.set_database(db.clone());
     }
 
     pub fn set_units_postfixes(&self, unit: &UnitString) {

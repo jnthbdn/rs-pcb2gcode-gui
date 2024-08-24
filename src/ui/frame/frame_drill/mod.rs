@@ -1,8 +1,10 @@
 mod imp;
 
+use std::sync::{Arc, Mutex};
+
 use gtk::{glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::units::UnitString;
+use crate::{database::database::Database, units::UnitString};
 
 glib::wrapper! {
     pub struct FrameDrill(ObjectSubclass<imp::FrameDrill>)
@@ -14,6 +16,11 @@ glib::wrapper! {
 impl FrameDrill {
     pub fn new() -> Self {
         glib::Object::builder().build()
+    }
+
+    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
+        self.imp().drill_tool.set_database(db.clone());
+        self.imp().milldrilling_tool.set_database(db);
     }
 
     pub fn set_units_postfixes(&self, unit: &UnitString) {

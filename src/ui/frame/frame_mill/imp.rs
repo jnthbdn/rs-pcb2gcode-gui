@@ -1,18 +1,13 @@
 #![allow(unreachable_code)]
-use std::sync::Mutex;
-
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::{
-    database::database::Database,
-    ui::{
-        object::{
-            browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
-            select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject,
-            textview_object::TextViewObject,
-        },
-        READONLY_CSS_CLASS,
+use crate::ui::{
+    object::{
+        browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
+        select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject,
+        textview_object::TextViewObject,
     },
+    READONLY_CSS_CLASS,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -51,8 +46,6 @@ pub struct FrameMill {
 }
 
 impl FrameMill {
-    pub fn set_database(db: Mutex<Database>) {}
-
     pub fn set_enable_voronoi(&self, is_enable: bool) {
         self.thermal_region.set_can_target(is_enable);
 
