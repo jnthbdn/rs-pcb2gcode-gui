@@ -83,7 +83,7 @@ impl FrameToolSettings {
     }
 
     pub fn show_vbit(&self, vbit: &VBit) {
-        self.current_tool.set(Some(ToolType::Endmill));
+        self.current_tool.set(Some(ToolType::VBit));
         self.show_base_tool(&vbit.base_tool);
 
         self.diameter_angle_label.set_visible(true);
