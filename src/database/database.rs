@@ -311,3 +311,15 @@ impl Database {
         }
     }
 }
+
+impl Default for Database {
+    fn default() -> Self {
+        match Self::new() {
+            Ok(db) => db,
+            Err(e) => {
+                log::error!("Failed to create database. ({e})");
+                std::process::exit(1);
+            }
+        }
+    }
+}
