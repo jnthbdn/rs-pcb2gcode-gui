@@ -22,6 +22,15 @@ impl WindowMain {
         if win_tool_db.borrow().is_none() || win_tool_db.borrow().as_ref().unwrap().ref_count() == 1
         {
             let win = WindowToolDB::new(self.imp().database.clone());
+
+            let self_clone = self.clone();
+            win.connect_local("tools-changed", false, move |_| {
+                self_clone.imp().frame_mill.refresh_tools();
+                self_clone.imp().frame_drill.refresh_tools();
+                self_clone.imp().frame_outline.refresh_tools();
+                None
+            });
+
             self.imp().win_tool_db.replace(Some(win));
         }
 
