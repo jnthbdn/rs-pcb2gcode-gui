@@ -4,10 +4,10 @@
         <child>
             <object class="GtkDropDown" id="dropdown">
                 <property name="hexpand">true</property>
-                <property name="model">
+                <!-- <property name="model">
                     <object class="GtkStringList" id="model">
                     </object>
-                </property>
+                </property> -->
             </object>
         </child>
     </template>

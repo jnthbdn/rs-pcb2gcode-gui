@@ -16,6 +16,13 @@
 	margin: 8px;
 }
 
+.dropdown_category{
+	font-weight: bold;
+}
+dropdown button .dropdown_category {
+	font-weight: normal;
+}
+
 entry.readonly,
 .readonly spinbutton,
 .readonly dropdown button,
