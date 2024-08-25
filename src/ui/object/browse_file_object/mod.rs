@@ -1,6 +1,6 @@
 mod imp;
 
-use gtk::{glib, subclass::prelude::ObjectSubclassIsExt, template_callbacks};
+use gtk::{glib, prelude::EditableExt, subclass::prelude::ObjectSubclassIsExt, template_callbacks};
 
 glib::wrapper! {
     pub struct BrowseFileObject(ObjectSubclass<imp::BrowseFileObject>)
@@ -17,5 +17,9 @@ impl BrowseFileObject {
     #[template_callback]
     pub fn browse_clicked(&self, _btn: gtk::Button) {
         self.imp().open_dialog();
+    }
+
+    pub fn get_path(&self) -> String {
+        self.imp().entry.text().into()
     }
 }
