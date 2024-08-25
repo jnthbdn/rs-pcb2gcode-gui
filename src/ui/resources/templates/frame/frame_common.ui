@@ -32,7 +32,7 @@
                                 <property name="orientation">horizontal</property>
                                 <property name="hexpand">true</property>
                                 <child>
-                                    <object class="GtkCheckButton" id="input_unit">
+                                    <object class="GtkCheckButton" id="input_unit_metric">
                                         <property name="hexpand">true</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
                                         <property name="active">true</property>
@@ -44,7 +44,7 @@
                                         <property name="hexpand">true</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
                                         <property name="label">Imperial</property>
-                                        <property name="group">input_unit</property>
+                                        <property name="group">input_unit_metric</property>
                                     </object>
                                 </child>
                                 <layout>
@@ -79,7 +79,7 @@
                                 <property name="orientation">horizontal</property>
                                 <property name="hexpand">true</property>
                                 <child>
-                                    <object class="GtkCheckButton" id="output_unit">
+                                    <object class="GtkCheckButton" id="output_unit_metric">
                                         <signal name="toggled" handler="ouput_unit_metric_toogle" swapped="true" after="true"/>
                                         <property name="hexpand">true</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
@@ -92,7 +92,7 @@
                                         <property name="hexpand">true</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
                                         <property name="label">Imperial</property>
-                                        <property name="group">output_unit</property>
+                                        <property name="group">output_unit_metric</property>
                                     </object>
                                 </child>
                                 <layout>
