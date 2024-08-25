@@ -134,21 +134,13 @@
 
                         <!-- Enable milldrilling -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Enable milldrilling</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="enable_milldrilling">
+                                <signal name="toggled" handler="enable_endmill_toggled" swapped="true" />
+                                <property name="label">Enable milldrilling</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">0</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="enable_milldrilling">
-                                <signal name="toggled" handler="enable_endmill_toggled" swapped="true" />
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">0</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -277,21 +269,13 @@
 
                         <!-- No G91.1 -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">No G91.1</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="no_g91_1">
+                                <property name="active">true</property>
+                                <property name="label">No G91.1</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">0</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="no_g91_1">
-                                <property name="active">true</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">0</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -307,21 +291,13 @@
 
                         <!-- No G81 -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">No G81</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="no_g81">
+                                <property name="active">true</property>
+                                <property name="label">No G81</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">1</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="no_g81">
-                                <property name="active">true</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">1</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>

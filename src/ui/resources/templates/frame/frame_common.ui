@@ -196,20 +196,12 @@
 
                         <!-- Tool change height as machine coord. -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Use "Tool change height"  as machine coordinate</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="tool_change_as_machine_coord">
+                                <property name="label">Use "Tool change height" as machine coordinate</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">2</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="tool_change_as_machine_coord">
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">2</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -490,20 +482,12 @@
 
                         <!-- mirror Y instead X -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Mirror Y-axis instead of X-axis</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="mirror_y_instead_x">
+                                <property name="label">Mirror Y-axis instead of X-axis</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">2</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="mirror_y_instead_x">
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">2</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -519,20 +503,12 @@
 
                         <!-- zero_start -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Start at (0, 0)</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="zero_start">
+                                <property name="label">Start at (0, 0)</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">3</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="zero_start">
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">3</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>

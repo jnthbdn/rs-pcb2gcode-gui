@@ -196,21 +196,13 @@
 
                         <!-- Invert Gerber -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Invert Gerbers</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="invert_gerber">
+                                <property name="active">false</property>
+                                <property name="label">Invert Gerbers</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">5</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="invert_gerber">
-                                <property name="active">false</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">5</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -239,21 +231,13 @@
 
                         <!-- Use voronoi -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Use voronoi regions</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="voronoi">
+                                <signal name="toggled" handler="voronoi_toggled" swapped="true"/>
+                                <property name="label">Use voronoi regions</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">0</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="voronoi">
-                                <signal name="toggled" handler="voronoi_toggled" swapped="true"/>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">0</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -270,21 +254,13 @@
 
                         <!-- Thermal regions -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Preserve Thermal reliefs</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="thermal_region">
+                                <property name="active">true</property>
+                                <property name="label">Preserve Thermal reliefs</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">1</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="thermal_region">
-                                <property name="active">true</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">1</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>

@@ -122,21 +122,13 @@
 
                         <!-- fill outline -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Fill outline</property>
-                                <property name="halign">GTK_ALIGN_START</property>
+                            <object class="GtkCheckButton" id="fill_outline">
+                                <property name="label">Fill outline</property>
+                                <property name="active">true</property>
                                 <layout>
                                     <property name="column">0</property>
                                     <property name="row">3</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkCheckButton" id="fill_outline">
-                                <property name="active">true</property>
-                                <layout>
-                                    <property name="column">1</property>
-                                    <property name="row">3</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
@@ -165,21 +157,13 @@
 
                         <!-- Enable bridges -->
                         <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Enable bridges</property>
-                                <property name="halign">GTK_ALIGN_START</property>
-                                <layout>
-                                    <property name="column">0</property>
-                                    <property name="row">0</property>
-                                </layout>
-                            </object>
-                        </child>
-                        <child>
                             <object class="GtkCheckButton" id="enable_bridge">
+                                <property name="label">Enable bridges</property>
                                 <signal name="toggled" handler="enable_bridge_toggled" swapped="true" />
                                  <layout>
-                                    <property name="column">1</property>
+                                    <property name="column">0</property>
                                     <property name="row">0</property>
+                                    <property name="column-span">2</property>
                                 </layout>
                             </object>
                         </child>
