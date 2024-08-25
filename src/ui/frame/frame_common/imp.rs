@@ -13,10 +13,10 @@ use crate::ui::object::{
 #[properties(wrapper_type=super::FrameCommon)]
 pub struct FrameCommon {
     #[template_child]
-    pub input_unit: TemplateChild<gtk::CheckButton>,
+    pub input_unit_metric: TemplateChild<gtk::CheckButton>,
 
     #[template_child]
-    pub output_unit: TemplateChild<gtk::CheckButton>,
+    pub output_unit_metric: TemplateChild<gtk::CheckButton>,
 
     #[template_child]
     pub safe_z: TemplateChild<SpinButtonObject>,
