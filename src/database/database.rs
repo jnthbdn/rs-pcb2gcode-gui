@@ -2,7 +2,7 @@ use rusqlite::{Connection, Error, Row};
 
 use crate::{
     dirs::get_config_path_to,
-    tools::{basetool::BaseTool, drill::Drill, endmill::Endmill, vbit::VBit},
+    tools::{drill::Drill, endmill::Endmill, vbit::VBit},
 };
 
 use gtk::glib;
