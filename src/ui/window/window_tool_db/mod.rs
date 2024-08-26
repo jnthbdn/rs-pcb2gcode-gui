@@ -162,10 +162,10 @@ impl WindowToolDB {
         let db = db.as_ref().unwrap();
 
         let db_clone = db.clone();
-        let action_add_endmill = gio::ActionEntry::builder("new_endmill")
+        let action_add_endmill_metric = gio::ActionEntry::builder("new_endmill_metric")
             .activate(move |win: &Self, _, _| {
                 let db = db_clone.lock().unwrap();
-                match db.add_endmill(&Endmill::new(
+                match db.add_endmill(&Endmill::new_metric(
                     0,
                     "New Endmill".to_string(),
                     "".to_string(),
@@ -188,10 +188,10 @@ impl WindowToolDB {
             .build();
 
         let db_clone = db.clone();
-        let action_add_drill = gio::ActionEntry::builder("new_drill")
+        let action_add_drill_metric = gio::ActionEntry::builder("new_drill_metric")
             .activate(move |win: &Self, _, _| {
                 let db = db_clone.lock().unwrap();
-                match db.add_drill(&Drill::new(
+                match db.add_drill(&Drill::new_metric(
                     0,
                     "New Drill".to_string(),
                     "".to_string(),
@@ -214,10 +214,10 @@ impl WindowToolDB {
             .build();
 
         let db_clone = db.clone();
-        let action_add_vbit = gio::ActionEntry::builder("new_vbit")
+        let action_add_vbit_metric = gio::ActionEntry::builder("new_vbit_metric")
             .activate(move |win: &Self, _, _| {
                 let db = db_clone.lock().unwrap();
-                match db.add_vbit(&VBit::new(
+                match db.add_vbit(&VBit::new_metric(
                     0,
                     "New V-Bit".to_string(),
                     "".to_string(),
@@ -241,6 +241,93 @@ impl WindowToolDB {
             })
             .build();
 
-        self.add_action_entries([action_add_endmill, action_add_drill, action_add_vbit]);
+        let db_clone = db.clone();
+        let action_add_endmill_imperial = gio::ActionEntry::builder("new_endmill_imperial")
+            .activate(move |win: &Self, _, _| {
+                let db = db_clone.lock().unwrap();
+                match db.add_endmill(&Endmill::new_imperial(
+                    0,
+                    "New Endmill".to_string(),
+                    "".to_string(),
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                )) {
+                    Ok(_) => {
+                        drop(db);
+                        win.imp().refresh_model();
+                        win.emit_by_name::<()>("tools-changed", &[]);
+                    }
+                    // TODO Improve this error (AlertDialog ?)
+                    Err(e) => log::error!("action_add_endmill error : {}", e),
+                };
+            })
+            .build();
+
+        let db_clone = db.clone();
+        let action_add_drill_imperial = gio::ActionEntry::builder("new_drill_imperial")
+            .activate(move |win: &Self, _, _| {
+                let db = db_clone.lock().unwrap();
+                match db.add_drill(&Drill::new_imperial(
+                    0,
+                    "New Drill".to_string(),
+                    "".to_string(),
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                )) {
+                    Ok(_) => {
+                        drop(db);
+                        win.imp().refresh_model();
+                        win.emit_by_name::<()>("tools-changed", &[]);
+                    }
+                    // TODO Improve this error (AlertDialog ?)
+                    Err(e) => log::error!("action_add_drill error : {}", e),
+                };
+            })
+            .build();
+
+        let db_clone = db.clone();
+        let action_add_vbit_imperial = gio::ActionEntry::builder("new_vbit_imperial")
+            .activate(move |win: &Self, _, _| {
+                let db = db_clone.lock().unwrap();
+                match db.add_vbit(&VBit::new_imperial(
+                    0,
+                    "New V-Bit".to_string(),
+                    "".to_string(),
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                )) {
+                    Ok(_) => {
+                        drop(db);
+                        win.imp().refresh_model();
+                        win.emit_by_name::<()>("tools-changed", &[]);
+                    }
+                    // TODO Improve this error (AlertDialog ?)
+                    Err(e) => log::error!("action_add_vbit error : {}", e),
+                };
+            })
+            .build();
+
+        self.add_action_entries([
+            action_add_endmill_metric,
+            action_add_drill_metric,
+            action_add_vbit_metric,
+            action_add_endmill_imperial,
+            action_add_drill_imperial,
+            action_add_vbit_imperial,
+        ]);
     }
 }

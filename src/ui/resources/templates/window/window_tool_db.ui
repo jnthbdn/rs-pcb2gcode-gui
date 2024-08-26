@@ -4,18 +4,45 @@
         <section>
             <item>
                 <attribute name="use-markup">true</attribute>
-                <attribute name="label" translatable="yes">New &lt;u&gt;_E&lt;/u&gt;ndmill</attribute>
-                <attribute name="action">win.new_endmill</attribute>
+                <attribute name="label" translatable="yes">&lt;u&gt;_M&lt;/u&gt;etric</attribute>
+                <link name="submenu">
+                    <item>
+                        <attribute name="use-markup">true</attribute>
+                        <attribute name="label" translatable="yes">New &lt;u&gt;_D&lt;/u&gt;rill</attribute>
+                        <attribute name="action">win.new_drill_metric</attribute>
+                    </item>
+                    <item>
+                        <attribute name="use-markup">true</attribute>
+                        <attribute name="label" translatable="yes">New &lt;u&gt;_E&lt;/u&gt;ndmill</attribute>
+                        <attribute name="action">win.new_endmill_metric</attribute>
+                    </item>
+                    <item>
+                        <attribute name="use-markup">true</attribute>
+                        <attribute name="label" translatable="yes">New &lt;u&gt;_V&lt;/u&gt;-Bit</attribute>
+                        <attribute name="action">win.new_vbit_metric</attribute>
+                    </item>
+                </link>
             </item>
             <item>
                 <attribute name="use-markup">true</attribute>
-                <attribute name="label" translatable="yes">New &lt;u&gt;_D&lt;/u&gt;rill</attribute>
-                <attribute name="action">win.new_drill</attribute>
-            </item>
-            <item>
-                <attribute name="use-markup">true</attribute>
-                <attribute name="label" translatable="yes">New &lt;u&gt;_V&lt;/u&gt;-Bit</attribute>
-                <attribute name="action">win.new_vbit</attribute>
+                <attribute name="label" translatable="yes">&lt;u&gt;_I&lt;/u&gt;mperial</attribute>
+                <link name="submenu">
+                    <item>
+                        <attribute name="use-markup">true</attribute>
+                        <attribute name="label" translatable="yes">New &lt;u&gt;_D&lt;/u&gt;rill</attribute>
+                        <attribute name="action">win.new_drill_imperial</attribute>
+                    </item>
+                    <item>
+                        <attribute name="use-markup">true</attribute>
+                        <attribute name="label" translatable="yes">New &lt;u&gt;_E&lt;/u&gt;ndmill</attribute>
+                        <attribute name="action">win.new_endmill_imperial</attribute>
+                    </item>
+                    <item>
+                        <attribute name="use-markup">true</attribute>
+                        <attribute name="label" translatable="yes">New &lt;u&gt;_V&lt;/u&gt;-Bit</attribute>
+                        <attribute name="action">win.new_vbit_imperial</attribute>
+                    </item>
+                </link>
             </item>
         </section>
     </menu>
