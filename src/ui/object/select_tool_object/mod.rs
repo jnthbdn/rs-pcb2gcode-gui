@@ -10,8 +10,7 @@ use gtk::{
 };
 
 use crate::database::database::Database;
-
-use super::db_label_object::DBLabelObject;
+use crate::ui::object::tree_tool_row::TreeToolRow;
 
 glib::wrapper! {
     pub struct SelectToolObject(ObjectSubclass<imp::SelectToolObject>)
@@ -33,11 +32,11 @@ impl SelectToolObject {
         self.imp().generate_list();
     }
 
-    pub fn get_selected(&self) -> Option<DBLabelObject> {
+    pub fn get_selected(&self) -> Option<TreeToolRow> {
         if self.imp().dropdown.selected() == GTK_INVALID_LIST_POSITION {
             None
         } else {
-            Some(self.imp().dropdown.selected_item().and_downcast().unwrap())
+            self.imp().dropdown.selected_item().and_downcast()
         }
     }
 }
