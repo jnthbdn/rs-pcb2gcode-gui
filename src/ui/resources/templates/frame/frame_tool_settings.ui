@@ -313,7 +313,7 @@
 
                         <!-- Horizontal speed -->
                         <child>
-                            <object class="GtkLabel">
+                            <object class="GtkLabel" id="speed_horizontal_label">
                                 <property name="hexpand">true</property>
                                 <property name="label" translatable="true">Feed rate (Horizontal speed)</property>
                                 <property name="halign">GTK_ALIGN_START</property>

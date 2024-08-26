@@ -58,18 +58,22 @@ impl FrameMill {
         let db = db.lock().unwrap();
         let mill = mill.unwrap();
 
-        let (diameter, base_tool) = match mill.get_tool_type().unwrap() {
+        let (diameter, feed_rate, base_tool) = match mill.get_tool_type().unwrap() {
             ToolType::Drill => return Err("Bad tool...".to_string()),
             ToolType::Endmill => {
                 let tool = db
                     .get_endmill(mill.get_tool_id().unwrap())
                     .unwrap()
                     .unwrap();
-                (tool.base_tool.tool_diameter, tool.base_tool)
+                (tool.base_tool.tool_diameter, tool.feed_rate, tool.base_tool)
             }
             ToolType::VBit => {
                 let tool = db.get_vbit(mill.get_tool_id().unwrap()).unwrap().unwrap();
-                (tool.diameter(self.imp().depth.value()), tool.base_tool)
+                (
+                    tool.diameter(self.imp().depth.value()),
+                    tool.feed_rate,
+                    tool.base_tool,
+                )
             }
         };
 
@@ -86,7 +90,7 @@ impl FrameMill {
             self.imp().post_milling.all_text()
         );
         result += &format!("--zwork={} ", self.imp().depth.value_str(true));
-        result += &format!("--mill-feed={} ", base_tool.feed_rate);
+        result += &format!("--mill-feed={} ", feed_rate);
         result += &format!("--mill-vertfeed={} ", base_tool.plunge_rate);
         result += &format!("--mill-infeed={} ", base_tool.pass_depth);
         result += &format!("--mill-speed={} ", base_tool.spindle_speed);

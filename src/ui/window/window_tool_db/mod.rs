@@ -12,7 +12,6 @@ use gtk::{
 use crate::{
     database::database::{Database, DatabaseColumn},
     tools::{drill::Drill, endmill::Endmill, vbit::VBit, ToolType},
-    ui::object::tree_tool_row::TreeToolRow,
 };
 
 glib::wrapper! {
@@ -197,7 +196,6 @@ impl WindowToolDB {
                     0.0,
                     0.0,
                     0.0,
-                    0.0,
                 )) {
                     Ok(_) => {
                         drop(db);
@@ -272,7 +270,6 @@ impl WindowToolDB {
                     0,
                     "New Drill".to_string(),
                     "".to_string(),
-                    0.0,
                     0.0,
                     0.0,
                     0.0,

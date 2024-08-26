@@ -59,7 +59,6 @@ impl Database {
                     spindle_speed REAL NOT NULL,
                     pass_depth REAL NOT NULL,
                     plunge_rate REAL NOT NULL,
-                    feed_rate REAL NOT NULL,
                     is_metric INTEGER NOT NULL
                 )",
             (),
@@ -95,7 +94,7 @@ impl Database {
             endmill.base_tool.spindle_speed,
             endmill.base_tool.pass_depth,
             endmill.base_tool.plunge_rate,
-            endmill.base_tool.feed_rate,
+            endmill.feed_rate,
             endmill.base_tool.unit.is_metric()
         ))?;
 
@@ -103,7 +102,7 @@ impl Database {
     }
 
     pub fn add_drill(&self, drill: &Drill) -> Result<(), rusqlite::Error> {
-        self.connection.execute("INSERT OR ROLLBACK INTO drill (name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)", (
+        self.connection.execute("INSERT OR ROLLBACK INTO drill (name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, is_metric) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)", (
             &drill.base_tool.name,
             &drill.base_tool.note,
             drill.base_tool.shaft_diameter,
@@ -111,7 +110,6 @@ impl Database {
             drill.base_tool.spindle_speed,
             drill.base_tool.pass_depth,
             drill.base_tool.plunge_rate,
-            drill.base_tool.feed_rate,
             drill.base_tool.unit.is_metric()
         ))?;
 
@@ -129,7 +127,7 @@ impl Database {
             vbit.base_tool.spindle_speed,
             vbit.base_tool.pass_depth,
             vbit.base_tool.plunge_rate,
-            vbit.base_tool.feed_rate,
+            vbit.feed_rate,
             vbit.base_tool.unit.is_metric()
         ))?;
 
@@ -145,7 +143,7 @@ impl Database {
     }
 
     pub fn get_all_drills(&self, is_metric: bool) -> Result<Vec<Drill>, rusqlite::Error> {
-        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM drill WHERE is_metric=?")?;
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, is_metric FROM drill WHERE is_metric=?")?;
 
         let results = stmt.query_map([is_metric], Self::map_drill)?;
 
@@ -176,7 +174,7 @@ impl Database {
     }
 
     pub fn get_drill(&self, id: u32) -> Result<Option<Drill>, rusqlite::Error> {
-        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM drill WHERE id=?1")?;
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, is_metric FROM drill WHERE id=?1")?;
 
         let results = stmt.query_map([id], Self::map_drill)?;
 
@@ -309,7 +307,7 @@ impl Database {
     }
 
     fn map_drill(row: &Row) -> Result<Drill, Error> {
-        let is_metric: bool = row.get(9)?;
+        let is_metric: bool = row.get(8)?;
 
         if is_metric {
             Ok(Drill::new_metric(
@@ -321,7 +319,6 @@ impl Database {
                 row.get(5)?,
                 row.get(6)?,
                 row.get(7)?,
-                row.get(8)?,
             ))
         } else {
             Ok(Drill::new_imperial(
@@ -333,7 +330,6 @@ impl Database {
                 row.get(5)?,
                 row.get(6)?,
                 row.get(7)?,
-                row.get(8)?,
             ))
         }
     }

@@ -68,7 +68,7 @@ impl FrameOutline {
         );
         result += &format!("--cutter-diameter={} ", endmill.base_tool.tool_diameter);
         result += &format!("--zcut={} ", self.imp().depth.value_str(true));
-        result += &format!("--cut-feed={} ", endmill.base_tool.feed_rate);
+        result += &format!("--cut-feed={} ", endmill.feed_rate);
         result += &format!("--cut-vertfeed={} ", endmill.base_tool.plunge_rate);
         result += &format!("--cut-speed={} ", endmill.base_tool.spindle_speed);
         result += &format!("--cut-infeed={} ", endmill.base_tool.pass_depth);

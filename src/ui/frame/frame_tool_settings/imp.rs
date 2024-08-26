@@ -42,6 +42,8 @@ pub struct FrameToolSettings {
     #[template_child]
     speed_vertical: TemplateChild<SpinButtonObject>,
     #[template_child]
+    speed_horizontal_label: TemplateChild<gtk::Label>,
+    #[template_child]
     speed_horizontal: TemplateChild<SpinButtonObject>,
 
     current_tool: Cell<Option<ToolType>>,
@@ -59,17 +61,19 @@ impl FrameToolSettings {
         self.pass_depth.init_value(base_tool.pass_depth);
         self.speed_spindle.init_value(base_tool.spindle_speed);
         self.speed_vertical.init_value(base_tool.plunge_rate);
-        self.speed_horizontal.init_value(base_tool.feed_rate);
     }
 
     pub fn show_endmill(&self, endmill: &Endmill) {
         self.current_tool.set(Some(ToolType::Endmill));
         self.show_base_tool(&endmill.base_tool);
+        self.speed_horizontal.init_value(endmill.feed_rate);
 
         self.diameter_angle_label.set_visible(false);
         self.diameter_angle.set_visible(false);
         self.diameter_tip_label.set_visible(false);
         self.diameter_tip.set_visible(false);
+        self.speed_horizontal.set_visible(true);
+        self.speed_horizontal_label.set_visible(true);
     }
 
     pub fn show_drill(&self, drill: &Drill) {
@@ -80,19 +84,24 @@ impl FrameToolSettings {
         self.diameter_angle.set_visible(false);
         self.diameter_tip_label.set_visible(false);
         self.diameter_tip.set_visible(false);
+        self.speed_horizontal.set_visible(false);
+        self.speed_horizontal_label.set_visible(false);
     }
 
     pub fn show_vbit(&self, vbit: &VBit) {
         self.current_tool.set(Some(ToolType::VBit));
         self.show_base_tool(&vbit.base_tool);
 
+        self.speed_horizontal.init_value(vbit.feed_rate);
+        self.diameter_angle.init_value(vbit.tool_angle);
+        self.diameter_tip.init_value(vbit.tip_diameter);
+
         self.diameter_angle_label.set_visible(true);
         self.diameter_angle.set_visible(true);
         self.diameter_tip_label.set_visible(true);
         self.diameter_tip.set_visible(true);
-
-        self.diameter_angle.init_value(vbit.tool_angle);
-        self.diameter_tip.init_value(vbit.tip_diameter);
+        self.speed_horizontal.set_visible(true);
+        self.speed_horizontal_label.set_visible(true);
     }
 
     pub fn current_tooltype(&self) -> Option<ToolType> {

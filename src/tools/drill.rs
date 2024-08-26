@@ -39,7 +39,6 @@ impl Drill {
         spindle_speed: f64,
         pass_depth: f64,
         plunge_rate: f64,
-        feed_rate: f64,
     ) -> Self {
         Self {
             base_tool: BaseTool::new_imperial(
