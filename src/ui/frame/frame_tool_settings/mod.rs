@@ -119,7 +119,7 @@ impl FrameToolSettings {
                 &[
                     &self.imp().current_tooltype().unwrap(),
                     &col.1,
-                    &obj.value_str().to_value(),
+                    &obj.value_str(false).to_value(),
                     &self.imp().current_id(),
                 ],
             )
