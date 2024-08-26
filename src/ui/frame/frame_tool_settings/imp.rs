@@ -16,35 +16,35 @@ use crate::ui::object::textview_object::TextViewObject;
 #[properties(wrapper_type=super::FrameToolSettings)]
 pub struct FrameToolSettings {
     #[template_child]
-    general_id: TemplateChild<gtk::Entry>,
+    pub general_id: TemplateChild<gtk::Entry>,
     #[template_child]
-    general_name: TemplateChild<EntryObject>,
+    pub general_name: TemplateChild<EntryObject>,
     #[template_child]
-    general_note: TemplateChild<TextViewObject>,
+    pub general_note: TemplateChild<TextViewObject>,
 
     #[template_child]
-    diameter_shaft: TemplateChild<SpinButtonObject>,
+    pub diameter_shaft: TemplateChild<SpinButtonObject>,
     #[template_child]
-    diameter_tool: TemplateChild<SpinButtonObject>,
+    pub diameter_tool: TemplateChild<SpinButtonObject>,
     #[template_child]
-    diameter_tip_label: TemplateChild<gtk::Label>,
+    pub diameter_tip_label: TemplateChild<gtk::Label>,
     #[template_child]
-    diameter_tip: TemplateChild<SpinButtonObject>,
+    pub diameter_tip: TemplateChild<SpinButtonObject>,
     #[template_child]
-    diameter_angle_label: TemplateChild<gtk::Label>,
+    pub diameter_angle_label: TemplateChild<gtk::Label>,
     #[template_child]
-    diameter_angle: TemplateChild<SpinButtonObject>,
+    pub diameter_angle: TemplateChild<SpinButtonObject>,
 
     #[template_child]
-    pass_depth: TemplateChild<SpinButtonObject>,
+    pub pass_depth: TemplateChild<SpinButtonObject>,
     #[template_child]
-    speed_spindle: TemplateChild<SpinButtonObject>,
+    pub speed_spindle: TemplateChild<SpinButtonObject>,
     #[template_child]
-    speed_vertical: TemplateChild<SpinButtonObject>,
+    pub speed_vertical: TemplateChild<SpinButtonObject>,
     #[template_child]
-    speed_horizontal_label: TemplateChild<gtk::Label>,
+    pub speed_horizontal_label: TemplateChild<gtk::Label>,
     #[template_child]
-    speed_horizontal: TemplateChild<SpinButtonObject>,
+    pub speed_horizontal: TemplateChild<SpinButtonObject>,
 
     current_tool: Cell<Option<ToolType>>,
 }
