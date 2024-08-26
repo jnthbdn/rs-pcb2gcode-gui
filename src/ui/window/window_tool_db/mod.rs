@@ -78,6 +78,7 @@ impl WindowToolDB {
                 _ => (),
             };
 
+            drop(db);
             self.emit_by_name::<()>("tools-changed", &[]);
         }
     }
