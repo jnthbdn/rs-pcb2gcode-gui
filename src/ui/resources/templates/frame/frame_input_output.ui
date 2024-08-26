@@ -36,7 +36,7 @@
                                     All files
                                 </property>
                                 <property name="file_pattern">
-                                    *.grb
+                                    *.gbr
                                     *
                                 </property>
                                 <layout>
@@ -76,7 +76,7 @@
                                     All files
                                 </property>
                                 <property name="file_pattern">
-                                    *.grb
+                                    *.gbr
                                     *
                                 </property>
                                 <layout>
@@ -116,7 +116,7 @@
                                     All files
                                 </property>
                                 <property name="file_pattern">
-                                    *.grb
+                                    *.gbr
                                     *
                                 </property>
                                 <layout>
@@ -157,7 +157,7 @@
                                 </property>
                                 <property name="file_pattern">
                                     *.drl
-                                    *.grb
+                                    *.gbr
                                     *
                                 </property>
                                 <layout>
