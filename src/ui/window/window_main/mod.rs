@@ -2,7 +2,7 @@ mod imp;
 
 use gtk::{glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::{units::UnitString, window_tool_db::WindowToolDB};
+use crate::{settings::Settings, units::UnitString, window_tool_db::WindowToolDB};
 
 glib::wrapper! {
     pub struct WindowMain(ObjectSubclass<imp::WindowMain>)
@@ -11,8 +11,35 @@ glib::wrapper! {
 
 #[gtk::template_callbacks]
 impl WindowMain {
-    pub fn new<P: IsA<gtk::Application>>(app: &P) -> Self {
-        glib::Object::builder().property("application", app).build()
+    pub fn new<P: IsA<gtk::Application>>(app: &P, settings: Settings) -> Self {
+        let s: Self = glib::Object::builder().property("application", app).build();
+
+        *s.imp().settings.borrow_mut() = settings;
+
+        s.load_window_settings();
+
+        s
+    }
+
+    fn load_window_settings(&self) {
+        let settings = self.imp().settings.borrow();
+
+        self.set_default_size(settings.window().width(), settings.window().height());
+        self.set_maximized(settings.window().maximized());
+    }
+
+    fn save_window_settings(&self) {
+        let mut settings = self.imp().settings.borrow_mut();
+
+        settings.window_mut().set_width(self.width());
+        settings.window_mut().set_height(self.height());
+        settings.window_mut().set_maximized(self.is_maximized());
+
+        match settings.save_settings() {
+            Ok(_) => log::info!("Settings saved !"),
+            //TODO Improve error (dialog ?)
+            Err(e) => log::error!("Failed to save settings ({e})"),
+        };
     }
 
     #[template_callback]

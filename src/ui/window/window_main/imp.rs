@@ -5,10 +5,11 @@ use std::{
     sync::{Arc, Mutex},
 };
 
-use gtk::{glib, prelude::StaticTypeExt, subclass::prelude::*};
+use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::{
     database::database::Database,
+    settings::Settings,
     ui::{
         frame::{
             frame_autoleveling::FrameAutoleveling, frame_common::FrameCommon,
@@ -26,6 +27,8 @@ pub struct WindowMain {
     pub database: Arc<Mutex<Database>>,
 
     pub win_tool_db: RefCell<Option<WindowToolDB>>,
+
+    pub settings: RefCell<Settings>,
 
     #[template_child]
     pub frame_input_output: TemplateChild<FrameInputOutput>,
@@ -74,13 +77,19 @@ impl ObjectImpl for WindowMain {
     fn constructed(&self) {
         self.parent_constructed();
 
-        self.obj().output_unit_change(true);
         self.frame_mill.set_database(self.database.clone());
         self.frame_drill.set_database(self.database.clone());
         self.frame_outline.set_database(self.database.clone());
+        self.obj().output_unit_change(true);
     }
 }
 
 impl WidgetImpl for WindowMain {}
-impl WindowImpl for WindowMain {}
+impl WindowImpl for WindowMain {
+    fn close_request(&self) -> glib::Propagation {
+        self.obj().save_window_settings();
+
+        glib::Propagation::Proceed
+    }
+}
 impl ApplicationWindowImpl for WindowMain {}

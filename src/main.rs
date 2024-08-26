@@ -1,10 +1,12 @@
 mod database;
 mod dirs;
+mod settings;
 mod tools;
 mod ui;
 mod units;
 
 use gtk::{gdk::Display, gio, glib, prelude::*, Application, CssProvider};
+use settings::Settings;
 use ui::{window::window_main, window::window_tool_db};
 
 const APP_ID: &str = "com.github.jnthbdn.rs-pcb2gcode-gui";
@@ -23,7 +25,15 @@ fn main() -> glib::ExitCode {
 
     app.connect_startup(|_| load_css());
     app.connect_activate(|app| {
-        let win_main = window_main::WindowMain::new(app);
+        let settings = match Settings::new() {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("Failed to load settings ({e})");
+                return;
+            }
+        };
+
+        let win_main = window_main::WindowMain::new(app, settings);
         win_main.present();
     });
 
