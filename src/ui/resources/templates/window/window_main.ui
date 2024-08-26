@@ -13,7 +13,7 @@
                                 <property name="name">notebook</property>
                                 <property name="vexpand">true</property>
                                 <child>
-                                    <object class="FrameInputOutput">
+                                    <object class="FrameInputOutput" id="frame_input_output">
                                     </object>
                                 </child>
                                 <child type="tab">

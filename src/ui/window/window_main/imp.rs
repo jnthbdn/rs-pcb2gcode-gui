@@ -28,6 +28,9 @@ pub struct WindowMain {
     pub win_tool_db: RefCell<Option<WindowToolDB>>,
 
     #[template_child]
+    pub frame_input_output: TemplateChild<FrameInputOutput>,
+
+    #[template_child]
     pub frame_common: TemplateChild<FrameCommon>,
 
     #[template_child]
