@@ -39,7 +39,69 @@ impl WindowMain {
 
     #[template_callback]
     fn run_pcb2gcode(&self, _button: &gtk::Button) {
-        todo!()
+        let mut params = String::new();
+
+        params += &match self.imp().frame_input_output.get_string_param() {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("{e}");
+                return;
+            }
+        };
+
+        params += &match self.imp().frame_common.get_string_param() {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("{e}");
+                return;
+            }
+        };
+
+        params += &match self
+            .imp()
+            .frame_mill
+            .get_string_param(self.imp().database.clone())
+        {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("{e}");
+                return;
+            }
+        };
+
+        params += &match self
+            .imp()
+            .frame_drill
+            .get_string_param(self.imp().database.clone())
+        {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("{e}");
+                return;
+            }
+        };
+
+        params += &match self
+            .imp()
+            .frame_outline
+            .get_string_param(self.imp().database.clone())
+        {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("{e}");
+                return;
+            }
+        };
+
+        params += &match self.imp().frame_autolevel.get_string_param() {
+            Ok(s) => s,
+            Err(e) => {
+                log::error!("{e}");
+                return;
+            }
+        };
+
+        log::info!("Params: {params}");
     }
 
     #[template_callback]
