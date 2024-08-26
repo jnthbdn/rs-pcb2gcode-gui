@@ -30,14 +30,11 @@ impl WindowToolDB {
 
         let clone = win.clone();
         let db = clone.imp().database.borrow();
-        win.imp().tree_tool.imp().set_root_elements(
-            vec![
-                TreeToolRow::new_category("Drill".to_string(), ToolType::Drill),
-                TreeToolRow::new_category("Endmill".to_string(), ToolType::Endmill),
-                TreeToolRow::new_category("V bit".to_string(), ToolType::VBit),
-            ],
-            db.as_ref().unwrap().clone(),
-        );
+
+        win.imp()
+            .tree_tool
+            .imp()
+            .refresh_tree(db.as_ref().unwrap().clone());
 
         win.setup_actions();
 

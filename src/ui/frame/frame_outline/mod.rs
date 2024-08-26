@@ -23,17 +23,23 @@ impl FrameOutline {
     }
 
     pub fn refresh_tools(&self) {
-        self.imp().tool.refresh_tools();
+        self.imp()
+            .tool
+            .refresh_tools(self.imp().is_unit_metric.get());
     }
 
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
-        self.imp().tool.set_database(db.clone());
+        self.imp()
+            .tool
+            .set_database(db.clone(), self.imp().is_unit_metric.get());
     }
 
     pub fn set_units_postfixes(&self, unit: &UnitString) {
         self.imp().depth.set_postfix(unit.measure());
         self.imp().bridge_width.set_postfix(unit.measure());
         self.imp().bridge_depth.set_postfix(unit.measure());
+        self.imp().is_unit_metric.set(unit.is_metric());
+        self.refresh_tools();
     }
 
     #[template_callback]

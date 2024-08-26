@@ -1,4 +1,6 @@
 #![allow(unreachable_code)]
+use std::cell::Cell;
+
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::ui::{
@@ -43,6 +45,8 @@ pub struct FrameMill {
 
     #[template_child]
     pub post_milling: TemplateChild<TextViewObject>,
+
+    pub is_unit_metric: Cell<bool>,
 }
 
 impl FrameMill {

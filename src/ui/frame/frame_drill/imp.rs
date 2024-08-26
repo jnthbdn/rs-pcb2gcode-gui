@@ -1,5 +1,7 @@
 #![allow(unreachable_code)]
 
+use std::cell::Cell;
+
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::ui::{
@@ -40,6 +42,8 @@ pub struct FrameDrill {
 
     #[template_child]
     pub no_g81: TemplateChild<gtk::CheckButton>,
+
+    pub is_unit_metric: Cell<bool>,
 }
 
 impl FrameDrill {

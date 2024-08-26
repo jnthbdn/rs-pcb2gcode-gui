@@ -18,7 +18,6 @@ pub struct FrameTreeTools {
     #[template_child]
     pub tool_list: TemplateChild<gtk::ListView>,
 
-    root_rows: RefCell<Vec<TreeToolRow>>,
     model_selection: gtk::SingleSelection,
     pub selected_tree: RefCell<Option<gtk::TreeExpander>>,
 }
@@ -32,42 +31,63 @@ impl FrameTreeTools {
             .downcast_ref()
             .expect("[create_tree_model] tool need to be TreeToolRow");
 
-        if tree_tool.is_tool() {
-            return None;
-        }
-
         let child_model = gio::ListStore::new::<TreeToolRow>();
         let db = mutex_db.lock().unwrap();
 
-        match tree_tool.get_tool_type() {
-            ToolType::Drill => {
-                // TODO Avoid this unwrap
-                for drill in db.get_all_drills().unwrap() {
-                    child_model.append(&TreeToolRow::new_drill_tool(
-                        drill.base_tool.name,
-                        drill.base_tool.id,
-                    ));
+        if tree_tool.is_tool() {
+            return None;
+        } else if tree_tool.is_unit_catergory() {
+            child_model.extend_from_slice(&vec![
+                TreeToolRow::new_category(
+                    "Drill".to_string(),
+                    ToolType::Drill,
+                    tree_tool.is_metric(),
+                ),
+                TreeToolRow::new_category(
+                    "Endmill".to_string(),
+                    ToolType::Endmill,
+                    tree_tool.is_metric(),
+                ),
+                TreeToolRow::new_category(
+                    "V bit".to_string(),
+                    ToolType::VBit,
+                    tree_tool.is_metric(),
+                ),
+            ]);
+        } else {
+            match tree_tool.get_tool_type().unwrap() {
+                ToolType::Drill => {
+                    // TODO Avoid this unwrap
+                    for drill in db.get_all_drills(tree_tool.is_metric()).unwrap() {
+                        child_model.append(&TreeToolRow::new_drill_tool(
+                            drill.base_tool.name,
+                            drill.base_tool.id,
+                            tree_tool.is_metric(),
+                        ));
+                    }
                 }
-            }
-            ToolType::Endmill => {
-                // TODO Avoid this unwrap
-                for endmill in db.get_all_endmills().unwrap() {
-                    child_model.append(&TreeToolRow::new_endmill_tool(
-                        endmill.base_tool.name,
-                        endmill.base_tool.id,
-                    ));
+                ToolType::Endmill => {
+                    // TODO Avoid this unwrap
+                    for endmill in db.get_all_endmills(tree_tool.is_metric()).unwrap() {
+                        child_model.append(&TreeToolRow::new_endmill_tool(
+                            endmill.base_tool.name,
+                            endmill.base_tool.id,
+                            tree_tool.is_metric(),
+                        ));
+                    }
                 }
-            }
-            ToolType::VBit => {
-                // TODO Avoid this unwrap
-                for vbit in db.get_all_vbits().unwrap() {
-                    child_model.append(&TreeToolRow::new_vbit_tool(
-                        vbit.base_tool.name,
-                        vbit.base_tool.id,
-                    ));
+                ToolType::VBit => {
+                    // TODO Avoid this unwrap
+                    for vbit in db.get_all_vbits(tree_tool.is_metric()).unwrap() {
+                        child_model.append(&TreeToolRow::new_vbit_tool(
+                            vbit.base_tool.name,
+                            vbit.base_tool.id,
+                            tree_tool.is_metric(),
+                        ));
+                    }
                 }
-            }
-        };
+            };
+        }
 
         Some(child_model.into())
     }
@@ -134,13 +154,14 @@ impl FrameTreeTools {
 
         tree_expander.set_list_row(Some(&list_row));
         tree_expander_child.set_label(&tree_tool_item.name());
-        tree_expander_child.set_tool_type(Some(tree_tool_item.get_tool_type()));
+        tree_expander_child.set_tool_type(tree_tool_item.get_tool_type());
+
         match tree_tool_item.get_tool_id() {
-            Ok(id) => tree_expander_child.set_db_id(id),
-            Err(_) => {}
+            Some(id) => tree_expander_child.set_db_id(id),
+            None => (),
         };
 
-        if tree_tool_item.is_category() {
+        if tree_tool_item.is_category() || tree_tool_item.is_unit_catergory() {
             tree_expander_child.add_css_class("label_tool_category");
             tree_expander.set_focusable(false);
             list_item.set_selectable(false);
@@ -150,16 +171,16 @@ impl FrameTreeTools {
 
     fn generate_tree_model(&self, database: Arc<Mutex<Database>>) -> gtk::TreeListModel {
         let model = gio::ListStore::new::<TreeToolRow>();
-        model.extend_from_slice(self.root_rows.borrow().as_slice());
+        //TODO Translation...
+        model.append(&TreeToolRow::new_unit_category(
+            "Imperial".to_string(),
+            false,
+        ));
+        model.append(&TreeToolRow::new_unit_category("Metric".to_string(), true));
 
         gtk::TreeListModel::new(model, false, true, move |obj| {
             Self::tree_model_callback(obj, &database)
         })
-    }
-
-    pub fn set_root_elements(&self, elems: Vec<TreeToolRow>, database: Arc<Mutex<Database>>) {
-        self.root_rows.set(elems);
-        self.refresh_tree(database);
     }
 
     pub fn refresh_tree(&self, database: Arc<Mutex<Database>>) {

@@ -23,13 +23,13 @@ impl SelectToolObject {
         glib::Object::builder().build()
     }
 
-    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
+    pub fn set_database(&self, db: Arc<Mutex<Database>>, is_metric: bool) {
         self.imp().database.set(Some(db));
-        self.refresh_tools();
+        self.refresh_tools(is_metric);
     }
 
-    pub fn refresh_tools(&self) {
-        self.imp().generate_list();
+    pub fn refresh_tools(&self, is_metric: bool) {
+        self.imp().generate_list(is_metric);
     }
 
     pub fn get_selected(&self) -> Option<TreeToolRow> {

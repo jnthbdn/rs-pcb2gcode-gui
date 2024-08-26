@@ -19,13 +19,21 @@ impl FrameDrill {
     }
 
     pub fn refresh_tools(&self) {
-        self.imp().drill_tool.refresh_tools();
-        self.imp().milldrilling_tool.refresh_tools();
+        self.imp()
+            .drill_tool
+            .refresh_tools(self.imp().is_unit_metric.get());
+        self.imp()
+            .milldrilling_tool
+            .refresh_tools(self.imp().is_unit_metric.get());
     }
 
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
-        self.imp().drill_tool.set_database(db.clone());
-        self.imp().milldrilling_tool.set_database(db);
+        self.imp()
+            .drill_tool
+            .set_database(db.clone(), self.imp().is_unit_metric.get());
+        self.imp()
+            .milldrilling_tool
+            .set_database(db, self.imp().is_unit_metric.get());
     }
 
     pub fn set_units_postfixes(&self, unit: &UnitString) {
@@ -34,6 +42,8 @@ impl FrameDrill {
         self.imp()
             .milldrilling_min_diameter
             .set_postfix(unit.measure());
+        self.imp().is_unit_metric.set(unit.is_metric());
+        self.refresh_tools();
     }
 
     #[template_callback]
@@ -57,7 +67,11 @@ impl FrameDrill {
         };
 
         result += &format!("--zdrill={} ", self.imp().depth.value_str(true));
-        result += &format!("--drill-feed={} ", drill.base_tool.feed_rate);
+        result += &format!(
+            "--drill-feed={}{} ",
+            drill.base_tool.plunge_rate,
+            drill.base_tool.unit.measure()
+        );
         result += &format!("--drill-speed={} ", drill.base_tool.spindle_speed);
         result += &format!(
             "--drill-side={} ",
@@ -86,14 +100,14 @@ impl FrameDrill {
                 self.imp().milldrilling_min_diameter.value_str(true)
             );
             result += &format!(
-                "--milldrill-diameter={} ",
-                mill_tool.base_tool.tool_diameter
+                "--milldrill-diameter={}{} ",
+                mill_tool.base_tool.tool_diameter,
+                mill_tool.base_tool.unit.measure()
             );
             result += &format!(
                 "--zmilldrill={} ",
                 self.imp().milldrilling_depth.value_str(true)
             );
-            result += &format!("--drill-feed={} ", drill.base_tool.feed_rate);
         } else {
             result += "--min-milldrill-hole-diameter=inf ";
         }

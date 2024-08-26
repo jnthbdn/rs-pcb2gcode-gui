@@ -1,4 +1,6 @@
 #![allow(unreachable_code)]
+use std::cell::Cell;
+
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
 use crate::ui::{
@@ -36,6 +38,8 @@ pub struct FrameOutline {
 
     #[template_child]
     pub bridge_depth: TemplateChild<SpinButtonObject>,
+
+    pub is_unit_metric: Cell<bool>,
 }
 
 impl FrameOutline {

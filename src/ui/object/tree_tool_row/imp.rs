@@ -16,6 +16,7 @@ pub struct TreeToolRow {
     name: Cell<String>,
 
     pub tool_type: OnceCell<TreeObjectType>,
+    pub is_metric: OnceCell<bool>,
 }
 
 impl TreeToolRow {

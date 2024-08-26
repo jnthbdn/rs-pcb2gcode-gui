@@ -23,16 +23,22 @@ impl FrameMill {
     }
 
     pub fn refresh_tools(&self) {
-        self.imp().mill_tool.refresh_tools();
+        self.imp()
+            .mill_tool
+            .refresh_tools(self.imp().is_unit_metric.get());
     }
 
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
-        self.imp().mill_tool.set_database(db.clone());
+        self.imp()
+            .mill_tool
+            .set_database(db.clone(), self.imp().is_unit_metric.get());
     }
 
     pub fn set_units_postfixes(&self, unit: &UnitString) {
         self.imp().depth.set_postfix(unit.measure());
         self.imp().isolation.set_postfix(unit.measure());
+        self.imp().is_unit_metric.set(unit.is_metric());
+        self.refresh_tools();
     }
 
     #[template_callback]
@@ -45,14 +51,14 @@ impl FrameMill {
 
         let mill = self.imp().mill_tool.get_selected();
 
-        if mill.is_none() || mill.as_ref().unwrap().is_category() {
+        if mill.is_none() || !mill.as_ref().unwrap().is_tool() {
             return Err("No tool selected".to_string());
         }
 
         let db = db.lock().unwrap();
         let mill = mill.unwrap();
 
-        let (diameter, base_tool) = match mill.get_tool_type() {
+        let (diameter, base_tool) = match mill.get_tool_type().unwrap() {
             ToolType::Drill => return Err("Bad tool...".to_string()),
             ToolType::Endmill => {
                 let tool = db

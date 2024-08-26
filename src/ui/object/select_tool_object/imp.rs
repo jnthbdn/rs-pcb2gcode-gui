@@ -62,8 +62,8 @@ impl SelectToolObject {
         child.set_label(&item.name());
 
         match item.get_tool_id() {
-            Ok(id) => child.set_db_id(id),
-            Err(_) => (),
+            Some(id) => child.set_db_id(id),
+            None => (),
         };
 
         if item.is_category() {
@@ -76,7 +76,7 @@ impl SelectToolObject {
         }
     }
 
-    pub fn generate_list(&self) {
+    pub fn generate_list(&self, is_metric: bool) {
         if self.database.borrow().is_none() {
             log::error!("No database, unable to generate list");
             return;
@@ -91,12 +91,14 @@ impl SelectToolObject {
             vec_model.push(TreeToolRow::new_category(
                 "Drill".to_string(),
                 ToolType::Drill,
+                is_metric,
             ));
 
-            for drill in db.get_all_drills().unwrap() {
+            for drill in db.get_all_drills(is_metric).unwrap() {
                 vec_model.push(TreeToolRow::new_drill_tool(
                     drill.base_tool.name,
                     drill.base_tool.id,
+                    is_metric,
                 ))
             }
         }
@@ -105,12 +107,14 @@ impl SelectToolObject {
             vec_model.push(TreeToolRow::new_category(
                 "Endmill".to_string(),
                 ToolType::Endmill,
+                is_metric,
             ));
 
-            for endmill in db.get_all_endmills().unwrap() {
+            for endmill in db.get_all_endmills(is_metric).unwrap() {
                 vec_model.push(TreeToolRow::new_endmill_tool(
                     endmill.base_tool.name,
                     endmill.base_tool.id,
+                    is_metric,
                 ))
             }
         }
@@ -119,12 +123,14 @@ impl SelectToolObject {
             vec_model.push(TreeToolRow::new_category(
                 "V-Bit".to_string(),
                 ToolType::VBit,
+                is_metric,
             ));
 
-            for vbit in db.get_all_vbits().unwrap() {
+            for vbit in db.get_all_vbits(is_metric).unwrap() {
                 vec_model.push(TreeToolRow::new_vbit_tool(
                     vbit.base_tool.name,
                     vbit.base_tool.id,
+                    is_metric,
                 ))
             }
         }
@@ -133,38 +139,7 @@ impl SelectToolObject {
         list.extend_from_slice(&vec_model);
 
         self.dropdown.set_model(Some(&list));
-
-        // self.clear_model();
-        // let db = self.database.borrow();
-        // let db = db.as_ref().unwrap().lock().unwrap();
-
-        // if self.show_drill.get() {
-        //     for drill in db.get_all_drills().unwrap() {
-        //         self.model
-        //             .append(&format!("[DRILL] {}", drill.base_tool.name));
-        //     }
-        // }
-
-        // if self.show_endmill.get() {
-        //     for endmill in db.get_all_endmills().unwrap() {
-        //         self.model
-        //             .append(&format!("[ENDMILL] {}", endmill.base_tool.name));
-        //     }
-        // }
-
-        // if self.show_vbit.get() {
-        //     for vbit in db.get_all_vbits().unwrap() {
-        //         self.model
-        //             .append(&format!("[V-BIT] {}", vbit.base_tool.name));
-        //     }
-        // }
     }
-
-    // fn clear_model(&self) {
-    //     for i in (0..self.model.n_items()).rev() {
-    //         self.model.remove(i);
-    //     }
-    // }
 }
 
 #[glib::object_subclass]
