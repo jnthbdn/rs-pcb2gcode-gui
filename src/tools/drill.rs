@@ -6,7 +6,7 @@ pub struct Drill {
 }
 
 impl Drill {
-    pub fn new(
+    pub fn new_metric(
         id: u32,
         name: String,
         note: String,
@@ -18,7 +18,33 @@ impl Drill {
         feed_rate: f64,
     ) -> Self {
         Self {
-            base_tool: BaseTool::new(
+            base_tool: BaseTool::new_metric(
+                id,
+                name,
+                note,
+                shaft_diameter,
+                tool_diameter,
+                spindle_speed,
+                pass_depth,
+                plunge_rate,
+                feed_rate,
+            ),
+        }
+    }
+
+    pub fn new_imperial(
+        id: u32,
+        name: String,
+        note: String,
+        shaft_diameter: f64,
+        tool_diameter: f64,
+        spindle_speed: f64,
+        pass_depth: f64,
+        plunge_rate: f64,
+        feed_rate: f64,
+    ) -> Self {
+        Self {
+            base_tool: BaseTool::new_imperial(
                 id,
                 name,
                 note,
