@@ -3,6 +3,7 @@ use super::basetool::BaseTool;
 #[derive(Default, Debug)]
 pub struct Endmill {
     pub base_tool: BaseTool,
+    pub feed_rate: f64,
 }
 
 impl Endmill {
@@ -27,8 +28,8 @@ impl Endmill {
                 spindle_speed,
                 pass_depth,
                 plunge_rate,
-                feed_rate,
             ),
+            feed_rate,
         }
     }
 
@@ -53,12 +54,15 @@ impl Endmill {
                 spindle_speed,
                 pass_depth,
                 plunge_rate,
-                feed_rate,
             ),
+            feed_rate,
         }
     }
 
-    pub fn new_from_base_tool(base_tool: BaseTool) -> Self {
-        Self { base_tool }
+    pub fn new_from_base_tool(base_tool: BaseTool, feed_rate: f64) -> Self {
+        Self {
+            base_tool,
+            feed_rate,
+        }
     }
 }

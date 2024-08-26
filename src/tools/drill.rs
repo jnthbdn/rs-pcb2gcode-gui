@@ -15,7 +15,6 @@ impl Drill {
         spindle_speed: f64,
         pass_depth: f64,
         plunge_rate: f64,
-        feed_rate: f64,
     ) -> Self {
         Self {
             base_tool: BaseTool::new_metric(
@@ -27,7 +26,6 @@ impl Drill {
                 spindle_speed,
                 pass_depth,
                 plunge_rate,
-                feed_rate,
             ),
         }
     }
@@ -53,7 +51,6 @@ impl Drill {
                 spindle_speed,
                 pass_depth,
                 plunge_rate,
-                feed_rate,
             ),
         }
     }

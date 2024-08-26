@@ -13,7 +13,6 @@ pub struct BaseTool {
     pub pass_depth: f64,
 
     pub plunge_rate: f64,
-    pub feed_rate: f64,
 
     pub unit: UnitString,
 }
@@ -28,7 +27,6 @@ impl BaseTool {
         spindle_speed: f64,
         pass_depth: f64,
         plunge_rate: f64,
-        feed_rate: f64,
     ) -> Self {
         Self {
             id,
@@ -42,7 +40,6 @@ impl BaseTool {
             pass_depth,
 
             plunge_rate,
-            feed_rate,
 
             unit: UnitString::new_metric(),
         }
@@ -57,7 +54,6 @@ impl BaseTool {
         spindle_speed: f64,
         pass_depth: f64,
         plunge_rate: f64,
-        feed_rate: f64,
     ) -> Self {
         Self {
             id,
@@ -71,7 +67,6 @@ impl BaseTool {
             pass_depth,
 
             plunge_rate,
-            feed_rate,
 
             unit: UnitString::new_imperial(),
         }
@@ -89,7 +84,6 @@ impl Default for BaseTool {
             spindle_speed: Default::default(),
             pass_depth: Default::default(),
             plunge_rate: Default::default(),
-            feed_rate: Default::default(),
             unit: UnitString::new_metric(),
         }
     }

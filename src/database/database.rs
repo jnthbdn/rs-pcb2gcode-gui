@@ -136,26 +136,26 @@ impl Database {
         Ok(())
     }
 
-    pub fn get_all_endmills(&self) -> Result<Vec<Endmill>, rusqlite::Error> {
-        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM endmill")?;
+    pub fn get_all_endmills(&self, is_metric: bool) -> Result<Vec<Endmill>, rusqlite::Error> {
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM endmill WHERE is_metric=?")?;
 
-        let results = stmt.query_map([], Self::map_endmill)?;
-
-        results.collect()
-    }
-
-    pub fn get_all_drills(&self) -> Result<Vec<Drill>, rusqlite::Error> {
-        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM drill")?;
-
-        let results = stmt.query_map([], Self::map_drill)?;
+        let results = stmt.query_map([is_metric], Self::map_endmill)?;
 
         results.collect()
     }
 
-    pub fn get_all_vbits(&self) -> Result<Vec<VBit>, rusqlite::Error> {
-        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, angle, tip_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM vbit")?;
+    pub fn get_all_drills(&self, is_metric: bool) -> Result<Vec<Drill>, rusqlite::Error> {
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM drill WHERE is_metric=?")?;
 
-        let results = stmt.query_map([], Self::map_vbit)?;
+        let results = stmt.query_map([is_metric], Self::map_drill)?;
+
+        results.collect()
+    }
+
+    pub fn get_all_vbits(&self, is_metric: bool) -> Result<Vec<VBit>, rusqlite::Error> {
+        let mut stmt = self.connection.prepare("SELECT id, name, note, shaft_diameter, tool_diameter, angle, tip_diameter, spindle_speed, pass_depth, plunge_rate, feed_rate, is_metric FROM vbit WHERE is_metric=?")?;
+
+        let results = stmt.query_map([is_metric], Self::map_vbit)?;
 
         results.collect()
     }

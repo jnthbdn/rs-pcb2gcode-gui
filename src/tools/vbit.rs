@@ -3,6 +3,7 @@ use super::basetool::BaseTool;
 #[derive(Default, Debug)]
 pub struct VBit {
     pub base_tool: BaseTool,
+    pub feed_rate: f64,
     pub tool_angle: f64,
     pub tip_diameter: f64,
 }
@@ -31,8 +32,8 @@ impl VBit {
                 spindle_speed,
                 pass_depth,
                 plunge_rate,
-                feed_rate,
             ),
+            feed_rate,
             tool_angle,
             tip_diameter,
         }
@@ -61,16 +62,22 @@ impl VBit {
                 spindle_speed,
                 pass_depth,
                 plunge_rate,
-                feed_rate,
             ),
+            feed_rate,
             tool_angle,
             tip_diameter,
         }
     }
 
-    pub fn new_from_base_tool(base_tool: BaseTool, tool_angle: f64, tip_diameter: f64) -> Self {
+    pub fn new_from_base_tool(
+        base_tool: BaseTool,
+        feed_rate: f64,
+        tool_angle: f64,
+        tip_diameter: f64,
+    ) -> Self {
         Self {
             base_tool,
+            feed_rate,
             tool_angle,
             tip_diameter,
         }
