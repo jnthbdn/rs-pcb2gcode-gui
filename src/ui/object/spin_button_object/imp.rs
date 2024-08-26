@@ -34,7 +34,7 @@ pub struct SpinButtonObject {
     value: Cell<f64>,
 
     #[property(set, get)]
-    postfix: RefCell<String>,
+    pub postfix: RefCell<String>,
 
     pub old_value: Cell<f64>,
 }
