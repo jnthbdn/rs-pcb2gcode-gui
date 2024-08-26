@@ -27,3 +27,11 @@ pub mod window {
 }
 
 pub static READONLY_CSS_CLASS: &str = "readonly";
+
+fn bool_to_str(b: bool) -> &'static str {
+    if b {
+        "true"
+    } else {
+        "false"
+    }
+}
