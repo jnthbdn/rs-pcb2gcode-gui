@@ -37,6 +37,8 @@ impl FrameTreeTools {
         if tree_tool.is_tool() {
             return None;
         } else if tree_tool.is_unit_catergory() {
+            // TODO translations....
+
             child_model.extend_from_slice(&vec![
                 TreeToolRow::new_category(
                     "Drill".to_string(),
@@ -56,8 +58,8 @@ impl FrameTreeTools {
             ]);
         } else {
             match tree_tool.get_tool_type().unwrap() {
+                // TODO improve error handling (avoid `unwrap()`)
                 ToolType::Drill => {
-                    // TODO Avoid this unwrap
                     for drill in db.get_all_drills(tree_tool.is_metric()).unwrap() {
                         child_model.append(&TreeToolRow::new_drill_tool(
                             drill.base_tool.name,
@@ -67,7 +69,6 @@ impl FrameTreeTools {
                     }
                 }
                 ToolType::Endmill => {
-                    // TODO Avoid this unwrap
                     for endmill in db.get_all_endmills(tree_tool.is_metric()).unwrap() {
                         child_model.append(&TreeToolRow::new_endmill_tool(
                             endmill.base_tool.name,
@@ -77,7 +78,6 @@ impl FrameTreeTools {
                     }
                 }
                 ToolType::VBit => {
-                    // TODO Avoid this unwrap
                     for vbit in db.get_all_vbits(tree_tool.is_metric()).unwrap() {
                         child_model.append(&TreeToolRow::new_vbit_tool(
                             vbit.base_tool.name,
