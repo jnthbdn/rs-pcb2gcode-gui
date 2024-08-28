@@ -19,6 +19,12 @@ pub struct FrameCommon {
     pub output_unit_metric: TemplateChild<gtk::CheckButton>,
 
     #[template_child]
+    pub input_unit_imperial: TemplateChild<gtk::CheckButton>,
+
+    #[template_child]
+    pub output_unit_imperial: TemplateChild<gtk::CheckButton>,
+
+    #[template_child]
     pub safe_z: TemplateChild<SpinButtonObject>,
 
     #[template_child]

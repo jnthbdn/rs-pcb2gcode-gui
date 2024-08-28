@@ -40,7 +40,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkCheckButton">
+                                    <object class="GtkCheckButton" id="input_unit_imperial">
                                         <property name="hexpand">true</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
                                         <property name="label">Imperial</property>
@@ -88,7 +88,7 @@
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkCheckButton">
+                                    <object class="GtkCheckButton" id="output_unit_imperial">
                                         <property name="hexpand">true</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
                                         <property name="label">Imperial</property>
