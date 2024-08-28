@@ -4,13 +4,14 @@ use std::sync::{Arc, Mutex};
 
 use gtk::{
     ffi::GTK_INVALID_LIST_POSITION,
+    gio,
     glib::{self, property::PropertySet},
-    prelude::CastNone,
+    prelude::{CastNone, ListModelExt},
     subclass::prelude::ObjectSubclassIsExt,
 };
 
-use crate::database::database::Database;
 use crate::ui::object::tree_tool_row::TreeToolRow;
+use crate::{database::database::Database, tools::ToolType};
 
 glib::wrapper! {
     pub struct SelectToolObject(ObjectSubclass<imp::SelectToolObject>)
@@ -37,6 +38,30 @@ impl SelectToolObject {
             None
         } else {
             self.imp().dropdown.selected_item().and_downcast()
+        }
+    }
+
+    pub fn select_item(&self, tool_type: ToolType, tool_id: u32) {
+        let list = self
+            .imp()
+            .dropdown
+            .model()
+            .and_downcast::<gio::ListStore>()
+            .expect("list need to be ListStore");
+
+        for i in 0..list.n_items() {
+            let item: TreeToolRow = list
+                .item(i)
+                .and_downcast()
+                .expect("item need to be TreeToolRow");
+
+            if item.is_tool()
+                && item.get_tool_type().as_ref().unwrap() == &tool_type
+                && item.get_tool_id().as_ref().unwrap() == &tool_id
+            {
+                self.imp().dropdown.set_selected(i);
+                return;
+            }
         }
     }
 }
