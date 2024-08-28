@@ -1,162 +1,232 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+    <menu id="main_menu">
+        <submenu>
+            <attribute name="use-markup">true</attribute>
+            <attribute name="label" translatable="true">_File</attribute>
+            <section>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">Set configuration as &lt;u&gt;_D&lt;/u&gt;efault</attribute>
+                    <attribute name="action">win.save_as_default</attribute>
+                </item>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">&lt;u&gt;_S&lt;/u&gt;ave configuration</attribute>
+                    <attribute name="action">win.save_config</attribute>
+                </item>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">&lt;u&gt;_L&lt;/u&gt;oad configuration</attribute>
+                    <attribute name="action">win.load_config</attribute>
+                </item>
+            </section>
+        </submenu>
+        <submenu>
+            <attribute name="use-markup">true</attribute>
+            <attribute name="label" translatable="true">_Option</attribute>
+            <section>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">&lt;u&gt;_S&lt;/u&gt;how pcb2gcode command line</attribute>
+                    <attribute name="action">win.show_commanbd</attribute>
+                </item>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">&lt;u&gt;_F&lt;/u&gt;orce preview</attribute>
+                    <attribute name="action">win.force_preview</attribute>
+                </item>
+            </section>
+        </submenu>
+        <submenu>
+            <attribute name="use-markup">true</attribute>
+            <attribute name="label" translatable="true">_About</attribute>
+            <section>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">&lt;u&gt;_r&lt;/u&gt;s-pcg2gcode-gui</attribute>
+                    <attribute name="action">win.about</attribute>
+                </item>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">&lt;u&gt;_p&lt;/u&gt;cb2gcode</attribute>
+                    <attribute name="action">win.about_pcb2gcode</attribute>
+                </item>
+                <item>
+                    <attribute name="use-markup">true</attribute>
+                    <attribute name="label" translatable="true">pcb2gcode - &lt;u&gt;_D&lt;/u&gt;ocumentation</attribute>
+                    <attribute name="action">win.about_doc</attribute>
+                </item>
+            </section>
+        </submenu>
+    </menu>
     <template class="WindowMain" parent="GtkApplicationWindow">
         <property name="title">Pcb2Gcode</property>
         <child>
             <object class="GtkBox">
-                <property name="orientation">horizontal</property>
+                <property name="orientation">vertical</property>
                 <child>
-                    <object class="GtkBox">
-                        <property name="orientation">vertical</property>
-                        <child>
-                            <object class="GtkNotebook">
-                                <property name="name">notebook</property>
-                                <property name="vexpand">true</property>
-                                <child>
-                                    <object class="FrameInputOutput" id="frame_input_output">
-                                    </object>
-                                </child>
-                                <child type="tab">
-                                    <object class="GtkLabel">
-                                        <property name="label" translatable="yes">Input/Output</property>
-                                    </object>
-                                </child>
-        
-                                <child>
-                                    <object class="FrameCommon" id="frame_common">
-                                        <signal name="output-unit-change" handler="output_unit_change" swapped="true"/>
-                                    </object>
-                                </child>
-                                <child type="tab">
-                                    <object class="GtkLabel">
-                                        <property name="label" translatable="yes">Common</property>
-                                    </object>
-                                </child>
-        
-                                <child>
-                                    <object class="FrameMill" id="frame_mill">
-                                    </object>
-                                </child>
-                                <child type="tab">
-                                    <object class="GtkLabel">
-                                        <property name="label" translatable="yes">Mill</property>
-                                    </object>
-                                </child>
-        
-                                <child>
-                                    <object class="FrameDrill" id="frame_drill">
-                                    </object>
-                                </child>
-                                <child type="tab">
-                                    <object class="GtkLabel">
-                                        <property name="label" translatable="yes">Drill</property>
-                                    </object>
-                                </child>
-                                
-                                <child>
-                                    <object class="FrameOutline" id="frame_outline">
-                                    </object>
-                                </child>
-                                <child type="tab">
-                                    <object class="GtkLabel">
-                                        <property name="label" translatable="yes">Outline</property>
-                                    </object>
-                                </child>
-        
-                                <child>
-                                    <object class="FrameAutoleveling" id="frame_autolevel">
-                                    </object>
-                                </child>
-                                <child type="tab">
-                                    <object class="GtkLabel">
-                                        <property name="label">Autoleveller</property>
-                                    </object>
-                                </child>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkLabel">
-                                <property name="label" translatable="true">Made with ❤️ in Rust &amp; GTK4</property>
-                                <property name="name">love_text</property>
-                            </object>
-                        </child>
+                    <object class="GtkPopoverMenuBar">
+                        <property name="menu-model">main_menu</property>
                     </object>
                 </child>
                 <child>
                     <object class="GtkBox">
-                        <property name="margin-top">8</property>
-                        <property name="orientation">vertical</property>
+                        <property name="orientation">horizontal</property>
                         <child>
                             <object class="GtkBox">
-                                <property name="margin-bottom">8</property>
-                                <property name="orientation">horizontal</property>
-                                <property name="hexpand">true</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                    <object class="GtkNotebook">
+                                        <property name="name">notebook</property>
+                                        <property name="vexpand">true</property>
+                                        <child>
+                                            <object class="FrameInputOutput" id="frame_input_output">
+                                            </object>
+                                        </child>
+                                        <child type="tab">
+                                            <object class="GtkLabel">
+                                                <property name="label" translatable="yes">Input/Output</property>
+                                            </object>
+                                        </child>
+                
+                                        <child>
+                                            <object class="FrameCommon" id="frame_common">
+                                                <signal name="output-unit-change" handler="output_unit_change" swapped="true"/>
+                                            </object>
+                                        </child>
+                                        <child type="tab">
+                                            <object class="GtkLabel">
+                                                <property name="label" translatable="yes">Common</property>
+                                            </object>
+                                        </child>
+                
+                                        <child>
+                                            <object class="FrameMill" id="frame_mill">
+                                            </object>
+                                        </child>
+                                        <child type="tab">
+                                            <object class="GtkLabel">
+                                                <property name="label" translatable="yes">Mill</property>
+                                            </object>
+                                        </child>
+                
+                                        <child>
+                                            <object class="FrameDrill" id="frame_drill">
+                                            </object>
+                                        </child>
+                                        <child type="tab">
+                                            <object class="GtkLabel">
+                                                <property name="label" translatable="yes">Drill</property>
+                                            </object>
+                                        </child>
+                                        
+                                        <child>
+                                            <object class="FrameOutline" id="frame_outline">
+                                            </object>
+                                        </child>
+                                        <child type="tab">
+                                            <object class="GtkLabel">
+                                                <property name="label" translatable="yes">Outline</property>
+                                            </object>
+                                        </child>
+                
+                                        <child>
+                                            <object class="FrameAutoleveling" id="frame_autolevel">
+                                            </object>
+                                        </child>
+                                        <child type="tab">
+                                            <object class="GtkLabel">
+                                                <property name="label">Autoleveller</property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
                                 <child>
                                     <object class="GtkLabel">
-                                        <property name="name">preview_label</property>
-                                        <property name="halign">GTK_ALIGN_START</property>
+                                        <property name="label" translatable="true">Made with ❤️ in Rust &amp; GTK4</property>
+                                        <property name="name">love_text</property>
+                                    </object>
+                                </child>
+                            </object>
+                        </child>
+                        <child>
+                            <object class="GtkBox">
+                                <property name="margin-top">8</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                    <object class="GtkBox">
+                                        <property name="margin-bottom">8</property>
+                                        <property name="orientation">horizontal</property>
+                                        <property name="hexpand">true</property>
+                                        <child>
+                                            <object class="GtkLabel">
+                                                <property name="name">preview_label</property>
+                                                <property name="halign">GTK_ALIGN_START</property>
+                                                <property name="hexpand">true</property>
+                                                <property name="margin-start">8</property>
+                                                <property name="margin-end">8</property>
+                                                <property name="label" translatable="yes">Preview</property>
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkDropDown">
+                                                <property name="margin-start">8</property>
+                                                <property name="margin-end">8</property>
+                                                <property name="model">
+                                                <object class="GtkStringList">
+                                                    <items>
+                                                    <item translatable="yes">Factory</item>
+                                                    <item translatable="yes">Home</item>
+                                                    <item translatable="yes">Subway</item>
+                                                    </items>
+                                                </object>
+                                                </property>
+                                            </object>
+                                        </child>
+                                    </object>
+                                </child>
+                                <child>
+                                    <object class="GtkPicture">
+                                        <property name="name">preview_picture</property>
+                                        <property name="vexpand">true</property>
                                         <property name="hexpand">true</property>
                                         <property name="margin-start">8</property>
                                         <property name="margin-end">8</property>
-                                        <property name="label" translatable="yes">Preview</property>
+                                        <property name="width-request">800</property>
+                                        <property name="height-request">600</property>
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkDropDown">
-                                        <property name="margin-start">8</property>
-                                        <property name="margin-end">8</property>
-                                        <property name="model">
-                                        <object class="GtkStringList">
-                                            <items>
-                                            <item translatable="yes">Factory</item>
-                                            <item translatable="yes">Home</item>
-                                            <item translatable="yes">Subway</item>
-                                            </items>
-                                        </object>
-                                        </property>
-                                    </object>
-                                </child>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkPicture">
-                                <property name="name">preview_picture</property>
-                                <property name="vexpand">true</property>
-                                <property name="hexpand">true</property>
-                                <property name="margin-start">8</property>
-                                <property name="margin-end">8</property>
-                                <property name="width-request">800</property>
-                                <property name="height-request">600</property>
-                            </object>
-                        </child>
-                        <child>
-                            <object class="GtkBox">
-                                <property name="orientation">horizontal</property>
-                                <property name="halign">GTK_ALIGN_CENTER</property>
-                                <child>
-                                    <object class="GtkButton">
-                                        <signal name="clicked" handler="open_tool_db" swapped="true"/>
-                                        <property name="vexpand">false</property>
-                                        <property name="hexpand">false</property>
+                                    <object class="GtkBox">
+                                        <property name="orientation">horizontal</property>
                                         <property name="halign">GTK_ALIGN_CENTER</property>
-                                        <property name="label" translatable="yes">Tools database</property>
-                                        <property name="margin-top">8</property>
-                                        <property name="margin-bottom">8</property>
-                                        <property name="margin-start">8</property>
-                                        <property name="margin-end">8</property>  
-                                    </object>
-                                </child>
-                                <child>
-                                    <object class="GtkButton">
-                                        <signal name="clicked" handler="run_pcb2gcode" swapped="true"/>
-                                        <property name="vexpand">false</property>
-                                        <property name="hexpand">false</property>
-                                        <property name="halign">GTK_ALIGN_CENTER</property>
-                                        <property name="label" translatable="yes">Run pcb2gcode</property>
-                                        <property name="margin-top">8</property>
-                                        <property name="margin-bottom">8</property>
-                                        <property name="margin-start">8</property>
-                                        <property name="margin-end">8</property>  
+                                        <child>
+                                            <object class="GtkButton">
+                                                <signal name="clicked" handler="open_tool_db" swapped="true"/>
+                                                <property name="vexpand">false</property>
+                                                <property name="hexpand">false</property>
+                                                <property name="halign">GTK_ALIGN_CENTER</property>
+                                                <property name="label" translatable="yes">Tools database</property>
+                                                <property name="margin-top">8</property>
+                                                <property name="margin-bottom">8</property>
+                                                <property name="margin-start">8</property>
+                                                <property name="margin-end">8</property>  
+                                            </object>
+                                        </child>
+                                        <child>
+                                            <object class="GtkButton">
+                                                <signal name="clicked" handler="run_pcb2gcode" swapped="true"/>
+                                                <property name="vexpand">false</property>
+                                                <property name="hexpand">false</property>
+                                                <property name="halign">GTK_ALIGN_CENTER</property>
+                                                <property name="label" translatable="yes">Run pcb2gcode</property>
+                                                <property name="margin-top">8</property>
+                                                <property name="margin-bottom">8</property>
+                                                <property name="margin-start">8</property>
+                                                <property name="margin-end">8</property>  
+                                            </object>
+                                        </child>
                                     </object>
                                 </child>
                             </object>
