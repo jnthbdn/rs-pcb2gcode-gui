@@ -10,6 +10,8 @@ getset = "0.1.2"
 gtk = { version = "0.9.0", package = "gtk4", features = ["v4_12"] }
 log = "0.4.22"
 rusqlite = { version = "0.32.1", features = ["bundled"] }
+serde = { version = "1.0.209", features = ["derive"] }
+serde_json = "1.0.127"
 
 [build-dependencies]
 glib-build-tools = "0.20.0"

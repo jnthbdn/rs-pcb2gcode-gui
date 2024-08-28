@@ -1,24 +1,46 @@
 mod imp;
 
-use gtk::{glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
+use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
 use crate::{settings::Settings, units::UnitString, window_tool_db::WindowToolDB};
 
 glib::wrapper! {
     pub struct WindowMain(ObjectSubclass<imp::WindowMain>)
-        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow;
+        @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow,
+        @implements gio::ActionGroup, gio::ActionMap;
 }
 
 #[gtk::template_callbacks]
 impl WindowMain {
     pub fn new<P: IsA<gtk::Application>>(app: &P, settings: Settings) -> Self {
-        let s: Self = glib::Object::builder().property("application", app).build();
+        let win: Self = glib::Object::builder().property("application", app).build();
 
-        *s.imp().settings.borrow_mut() = settings;
+        win.imp()
+            .frame_common
+            .load_frame_settings(settings.frame_common());
 
-        s.load_window_settings();
+        win.imp()
+            .frame_mill
+            .load_frame_settings(settings.frame_mill());
 
-        s
+        win.imp()
+            .frame_drill
+            .load_frame_settings(settings.frame_drill());
+
+        win.imp()
+            .frame_outline
+            .load_frame_settings(settings.frame_outline());
+
+        win.imp()
+            .frame_autolevel
+            .load_frame_settings(settings.frame_autolevel());
+
+        *win.imp().settings.borrow_mut() = settings;
+        win.load_window_settings();
+
+        win.setup_actions();
+
+        win
     }
 
     fn load_window_settings(&self) {
@@ -34,6 +56,36 @@ impl WindowMain {
         settings.window_mut().set_width(self.width());
         settings.window_mut().set_height(self.height());
         settings.window_mut().set_maximized(self.is_maximized());
+
+        match settings.save_settings() {
+            Ok(_) => log::info!("Settings saved !"),
+            //TODO Improve error (dialog ?)
+            Err(e) => log::error!("Failed to save settings ({e})"),
+        };
+    }
+
+    fn save_default_settings(&self) {
+        let mut settings = self.imp().settings.borrow_mut();
+
+        self.imp()
+            .frame_common
+            .save_frame_settings(settings.frame_common_mut());
+
+        self.imp()
+            .frame_mill
+            .save_frame_settings(settings.frame_mill_mut());
+
+        self.imp()
+            .frame_drill
+            .save_frame_settings(settings.frame_drill_mut());
+
+        self.imp()
+            .frame_outline
+            .save_frame_settings(settings.frame_outline_mut());
+
+        self.imp()
+            .frame_autolevel
+            .save_frame_settings(settings.frame_autolevel_mut());
 
         match settings.save_settings() {
             Ok(_) => log::info!("Settings saved !"),
@@ -143,5 +195,52 @@ impl WindowMain {
         self.imp().frame_mill.set_units_postfixes(&unit);
         self.imp().frame_drill.set_units_postfixes(&unit);
         self.imp().frame_outline.set_units_postfixes(&unit);
+    }
+
+    fn setup_actions(&self) {
+        let save_as_default = gio::ActionEntry::builder("save_as_default")
+            .activate(move |win: &Self, _, _| {
+                win.save_default_settings();
+            })
+            .build();
+
+        let save_config = gio::ActionEntry::builder("save_config")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        let load_config = gio::ActionEntry::builder("load_config")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        let show_commanbd = gio::ActionEntry::builder("show_commanbd")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        let force_preview = gio::ActionEntry::builder("force_preview")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        let about = gio::ActionEntry::builder("about")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        let about_pcb2gcode = gio::ActionEntry::builder("about_pcb2gcode")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        let about_doc = gio::ActionEntry::builder("about_doc")
+            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .build();
+
+        self.add_action_entries([
+            save_as_default,
+            save_config,
+            load_config,
+            show_commanbd,
+            force_preview,
+            about,
+            about_pcb2gcode,
+            about_doc,
+        ]);
     }
 }

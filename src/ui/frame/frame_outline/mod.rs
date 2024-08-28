@@ -8,7 +8,10 @@ use gtk::{
     subclass::prelude::ObjectSubclassIsExt,
 };
 
-use crate::{database::database::Database, ui::bool_to_str, units::UnitString};
+use crate::{
+    database::database::Database, settings::settings_frame_outline::SettingsFrameOutline,
+    tools::ToolType, ui::bool_to_str, units::UnitString,
+};
 
 glib::wrapper! {
     pub struct FrameOutline(ObjectSubclass<imp::FrameOutline>)
@@ -40,6 +43,36 @@ impl FrameOutline {
         self.imp().bridge_depth.set_postfix(unit.measure());
         self.imp().is_unit_metric.set(unit.is_metric());
         self.refresh_tools();
+    }
+
+    pub fn load_frame_settings(&self, settings: &SettingsFrameOutline) {
+        let self_imp = self.imp();
+
+        self_imp
+            .tool
+            .select_item(settings.tool_type(), settings.tool_id());
+        self_imp.side.set_selected(settings.side());
+        self_imp.fill_outline.set_active(settings.is_fill_outline());
+        self_imp
+            .enable_bridge
+            .set_active(settings.is_enable_bridge());
+        self_imp.bridge_width.init_value(settings.bridge_width());
+        self_imp.bridge_number.init_value(settings.bridge_number());
+        self_imp.bridge_depth.init_value(settings.bridge_depth());
+    }
+
+    pub fn save_frame_settings(&self, settings: &mut SettingsFrameOutline) {
+        let self_imp = self.imp();
+        let tool = self_imp.tool.get_selected().unwrap();
+
+        settings.set_tool_type(tool.get_tool_type().unwrap_or(ToolType::Endmill));
+        settings.set_tool_id(tool.get_tool_id().unwrap_or(u32::MAX));
+        settings.set_side(self_imp.side.selected());
+        settings.set_is_fill_outline(self_imp.fill_outline.is_active());
+        settings.set_is_enable_bridge(self_imp.enable_bridge.is_active());
+        settings.set_bridge_width(self_imp.bridge_width.value());
+        settings.set_bridge_number(self_imp.bridge_number.value());
+        settings.set_bridge_depth(self_imp.bridge_depth.value());
     }
 
     #[template_callback]

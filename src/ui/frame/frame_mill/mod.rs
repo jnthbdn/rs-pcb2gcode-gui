@@ -8,7 +8,10 @@ use gtk::{
     subclass::prelude::ObjectSubclassIsExt,
 };
 
-use crate::{database::database::Database, tools::ToolType, ui::bool_to_str, units::UnitString};
+use crate::{
+    database::database::Database, settings::settings_frame_mill::SettingsFrameMill,
+    tools::ToolType, ui::bool_to_str, units::UnitString,
+};
 
 glib::wrapper! {
     pub struct FrameMill(ObjectSubclass<imp::FrameMill>)
@@ -20,6 +23,46 @@ glib::wrapper! {
 impl FrameMill {
     pub fn new() -> Self {
         glib::Object::builder().build()
+    }
+
+    pub fn load_frame_settings(&self, settings: &SettingsFrameMill) {
+        let self_imp = self.imp();
+
+        self_imp
+            .mill_tool
+            .select_item(settings.tool_type(), settings.tool_id());
+        self_imp.overlap.init_value(settings.overlap());
+        self_imp.depth.init_value(settings.depth());
+        self_imp.direction.set_selected(settings.direction());
+        self_imp.isolation.init_value(settings.isolation());
+        self_imp
+            .invert_gerber
+            .set_active(settings.is_invert_gerber());
+        self_imp.voronoi.set_active(settings.is_voronoi());
+        self_imp
+            .thermal_region
+            .set_active(settings.is_thermal_region());
+        self_imp.pre_milling.set_text(settings.pre_milling());
+        self_imp.post_milling.set_text(settings.post_milling());
+    }
+
+    pub fn save_frame_settings(&self, settings: &mut SettingsFrameMill) {
+        let self_imp = self.imp();
+        let tool = self_imp.mill_tool.get_selected().unwrap();
+
+        // TODO Save tool
+        settings.set_tool_type(tool.get_tool_type().unwrap_or(ToolType::VBit));
+        settings.set_tool_id(tool.get_tool_id().unwrap_or(u32::MAX));
+
+        settings.set_overlap(self_imp.overlap.value());
+        settings.set_depth(self_imp.depth.value());
+        settings.set_direction(self_imp.direction.selected());
+        settings.set_isolation(self_imp.isolation.value());
+        settings.set_is_invert_gerber(self_imp.invert_gerber.is_active());
+        settings.set_is_voronoi(self_imp.voronoi.is_active());
+        settings.set_is_thermal_region(self_imp.thermal_region.is_active());
+        settings.set_pre_milling(self_imp.pre_milling.all_text().to_string());
+        settings.set_post_milling(self_imp.post_milling.all_text().to_string());
     }
 
     pub fn refresh_tools(&self) {

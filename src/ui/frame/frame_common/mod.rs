@@ -2,7 +2,9 @@ mod imp;
 
 use gtk::{glib, prelude::ObjectExt, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::{ui::bool_to_str, units::UnitString};
+use crate::{
+    settings::settings_frame_common::SettingsFrameCommon, ui::bool_to_str, units::UnitString,
+};
 
 glib::wrapper! {
     pub struct FrameCommon(ObjectSubclass<imp::FrameCommon>)
@@ -24,6 +26,59 @@ impl FrameCommon {
         self.imp().offset_x.set_postfix(unit.measure());
         self.imp().offset_y.set_postfix(unit.measure());
         self.imp().mirror_x.set_postfix(unit.measure());
+    }
+
+    pub fn load_frame_settings(&self, settings: &SettingsFrameCommon) {
+        let self_imp = self.imp();
+
+        self_imp
+            .input_unit_metric
+            .set_active(settings.is_input_metric());
+        self_imp
+            .input_unit_imperial
+            .set_active(!settings.is_input_metric());
+        self_imp
+            .output_unit_metric
+            .set_active(settings.is_output_metric());
+        self_imp
+            .output_unit_imperial
+            .set_active(!settings.is_output_metric());
+        self_imp.safe_z.init_value(settings.safe_z());
+        self_imp.tool_change.init_value(settings.tool_change());
+        self_imp
+            .tool_change_as_machine_coord
+            .set_active(settings.is_tool_change_as_machine_coord());
+        self_imp.tolerance.init_value(settings.tolerance());
+        self_imp.optimization.init_value(settings.optimization());
+        self_imp.tiles_x.init_value(settings.tile_x());
+        self_imp.tiles_y.init_value(settings.tile_y());
+        self_imp.offset_x.init_value(settings.offset_x());
+        self_imp.offset_y.init_value(settings.offset_y());
+        self_imp.mirror_x.init_value(settings.mirror_x());
+        self_imp
+            .mirror_y_instead_x
+            .set_active(settings.is_mirror_y());
+        self_imp.zero_start.set_active(settings.is_zero_start());
+    }
+
+    pub fn save_frame_settings(&self, settings: &mut SettingsFrameCommon) {
+        let self_imp = self.imp();
+
+        settings.set_is_input_metric(self_imp.input_unit_metric.is_active());
+        settings.set_is_output_metric(self_imp.output_unit_metric.is_active());
+        settings.set_safe_z(self_imp.safe_z.value());
+        settings.set_tool_change(self_imp.tool_change.value());
+        settings
+            .set_is_tool_change_as_machine_coord(self_imp.tool_change_as_machine_coord.is_active());
+        settings.set_tolerance(self_imp.tolerance.value());
+        settings.set_optimization(self_imp.optimization.value());
+        settings.set_tile_x(self_imp.tiles_x.value());
+        settings.set_tile_y(self_imp.tiles_y.value());
+        settings.set_offset_x(self_imp.offset_x.value());
+        settings.set_offset_y(self_imp.offset_y.value());
+        settings.set_mirror_x(self_imp.mirror_x.value());
+        settings.set_is_mirror_y(self_imp.mirror_y_instead_x.is_active());
+        settings.set_is_zero_start(self_imp.zero_start.is_active());
     }
 
     #[template_callback]
