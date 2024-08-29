@@ -3,6 +3,7 @@
   <gresource prefix="/com/github/jnthbdn/rs-pcb2gcode-gui/">
     <file compressed="true" preprocess="xml-stripblanks">templates/window/window_main.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/window/window_tool_db.ui</file>
+    <file compressed="true" preprocess="xml-stripblanks">templates/window/window_command.ui</file>
 
     <file compressed="true" preprocess="xml-stripblanks">templates/frame/frame_tool_settings.ui</file>
     <file compressed="true" preprocess="xml-stripblanks">templates/frame/frame_tree_tools.ui</file>

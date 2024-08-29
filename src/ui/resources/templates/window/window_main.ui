@@ -29,7 +29,7 @@
                 <item>
                     <attribute name="use-markup">true</attribute>
                     <attribute name="label" translatable="true">&lt;u&gt;_S&lt;/u&gt;how pcb2gcode command line</attribute>
-                    <attribute name="action">win.show_commanbd</attribute>
+                    <attribute name="action">win.show_command</attribute>
                 </item>
                 <item>
                     <attribute name="use-markup">true</attribute>

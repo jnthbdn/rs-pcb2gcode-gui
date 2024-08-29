@@ -6,6 +6,8 @@ use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
 use crate::{settings::Settings, units::UnitString, window_tool_db::WindowToolDB};
 
+use super::window_command::WindowCommand;
+
 glib::wrapper! {
     pub struct WindowMain(ObjectSubclass<imp::WindowMain>)
         @extends gtk::Widget, gtk::Window, gtk::ApplicationWindow,
@@ -122,15 +124,14 @@ impl WindowMain {
         win_tool_db.borrow().as_ref().unwrap().present();
     }
 
-    #[template_callback]
-    fn run_pcb2gcode(&self, _button: &gtk::Button) {
+    fn get_pcb2gcode_params(&self) -> Result<String, String> {
         let mut params = String::new();
 
         params += &match self.imp().frame_input_output.get_string_param() {
             Ok(s) => s,
             Err(e) => {
                 log::error!("{e}");
-                return;
+                return Err(e);
             }
         };
 
@@ -138,7 +139,7 @@ impl WindowMain {
             Ok(s) => s,
             Err(e) => {
                 log::error!("{e}");
-                return;
+                return Err(e);
             }
         };
 
@@ -150,7 +151,7 @@ impl WindowMain {
             Ok(s) => s,
             Err(e) => {
                 log::error!("{e}");
-                return;
+                return Err(e);
             }
         };
 
@@ -162,7 +163,7 @@ impl WindowMain {
             Ok(s) => s,
             Err(e) => {
                 log::error!("{e}");
-                return;
+                return Err(e);
             }
         };
 
@@ -174,7 +175,7 @@ impl WindowMain {
             Ok(s) => s,
             Err(e) => {
                 log::error!("{e}");
-                return;
+                return Err(e);
             }
         };
 
@@ -182,11 +183,18 @@ impl WindowMain {
             Ok(s) => s,
             Err(e) => {
                 log::error!("{e}");
-                return;
+                return Err(e);
             }
         };
 
-        log::info!("Params: {params}");
+        Ok(params)
+    }
+
+    #[template_callback]
+    fn run_pcb2gcode(&self, _button: &gtk::Button) {
+        let params = self.get_pcb2gcode_params();
+
+        log::info!("Params: {:?}", params);
     }
 
     #[template_callback]
@@ -321,8 +329,15 @@ impl WindowMain {
             })
             .build();
 
-        let show_commanbd = gio::ActionEntry::builder("show_commanbd")
-            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+        let show_commanbd = gio::ActionEntry::builder("show_command")
+            .activate(move |win: &Self, _, _| {
+                let w = WindowCommand::new(win.upcast_ref::<gtk::Window>());
+                w.open(
+                    win.get_pcb2gcode_params()
+                        .or_else(|e| Ok::<String, String>("ERROR: ".to_string() + &e))
+                        .unwrap(),
+                );
+            })
             .build();
 
         let force_preview = gio::ActionEntry::builder("force_preview")

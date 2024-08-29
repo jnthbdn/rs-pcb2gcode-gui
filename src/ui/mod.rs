@@ -22,6 +22,7 @@ pub mod object {
 }
 
 pub mod window {
+    pub mod window_command;
     pub mod window_main;
     pub mod window_tool_db;
 }
