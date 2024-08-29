@@ -50,23 +50,41 @@ pub struct Settings {
 impl Settings {
     pub fn new() -> Result<Self, Box<dyn Error>> {
         let path = dirs::get_config_path_to(SETTING_FILENAME);
+        let mut settings: Self = Default::default();
 
         if path.exists() {
-            log::info!("Setting file found. Try loading");
+            log::info!("Setting file found.");
             let file = File::open(path)?;
-            let reader = BufReader::new(file);
 
-            Ok(serde_json::from_reader(reader)?)
+            settings.load_from_file(&file)?;
         } else {
             log::info!("No settings file.");
-            Ok(Default::default())
         }
+
+        Ok(settings)
     }
 
     pub fn save_settings(&self) -> Result<(), Box<dyn Error>> {
         let file = File::create(dirs::get_config_path_to(SETTING_FILENAME))?;
 
         Ok(serde_json::to_writer_pretty(file, &self)?)
+    }
+
+    pub fn save_to_file(&self, file: &File) -> Result<(), Box<dyn Error>> {
+        Ok(serde_json::to_writer_pretty(file, &self)?)
+    }
+
+    pub fn load_from_file(&mut self, file: &File) -> Result<(), Box<dyn Error>> {
+        let settings: Self = serde_json::from_reader(BufReader::new(file))?;
+
+        self.window = settings.window;
+        self.frame_common = settings.frame_common;
+        self.frame_mill = settings.frame_mill;
+        self.frame_drill = settings.frame_drill;
+        self.frame_outline = settings.frame_outline;
+        self.frame_autolevel = settings.frame_autolevel;
+
+        Ok(())
     }
 }
 

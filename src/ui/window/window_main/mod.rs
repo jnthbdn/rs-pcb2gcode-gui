@@ -1,5 +1,7 @@
 mod imp;
 
+use std::fs::File;
+
 use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
 use crate::{settings::Settings, units::UnitString, window_tool_db::WindowToolDB};
@@ -15,39 +17,39 @@ impl WindowMain {
     pub fn new<P: IsA<gtk::Application>>(app: &P, settings: Settings) -> Self {
         let win: Self = glib::Object::builder().property("application", app).build();
 
-        win.imp()
-            .frame_common
-            .load_frame_settings(settings.frame_common());
-
-        win.imp()
-            .frame_mill
-            .load_frame_settings(settings.frame_mill());
-
-        win.imp()
-            .frame_drill
-            .load_frame_settings(settings.frame_drill());
-
-        win.imp()
-            .frame_outline
-            .load_frame_settings(settings.frame_outline());
-
-        win.imp()
-            .frame_autolevel
-            .load_frame_settings(settings.frame_autolevel());
-
         *win.imp().settings.borrow_mut() = settings;
-        win.load_window_settings();
+        win.load_settings();
 
         win.setup_actions();
 
         win
     }
 
-    fn load_window_settings(&self) {
+    fn load_settings(&self) {
         let settings = self.imp().settings.borrow();
 
         self.set_default_size(settings.window().width(), settings.window().height());
         self.set_maximized(settings.window().maximized());
+
+        self.imp()
+            .frame_common
+            .load_frame_settings(settings.frame_common());
+
+        self.imp()
+            .frame_mill
+            .load_frame_settings(settings.frame_mill());
+
+        self.imp()
+            .frame_drill
+            .load_frame_settings(settings.frame_drill());
+
+        self.imp()
+            .frame_outline
+            .load_frame_settings(settings.frame_outline());
+
+        self.imp()
+            .frame_autolevel
+            .load_frame_settings(settings.frame_autolevel());
     }
 
     fn save_window_settings(&self) {
@@ -58,13 +60,23 @@ impl WindowMain {
         settings.window_mut().set_maximized(self.is_maximized());
 
         match settings.save_settings() {
-            Ok(_) => log::info!("Settings saved !"),
+            Ok(_) => log::info!("Window settings saved."),
+            //TODO Improve error (dialog ?)
+            Err(e) => log::error!("Failed to save window settings ({e})"),
+        };
+    }
+
+    fn save_default_settings(&self) {
+        self.update_settings();
+
+        match self.imp().settings.borrow().save_settings() {
+            Ok(_) => log::info!("Settings saved."),
             //TODO Improve error (dialog ?)
             Err(e) => log::error!("Failed to save settings ({e})"),
         };
     }
 
-    fn save_default_settings(&self) {
+    fn update_settings(&self) {
         let mut settings = self.imp().settings.borrow_mut();
 
         self.imp()
@@ -86,12 +98,6 @@ impl WindowMain {
         self.imp()
             .frame_autolevel
             .save_frame_settings(settings.frame_autolevel_mut());
-
-        match settings.save_settings() {
-            Ok(_) => log::info!("Settings saved !"),
-            //TODO Improve error (dialog ?)
-            Err(e) => log::error!("Failed to save settings ({e})"),
-        };
     }
 
     #[template_callback]
@@ -205,11 +211,114 @@ impl WindowMain {
             .build();
 
         let save_config = gio::ActionEntry::builder("save_config")
-            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .activate(move |win: &Self, _, _| {
+                let filters = gio::ListStore::new::<gtk::FileFilter>();
+
+                let filter_json = gtk::FileFilter::new();
+                // TODO Translation...
+                filter_json.set_name(Some("JSON file"));
+                filter_json.add_pattern("*.json");
+
+                let filter_all = gtk::FileFilter::new();
+                // TODO Translation...
+                filter_all.set_name(Some("All files"));
+                filter_all.add_pattern("*.*");
+
+                filters.extend_from_slice(&[filter_json, filter_all]);
+
+                //TODO Translation...
+                let dialog = gtk::FileDialog::builder()
+                    .filters(&filters)
+                    .title("Save configuration file")
+                    .initial_name("settings.json")
+                    .modal(true)
+                    .build();
+
+                let win_clone = win.clone();
+                dialog.save(
+                    Some(win.upcast_ref::<gtk::Window>()),
+                    None::<&gio::Cancellable>,
+                    move |res| {
+                        match res {
+                            Ok(file) => {
+                                let path = file.path().unwrap();
+
+                                match File::create(path) {
+                                    Ok(file) => {
+                                        win_clone.update_settings();
+                                        match win_clone.imp().settings.borrow().save_to_file(&file)
+                                        {
+                                            Ok(_) => (),
+                                            Err(e) => log::error!("Failed to save to file ({e})"),
+                                        }
+                                    }
+
+                                    Err(e) => log::error!("Failed to open file ({e})"),
+                                };
+                            }
+                            Err(e) => log::error!("Failed save file: {e}"),
+                        };
+                    },
+                );
+            })
             .build();
 
         let load_config = gio::ActionEntry::builder("load_config")
-            .activate(move |_win: &Self, _, _| log::warn!("TODO..."))
+            .activate(move |win: &Self, _, _| {
+                let filters = gio::ListStore::new::<gtk::FileFilter>();
+
+                let filter_json = gtk::FileFilter::new();
+                // TODO Translation...
+                filter_json.set_name(Some("JSON file"));
+                filter_json.add_pattern("*.json");
+
+                let filter_all = gtk::FileFilter::new();
+                // TODO Translation...
+                filter_all.set_name(Some("All files"));
+                filter_all.add_pattern("*.*");
+
+                filters.extend_from_slice(&[filter_json, filter_all]);
+
+                //TODO Translation...
+                let dialog = gtk::FileDialog::builder()
+                    .filters(&filters)
+                    .title("Open configuration file")
+                    .initial_name("settings.json")
+                    .modal(true)
+                    .build();
+
+                let win_clone = win.clone();
+                dialog.open(
+                    Some(win.upcast_ref::<gtk::Window>()),
+                    None::<&gio::Cancellable>,
+                    move |res| {
+                        match res {
+                            Ok(file) => {
+                                let path = file.path().unwrap();
+
+                                match File::open(path) {
+                                    Ok(file) => {
+                                        let load = win_clone
+                                            .imp()
+                                            .settings
+                                            .borrow_mut()
+                                            .load_from_file(&file);
+                                        match load {
+                                            Ok(_) => win_clone.load_settings(),
+                                            Err(e) => {
+                                                log::error!("Failed to load settings file ({e})")
+                                            }
+                                        }
+                                    }
+
+                                    Err(e) => log::error!("Failed to open file ({e})"),
+                                };
+                            }
+                            Err(e) => log::error!("Failed save file: {e}"),
+                        };
+                    },
+                );
+            })
             .build();
 
         let show_commanbd = gio::ActionEntry::builder("show_commanbd")
