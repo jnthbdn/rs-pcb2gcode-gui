@@ -36,3 +36,16 @@ fn bool_to_str(b: bool) -> &'static str {
         "false"
     }
 }
+
+fn show_alert_dialog(
+    message: &str,
+    detail: &str,
+    parent: &impl gtk::glib::object::IsA<gtk::Window>,
+) {
+    gtk::AlertDialog::builder()
+        .message(message)
+        .detail(detail)
+        .modal(true)
+        .build()
+        .show(Some(parent));
+}

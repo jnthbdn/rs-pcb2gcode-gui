@@ -4,7 +4,9 @@ use std::fs::File;
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
-use crate::{settings::Settings, units::UnitString, window_tool_db::WindowToolDB};
+use crate::{
+    settings::Settings, ui::show_alert_dialog, units::UnitString, window_tool_db::WindowToolDB,
+};
 
 use super::window_command::WindowCommand;
 
@@ -63,8 +65,15 @@ impl WindowMain {
 
         match settings.save_settings() {
             Ok(_) => log::info!("Window settings saved."),
-            //TODO Improve error (dialog ?)
-            Err(e) => log::error!("Failed to save window settings ({e})"),
+            Err(e) => {
+                show_alert_dialog(
+                    // TODO Translation....
+                    "Fail save window settings",
+                    &e.to_string(),
+                    self.upcast_ref::<gtk::Window>(),
+                );
+                log::error!("Failed to save window settings ({e})")
+            }
         };
     }
 
@@ -73,8 +82,15 @@ impl WindowMain {
 
         match self.imp().settings.borrow().save_settings() {
             Ok(_) => log::info!("Settings saved."),
-            //TODO Improve error (dialog ?)
-            Err(e) => log::error!("Failed to save settings ({e})"),
+            Err(e) => {
+                show_alert_dialog(
+                    // TODO Translation....
+                    "Fail save default settings",
+                    &e.to_string(),
+                    self.upcast_ref::<gtk::Window>(),
+                );
+                log::error!("Failed to save default settings ({e})")
+            }
         };
     }
 
@@ -194,6 +210,16 @@ impl WindowMain {
     fn run_pcb2gcode(&self, _button: &gtk::Button) {
         let params = self.get_pcb2gcode_params();
 
+        if params.is_err() {
+            //TODO Translation...
+            show_alert_dialog(
+                "Failed to run pcb2gcode",
+                &params.err().unwrap(),
+                self.upcast_ref::<gtk::Window>(),
+            );
+            return;
+        }
+
         log::info!("Params: {:?}", params);
     }
 
@@ -234,9 +260,9 @@ impl WindowMain {
 
                 filters.extend_from_slice(&[filter_json, filter_all]);
 
-                //TODO Translation...
                 let dialog = gtk::FileDialog::builder()
                     .filters(&filters)
+                    //TODO Translation...
                     .title("Save configuration file")
                     .initial_name("settings.json")
                     .modal(true)
@@ -257,14 +283,30 @@ impl WindowMain {
                                         match win_clone.imp().settings.borrow().save_to_file(&file)
                                         {
                                             Ok(_) => (),
-                                            Err(e) => log::error!("Failed to save to file ({e})"),
+                                            Err(e) => {
+                                                show_alert_dialog(
+                                                    //TODO Translation...
+                                                    "Fail saving settings",
+                                                    &e.to_string(),
+                                                    win_clone.upcast_ref::<gtk::Window>(),
+                                                );
+                                                log::error!("Failed to save settings file ({e})")
+                                            }
                                         }
                                     }
 
-                                    Err(e) => log::error!("Failed to open file ({e})"),
+                                    Err(e) => {
+                                        show_alert_dialog(
+                                            //TODO Translation...
+                                            "Fail open file",
+                                            &e.to_string(),
+                                            win_clone.upcast_ref::<gtk::Window>(),
+                                        );
+                                        log::error!("Failed to open file ({e})")
+                                    }
                                 };
                             }
-                            Err(e) => log::error!("Failed save file: {e}"),
+                            Err(e) => log::warn!("{e}"),
                         };
                     },
                 );
@@ -287,9 +329,9 @@ impl WindowMain {
 
                 filters.extend_from_slice(&[filter_json, filter_all]);
 
-                //TODO Translation...
                 let dialog = gtk::FileDialog::builder()
                     .filters(&filters)
+                    //TODO Translation...
                     .title("Open configuration file")
                     .initial_name("settings.json")
                     .modal(true)
@@ -314,15 +356,29 @@ impl WindowMain {
                                         match load {
                                             Ok(_) => win_clone.load_settings(),
                                             Err(e) => {
+                                                show_alert_dialog(
+                                                    //TODO Translation...
+                                                    "Fail loading settings",
+                                                    &e.to_string(),
+                                                    win_clone.upcast_ref::<gtk::Window>(),
+                                                );
                                                 log::error!("Failed to load settings file ({e})")
                                             }
                                         }
                                     }
 
-                                    Err(e) => log::error!("Failed to open file ({e})"),
+                                    Err(e) => {
+                                        show_alert_dialog(
+                                            //TODO Translation...
+                                            "Fail open file",
+                                            &e.to_string(),
+                                            win_clone.upcast_ref::<gtk::Window>(),
+                                        );
+                                        log::error!("Failed to open file ({e})")
+                                    }
                                 };
                             }
-                            Err(e) => log::error!("Failed save file: {e}"),
+                            Err(e) => log::warn!("{e}"),
                         };
                     },
                 );

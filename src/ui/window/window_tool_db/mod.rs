@@ -12,6 +12,7 @@ use gtk::{
 use crate::{
     database::database::{Database, DatabaseColumn},
     tools::{drill::Drill, endmill::Endmill, vbit::VBit, ToolType},
+    ui::show_alert_dialog,
 };
 
 glib::wrapper! {
@@ -178,8 +179,15 @@ impl WindowToolDB {
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
                     }
-                    // TODO Improve this error (AlertDialog ?)
-                    Err(e) => log::error!("action_add_endmill error : {}", e),
+                    Err(e) => {
+                        show_alert_dialog(
+                            // TODO Translation....
+                            "Add endmill error",
+                            &e.to_string(),
+                            win.upcast_ref::<gtk::Window>(),
+                        );
+                        log::error!("Failed to add metric endmill ({e})")
+                    }
                 };
             })
             .build();
@@ -203,8 +211,15 @@ impl WindowToolDB {
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
                     }
-                    // TODO Improve this error (AlertDialog ?)
-                    Err(e) => log::error!("action_add_drill error : {}", e),
+                    Err(e) => {
+                        show_alert_dialog(
+                            // TODO Translation....
+                            "Add drill error",
+                            &e.to_string(),
+                            win.upcast_ref::<gtk::Window>(),
+                        );
+                        log::error!("Failed to add metric drill ({e})")
+                    }
                 };
             })
             .build();
@@ -231,8 +246,15 @@ impl WindowToolDB {
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
                     }
-                    // TODO Improve this error (AlertDialog ?)
-                    Err(e) => log::error!("action_add_vbit error : {}", e),
+                    Err(e) => {
+                        show_alert_dialog(
+                            // TODO Translation....
+                            "Add V-Bit error",
+                            &e.to_string(),
+                            win.upcast_ref::<gtk::Window>(),
+                        );
+                        log::error!("Failed to add metric vbit ({e})")
+                    }
                 };
             })
             .build();
@@ -257,8 +279,15 @@ impl WindowToolDB {
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
                     }
-                    // TODO Improve this error (AlertDialog ?)
-                    Err(e) => log::error!("action_add_endmill error : {}", e),
+                    Err(e) => {
+                        show_alert_dialog(
+                            // TODO Translation....
+                            "Add endmill error",
+                            &e.to_string(),
+                            win.upcast_ref::<gtk::Window>(),
+                        );
+                        log::error!("Failed to add imperial endmill ({e})")
+                    }
                 };
             })
             .build();
@@ -282,8 +311,15 @@ impl WindowToolDB {
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
                     }
-                    // TODO Improve this error (AlertDialog ?)
-                    Err(e) => log::error!("action_add_drill error : {}", e),
+                    Err(e) => {
+                        show_alert_dialog(
+                            // TODO Translation....
+                            "Add drill error",
+                            &e.to_string(),
+                            win.upcast_ref::<gtk::Window>(),
+                        );
+                        log::error!("Failed to add imperial drill ({e})")
+                    }
                 };
             })
             .build();
@@ -310,8 +346,15 @@ impl WindowToolDB {
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
                     }
-                    // TODO Improve this error (AlertDialog ?)
-                    Err(e) => log::error!("action_add_vbit error : {}", e),
+                    Err(e) => {
+                        show_alert_dialog(
+                            // TODO Translation....
+                            "Add V-Bit error",
+                            &e.to_string(),
+                            win.upcast_ref::<gtk::Window>(),
+                        );
+                        log::error!("Failed to add imperial v-bit ({e})")
+                    }
                 };
             })
             .build();

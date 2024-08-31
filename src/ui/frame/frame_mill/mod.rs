@@ -50,7 +50,6 @@ impl FrameMill {
         let self_imp = self.imp();
         let tool = self_imp.mill_tool.get_selected().unwrap();
 
-        // TODO Save tool
         settings.set_tool_type(tool.get_tool_type().unwrap_or(ToolType::VBit));
         settings.set_tool_id(tool.get_tool_id().unwrap_or(u32::MAX));
 
