@@ -82,6 +82,23 @@ impl FrameAutoleveling {
             self.probe_set_zero.add_css_class(READONLY_CSS_CLASS);
         }
     }
+    pub fn on_software_change(&self) {
+        let is_custom = self.software.selected() == 3;
+
+        self.probe_code.set_can_target(is_custom);
+        self.probe_variable.set_can_target(is_custom);
+        self.probe_set_zero.set_can_target(is_custom);
+
+        if is_custom {
+            self.probe_code.remove_css_class(READONLY_CSS_CLASS);
+            self.probe_variable.remove_css_class(READONLY_CSS_CLASS);
+            self.probe_set_zero.remove_css_class(READONLY_CSS_CLASS);
+        } else {
+            self.probe_code.add_css_class(READONLY_CSS_CLASS);
+            self.probe_variable.add_css_class(READONLY_CSS_CLASS);
+            self.probe_set_zero.add_css_class(READONLY_CSS_CLASS);
+        }
+    }
 }
 
 #[glib::object_subclass]
@@ -110,21 +127,13 @@ impl ObjectImpl for FrameAutoleveling {
         self.parent_constructed();
 
         self.set_autolevel_enable(false);
-    }
 
-    // fn signals() -> &'static [glib::subclass::Signal] {
-    //     static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
-    //     SIGNALS.get_or_init(|| {
-    //         vec![glib::subclass::Signal::builder("setting-changed")
-    //             .param_types([
-    //                 ToolType::static_type(),
-    //                 DatabaseColumn::static_type(),
-    //                 glib::GString::static_type(),
-    //                 u32::static_type(),
-    //             ])
-    //             .build()]
-    //     })
-    // }
+        let obj = self.obj().clone();
+        self.software
+            .connect_notify_local(Some("selected"), move |_, _| {
+                obj.imp().on_software_change();
+            });
+    }
 }
 impl WidgetImpl for FrameAutoleveling {}
 impl BoxImpl for FrameAutoleveling {}
