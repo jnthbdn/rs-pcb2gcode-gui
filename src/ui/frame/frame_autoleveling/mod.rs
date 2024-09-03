@@ -52,13 +52,6 @@ impl FrameAutoleveling {
         settings.set_probe_set_zero(self_imp.probe_set_zero.text().into());
     }
 
-    #[template_callback]
-    pub fn enable_autolevel_toggled(&self, _: gtk::CheckButton) {
-        self.imp().set_autolevel_enable(
-            self.imp().enable_front.is_active() || self.imp().enable_back.is_active(),
-        )
-    }
-
     pub fn get_string_param(&self) -> Result<String, String> {
         let mut result = String::new();
 
@@ -97,5 +90,12 @@ impl FrameAutoleveling {
         }
 
         Ok(result)
+    }
+
+    #[template_callback]
+    pub fn enable_autolevel_toggled(&self, _: gtk::CheckButton) {
+        self.imp().set_autolevel_enable(
+            self.imp().enable_front.is_active() || self.imp().enable_back.is_active(),
+        )
     }
 }
