@@ -112,7 +112,7 @@ impl FrameMill {
             ToolType::VBit => {
                 let tool = db.get_vbit(mill.get_tool_id().unwrap()).unwrap().unwrap();
                 (
-                    tool.diameter(self.imp().depth.value()),
+                    tool.diameter(self.imp().depth.value().abs()),
                     tool.feed_rate,
                     tool.base_tool,
                 )
