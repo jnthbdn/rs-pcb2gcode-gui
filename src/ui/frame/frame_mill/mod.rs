@@ -126,9 +126,12 @@ impl FrameMill {
             "--isolation-width={} ",
             self.imp().isolation.value_str(true)
         );
-        result += &format!("--pre-milling-gcode={} ", self.imp().pre_milling.all_text());
         result += &format!(
-            "--post-milling-gcode={} ",
+            "--pre-milling-gcode=\"{}\" ",
+            self.imp().pre_milling.all_text()
+        );
+        result += &format!(
+            "--post-milling-gcode=\"{}\" ",
             self.imp().post_milling.all_text()
         );
         result += &format!("--zwork={} ", self.imp().depth.value_str(true));

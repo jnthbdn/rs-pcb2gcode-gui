@@ -69,10 +69,10 @@ impl FrameAutoleveling {
             result += &format!("--al-x={} ", self.imp().distance_probe_x.value_str(true));
             result += &format!("--al-y={} ", self.imp().distance_probe_y.value_str(true));
             result += &format!("--al-probefeed={} ", self.imp().feed.value_str(true));
-            result += &format!("--al-prob-on={} ", self.imp().probe_on.text());
-            result += &format!("--al-prob-off={} ", self.imp().probe_off.text());
+            result += &format!("--al-prob-on=\"{}\" ", self.imp().probe_on.text());
+            result += &format!("--al-prob-off=\"{}\" ", self.imp().probe_off.text());
             result += &format!(
-                "--software={} ",
+                "--software=\"{}\" ",
                 self.imp()
                     .software
                     .selected_item()
@@ -83,9 +83,9 @@ impl FrameAutoleveling {
             );
 
             if self.imp().software.selected() == 3 {
-                result += &format!("--al-probecode={} ", self.imp().probe_code.text());
-                result += &format!("--al-probevar={} ", self.imp().probe_variable.text());
-                result += &format!("--al-setzzero={} ", self.imp().probe_set_zero.text());
+                result += &format!("--al-probecode=\"{}\" ", self.imp().probe_code.text());
+                result += &format!("--al-probevar=\"{}\" ", self.imp().probe_variable.text());
+                result += &format!("--al-setzzero=\"{}\" ", self.imp().probe_set_zero.text());
             }
         }
 
