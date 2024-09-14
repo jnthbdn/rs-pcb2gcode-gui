@@ -17,6 +17,8 @@
                         <property name="vexpand">true</property>
                         <property name="width-request">700</property>
                         <property name="height-request">300</property>
+                        <property name="wrap-mode">GTK_WRAP_WORD</property>
+                        <property name="monospace">true</property>
                     </object>
                 </child>
                 <child>
