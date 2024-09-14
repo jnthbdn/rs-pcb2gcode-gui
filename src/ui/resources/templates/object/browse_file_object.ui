@@ -5,10 +5,7 @@
         <child>
             <object class="GtkEntry" id="entry">
                 <property name="hexpand">true</property>
-                <property name="editable">false</property>
-                <style>
-                    <class name="readonly"/>
-                </style>
+                <property name="editable">true</property>
             </object>
         </child>
         <child>
