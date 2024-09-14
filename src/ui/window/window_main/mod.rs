@@ -171,29 +171,33 @@ impl WindowMain {
             }
         };
 
-        params += &match self
-            .imp()
-            .frame_drill
-            .get_string_param(self.imp().database.clone())
-        {
-            Ok(s) => s,
-            Err(e) => {
-                log::error!("{e}");
-                return Err(e);
-            }
-        };
+        if self.imp().frame_input_output.is_drill_file_available() {
+            params += &match self
+                .imp()
+                .frame_drill
+                .get_string_param(self.imp().database.clone())
+            {
+                Ok(s) => s,
+                Err(e) => {
+                    log::error!("{e}");
+                    return Err(e);
+                }
+            };
+        }
 
-        params += &match self
-            .imp()
-            .frame_outline
-            .get_string_param(self.imp().database.clone())
-        {
-            Ok(s) => s,
-            Err(e) => {
-                log::error!("{e}");
-                return Err(e);
-            }
-        };
+        if self.imp().frame_input_output.is_outline_file_available() {
+            params += &match self
+                .imp()
+                .frame_outline
+                .get_string_param(self.imp().database.clone())
+            {
+                Ok(s) => s,
+                Err(e) => {
+                    log::error!("{e}");
+                    return Err(e);
+                }
+            };
+        }
 
         params += &match self.imp().frame_autolevel.get_string_param() {
             Ok(s) => s,
