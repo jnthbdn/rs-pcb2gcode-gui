@@ -58,4 +58,12 @@ impl FrameInputOutput {
 
         Ok(result)
     }
+
+    pub fn is_drill_file_available(&self) -> bool {
+        !self.imp().drill_file.get_path().is_empty()
+    }
+
+    pub fn is_outline_file_available(&self) -> bool {
+        !self.imp().outline_file.get_path().is_empty()
+    }
 }
