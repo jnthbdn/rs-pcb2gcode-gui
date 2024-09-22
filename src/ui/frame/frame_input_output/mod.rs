@@ -66,4 +66,17 @@ impl FrameInputOutput {
     pub fn is_outline_file_available(&self) -> bool {
         !self.imp().outline_file.get_path().is_empty()
     }
+
+    pub fn get_default_folder(&self) -> Option<String> {
+        self.imp().get_default_folder()
+    }
+
+    pub fn set_default_folder(&self, value: Option<String>) {
+        self.imp().set_default_folder(value);
+    }
+
+    #[template_callback]
+    fn on_file_selected(&self, folder: String, _filename: String) {
+        self.imp().set_default_openning_folder(&folder);
+    }
 }
