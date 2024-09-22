@@ -14,6 +14,10 @@ impl BrowseFileObject {
         glib::Object::builder().build()
     }
 
+    pub fn set_default_folder(&self, path: &String) {
+        self.imp().set_default_folder(path);
+    }
+
     #[template_callback]
     pub fn browse_clicked(&self, _btn: gtk::Button) {
         self.imp().open_dialog();

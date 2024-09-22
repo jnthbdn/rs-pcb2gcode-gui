@@ -3,6 +3,8 @@
 use std::{
     cell::{Cell, RefCell},
     cmp::min,
+    path::Path,
+    sync::OnceLock,
 };
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::*};
@@ -41,10 +43,21 @@ impl BrowseFileObject {
 
         let clone_self = self.obj().clone();
         let callback = move |result: Result<gio::File, glib::Error>| match result {
-            Ok(file) => clone_self
-                .imp()
-                .entry
-                .set_text(file.path().unwrap().to_str().unwrap()),
+            Ok(file) => {
+                let path = file.path().unwrap();
+                let folder = if path.is_file() {
+                    path.parent().unwrap()
+                } else {
+                    &path
+                };
+                let filename = if path.is_file() {
+                    path.file_name().unwrap().to_str().unwrap()
+                } else {
+                    ""
+                };
+                clone_self.imp().entry.set_text(path.to_str().unwrap());
+                clone_self.emit_by_name::<()>("selected", &[&folder.to_str().unwrap(), &filename]);
+            }
             Err(e) => log::warn!("{}", e),
         };
 
@@ -110,6 +123,13 @@ impl BrowseFileObject {
 
         self.dialog.borrow().set_filters(Some(&list));
     }
+
+    pub fn set_default_folder(&self, path: &String) {
+        let path = Path::new(path);
+        self.dialog
+            .borrow()
+            .set_initial_folder(Some(&gio::File::for_path(path)));
+    }
 }
 
 #[glib::object_subclass]
@@ -134,6 +154,15 @@ impl ObjectImpl for BrowseFileObject {
         self.parent_constructed();
 
         self.dialog.borrow().set_modal(true);
+    }
+
+    fn signals() -> &'static [glib::subclass::Signal] {
+        static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
+        SIGNALS.get_or_init(|| {
+            vec![glib::subclass::Signal::builder("selected")
+                .param_types([String::static_type(), String::static_type()])
+                .build()]
+        })
     }
 }
 impl WidgetImpl for BrowseFileObject {}
