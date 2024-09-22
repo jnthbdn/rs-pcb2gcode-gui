@@ -109,7 +109,7 @@ impl FrameCommon {
             "--zchange-absolute={} ",
             bool_to_str(self.imp().tool_change_as_machine_coord.is_active())
         );
-        result += &format!("--tolerance={} ", self.imp().tolerance.value_str(true));
+        result += &format!("--tolerance={} ", self.imp().tolerance.value_str(false));
         result += &format!("--optimise={} ", self.imp().optimization.value_str(true));
         result += &format!("--tile-x={} ", self.imp().tiles_x.value_str(true));
         result += &format!("--tile-y={} ", self.imp().tiles_y.value_str(true));
