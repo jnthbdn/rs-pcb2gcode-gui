@@ -8,7 +8,7 @@ use crate::{
     settings::Settings, ui::show_alert_dialog, units::UnitString, window_tool_db::WindowToolDB,
 };
 
-use super::window_command::WindowCommand;
+use super::{window_command::WindowCommand, window_execute::WindowExecute};
 
 glib::wrapper! {
     pub struct WindowMain(ObjectSubclass<imp::WindowMain>)
@@ -34,6 +34,10 @@ impl WindowMain {
 
         self.set_default_size(settings.window().width(), settings.window().height());
         self.set_maximized(settings.window().maximized());
+
+        self.imp()
+            .frame_input_output
+            .set_default_folder(settings.window().default_folder().clone());
 
         self.imp()
             .frame_common
@@ -62,6 +66,9 @@ impl WindowMain {
         settings.window_mut().set_width(self.width());
         settings.window_mut().set_height(self.height());
         settings.window_mut().set_maximized(self.is_maximized());
+        settings
+            .window_mut()
+            .set_default_folder(self.imp().frame_input_output.get_default_folder());
 
         match settings.save_settings() {
             Ok(_) => log::info!("Window settings saved."),
@@ -146,16 +153,16 @@ impl WindowMain {
         params += &match self.imp().frame_input_output.get_string_param() {
             Ok(s) => s,
             Err(e) => {
-                log::error!("{e}");
-                return Err(e);
+                log::error!("Frame input/output: {e}");
+                return Err(format!("Input/Output options: {e}"));
             }
         };
 
         params += &match self.imp().frame_common.get_string_param() {
             Ok(s) => s,
             Err(e) => {
-                log::error!("{e}");
-                return Err(e);
+                log::error!("Frame common: {e}");
+                return Err(format!("Common options: {e}"));
             }
         };
 
@@ -166,8 +173,8 @@ impl WindowMain {
         {
             Ok(s) => s,
             Err(e) => {
-                log::error!("{e}");
-                return Err(e);
+                log::error!("Frame mill: {e}");
+                return Err(format!("Milling options: {e}"));
             }
         };
 
@@ -179,8 +186,8 @@ impl WindowMain {
             {
                 Ok(s) => s,
                 Err(e) => {
-                    log::error!("{e}");
-                    return Err(e);
+                    log::error!("Frame drill: {e}");
+                    return Err(format!("Drill options: {e}"));
                 }
             };
         }
@@ -193,8 +200,8 @@ impl WindowMain {
             {
                 Ok(s) => s,
                 Err(e) => {
-                    log::error!("{e}");
-                    return Err(e);
+                    log::error!("Frame outline: {e}");
+                    return Err(format!("Outline options: {e}"));
                 }
             };
         }
@@ -202,8 +209,8 @@ impl WindowMain {
         params += &match self.imp().frame_autolevel.get_string_param() {
             Ok(s) => s,
             Err(e) => {
-                log::error!("{e}");
-                return Err(e);
+                log::error!("Frame autolevel : {e}");
+                return Err(format!("Autolevele options: {e}"));
             }
         };
 
@@ -224,7 +231,8 @@ impl WindowMain {
             return;
         }
 
-        log::info!("Params: {:?}", params);
+        log::info!("pcb2gcode Params: {:?}", params);
+        WindowExecute::new(self.upcast_ref::<gtk::Window>()).open(params.unwrap());
     }
 
     #[template_callback]
@@ -389,7 +397,7 @@ impl WindowMain {
             })
             .build();
 
-        let show_commanbd = gio::ActionEntry::builder("show_command")
+        let show_command = gio::ActionEntry::builder("show_command")
             .activate(move |win: &Self, _, _| {
                 let w = WindowCommand::new(win.upcast_ref::<gtk::Window>());
                 w.open(
@@ -420,7 +428,7 @@ impl WindowMain {
             save_as_default,
             save_config,
             load_config,
-            show_commanbd,
+            show_command,
             force_preview,
             about,
             about_pcb2gcode,
