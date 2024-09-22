@@ -190,7 +190,7 @@
 
                         <!-- Tool angle (only for V-Bit) -->
                         <child>
-                            <object class="GtkLabel" id="diameter_angle_label">
+                            <object class="GtkLabel" id="tool_angle_label">
                                 <property name="hexpand">true</property>
                                 <property name="label" translatable="true">Tool angle</property>
                                 <property name="halign">GTK_ALIGN_START</property>
@@ -201,7 +201,7 @@
                             </object>
                         </child>
                         <child>
-                            <object class="SpinButtonObject" id="diameter_angle">
+                            <object class="SpinButtonObject" id="tool_angle">
                                 <signal name="value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>

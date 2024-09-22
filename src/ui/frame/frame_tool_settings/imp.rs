@@ -31,9 +31,9 @@ pub struct FrameToolSettings {
     #[template_child]
     pub diameter_tip: TemplateChild<SpinButtonObject>,
     #[template_child]
-    pub diameter_angle_label: TemplateChild<gtk::Label>,
+    pub tool_angle_label: TemplateChild<gtk::Label>,
     #[template_child]
-    pub diameter_angle: TemplateChild<SpinButtonObject>,
+    pub tool_angle: TemplateChild<SpinButtonObject>,
 
     #[template_child]
     pub pass_depth: TemplateChild<SpinButtonObject>,
@@ -68,8 +68,8 @@ impl FrameToolSettings {
         self.show_base_tool(&endmill.base_tool);
         self.speed_horizontal.init_value(endmill.feed_rate);
 
-        self.diameter_angle_label.set_visible(false);
-        self.diameter_angle.set_visible(false);
+        self.tool_angle_label.set_visible(false);
+        self.tool_angle.set_visible(false);
         self.diameter_tip_label.set_visible(false);
         self.diameter_tip.set_visible(false);
         self.speed_horizontal.set_visible(true);
@@ -80,8 +80,8 @@ impl FrameToolSettings {
         self.current_tool.set(Some(ToolType::Drill));
         self.show_base_tool(&drill.base_tool);
 
-        self.diameter_angle_label.set_visible(false);
-        self.diameter_angle.set_visible(false);
+        self.tool_angle_label.set_visible(false);
+        self.tool_angle.set_visible(false);
         self.diameter_tip_label.set_visible(false);
         self.diameter_tip.set_visible(false);
         self.speed_horizontal.set_visible(false);
@@ -93,11 +93,11 @@ impl FrameToolSettings {
         self.show_base_tool(&vbit.base_tool);
 
         self.speed_horizontal.init_value(vbit.feed_rate);
-        self.diameter_angle.init_value(vbit.tool_angle);
+        self.tool_angle.init_value(vbit.tool_angle);
         self.diameter_tip.init_value(vbit.tip_diameter);
 
-        self.diameter_angle_label.set_visible(true);
-        self.diameter_angle.set_visible(true);
+        self.tool_angle_label.set_visible(true);
+        self.tool_angle.set_visible(true);
         self.diameter_tip_label.set_visible(true);
         self.diameter_tip.set_visible(true);
         self.speed_horizontal.set_visible(true);
@@ -128,7 +128,7 @@ impl FrameToolSettings {
             Some(tool) => match tool {
                 ToolType::VBit => {
                     self.diameter_tip.imp().check_change();
-                    self.diameter_angle.imp().check_change();
+                    self.tool_angle.imp().check_change();
                 }
                 _ => (),
             },
