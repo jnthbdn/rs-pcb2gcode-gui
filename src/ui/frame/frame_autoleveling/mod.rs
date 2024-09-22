@@ -69,8 +69,8 @@ impl FrameAutoleveling {
             result += &format!("--al-x={} ", self.imp().distance_probe_x.value_str(true));
             result += &format!("--al-y={} ", self.imp().distance_probe_y.value_str(true));
             result += &format!("--al-probefeed={} ", self.imp().feed.value_str(true));
-            result += &format!("--al-prob-on=\"{}\" ", self.imp().probe_on.text());
-            result += &format!("--al-prob-off=\"{}\" ", self.imp().probe_off.text());
+            result += &format!("--al-probe-on=\"{}\" ", self.imp().probe_on.text());
+            result += &format!("--al-probe-off=\"{}\" ", self.imp().probe_off.text());
             result += &format!(
                 "--software=\"{}\" ",
                 self.imp()
