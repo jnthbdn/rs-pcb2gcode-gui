@@ -61,7 +61,6 @@ impl FrameInputOutput {
     }
 
     pub fn set_default_folder(&self, value: Option<String>) {
-        println!("{:?}", value);
         self.last_folder.set(value.clone());
 
         match value {
