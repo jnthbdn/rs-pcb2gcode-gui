@@ -23,6 +23,7 @@ dropdown button .dropdown_category {
 	font-weight: normal;
 }
 
+.readonly,
 entry.readonly,
 .readonly spinbutton,
 .readonly dropdown button,
