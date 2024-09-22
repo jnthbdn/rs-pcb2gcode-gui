@@ -102,7 +102,7 @@ impl Database {
     }
 
     pub fn add_drill(&self, drill: &Drill) -> Result<(), rusqlite::Error> {
-        self.connection.execute("INSERT OR ROLLBACK INTO drill (name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, is_metric) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)", (
+        self.connection.execute("INSERT OR ROLLBACK INTO drill (name, note, shaft_diameter, tool_diameter, spindle_speed, pass_depth, plunge_rate, is_metric) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)", (
             &drill.base_tool.name,
             &drill.base_tool.note,
             drill.base_tool.shaft_diameter,
