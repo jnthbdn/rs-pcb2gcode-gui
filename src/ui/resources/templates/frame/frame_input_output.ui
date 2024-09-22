@@ -29,6 +29,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="front_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select front file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -69,6 +70,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="back_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select back file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -109,6 +111,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="outline_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select outline file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -148,6 +151,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="drill_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select drill file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -201,6 +205,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="preamble_text_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select preamble text file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -240,6 +245,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="preamble_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select preamble file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -279,6 +285,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="postamble_file">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select postamble file</property>
                                 <property name="file_pattern_name" translatable="true">
@@ -330,6 +337,7 @@
                         </child>
                         <child>
                             <object class="BrowseFileObject" id="output_folder">
+                                <signal name="selected" handler="on_file_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="title" translatable="true">Select output directory</property>
                                 <property name="select_directory">true</property>
