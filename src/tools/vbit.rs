@@ -84,6 +84,7 @@ impl VBit {
     }
 
     pub fn diameter(&self, depth_cut: f64) -> f64 {
+        let depth_cut = depth_cut.abs();
         let alpha = self.tool_angle / 2.0;
         let opposite = alpha.to_radians().tan() * depth_cut;
 
