@@ -38,10 +38,12 @@ impl WindowExecute {
             .spawn();
 
         if child.is_err() {
+            let err = child.err().unwrap();
             self.textview.buffer().set_text(&format!(
                 "ERROR : Failed to spawn process.\nError desciption: {}",
-                child.err().unwrap(),
+                err,
             ));
+            log::error!("Failed to spaw process. {}", err);
             return;
         }
 
@@ -54,7 +56,7 @@ impl WindowExecute {
         let thread_process_running = self.process_running.clone();
         let thread_win = self.obj().clone();
         thread::spawn(move || {
-            log::info!("Start stdout thread");
+            log::debug!("Start stdout thread");
             let lines = BufReader::new(stdout).lines();
 
             for line in lines {
@@ -63,20 +65,20 @@ impl WindowExecute {
                 }
                 match line {
                     Ok(line) => {
-                        log::info!("STDOUT: {}", line);
+                        log::info!("PCB2GCODE: {}", line);
                         thread_win.add_error_line(&line);
                     }
                     Err(_) => (),
                 };
             }
 
-            log::info!("End stdout thread");
+            log::debug!("End stdout thread");
         });
 
         let thread_process_running = self.process_running.clone();
         let thread_win = self.obj().clone();
         thread::spawn(move || {
-            log::info!("Start stderr thread");
+            log::debug!("Start stderr thread");
             let lines = BufReader::new(stderr).lines();
 
             for line in lines {
@@ -85,27 +87,27 @@ impl WindowExecute {
                 }
                 match line {
                     Ok(line) => {
-                        log::info!("STDERR: {}", line);
+                        log::error!("PCB2GCODE: {}", line);
                         thread_win.imp().add_error_line(&line);
                     }
                     Err(_) => (),
                 };
             }
 
-            log::info!("End stderr thread");
+            log::debug!("End stderr thread");
         });
 
         let thread_process_running = self.process_running.clone();
         thread::spawn(move || {
-            log::info!("Start watcher thread");
+            log::debug!("Start watcher thread");
 
             match child.wait() {
                 Ok(code) => log::info!("pcb2gcode thread exited with code {}", code),
-                Err(e) => log::warn!("pcb2gcode error \"{}\"", e),
+                Err(e) => log::error!("pcb2gcode error \"{}\"", e),
             };
 
             thread_process_running.store(false, Ordering::Relaxed);
-            log::info!("End watcher thread");
+            log::debug!("End watcher thread");
         });
     }
 
