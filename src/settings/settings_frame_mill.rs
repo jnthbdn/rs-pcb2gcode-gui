@@ -25,6 +25,10 @@ pub struct SettingsFrameMill {
     #[getset(get_copy = "pub", set = "pub")]
     pub(super) direction: u32,
 
+    #[serde(default = "super::true_default")]
+    #[getset(get_copy = "pub", set = "pub")]
+    pub(super) is_isolation_width_tool: bool,
+
     #[serde(default)]
     #[getset(get_copy = "pub", set = "pub")]
     pub(super) isolation: f64,
@@ -58,6 +62,7 @@ impl Default for SettingsFrameMill {
             overlap: Default::default(),
             depth: Default::default(),
             direction: Default::default(),
+            is_isolation_width_tool: true,
             isolation: Default::default(),
             is_invert_gerber: Default::default(),
             is_voronoi: Default::default(),
