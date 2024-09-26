@@ -1,6 +1,6 @@
 #![allow(unreachable_code)]
 use std::cell::{Cell, RefCell};
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use gtk::prelude::*;
 use gtk::subclass::prelude::*;
@@ -84,6 +84,7 @@ impl SelectToolObject {
 
         let mut vec_model: Vec<TreeToolRow> = Vec::new();
 
+        log::debug!("Lock database.");
         let db = self.database.borrow();
         let db = db.as_ref().unwrap().lock().unwrap();
 
@@ -135,6 +136,9 @@ impl SelectToolObject {
             }
         }
 
+        log::debug!("Drop lock database.");
+        drop(db);
+
         let list = gio::ListStore::new::<TreeToolRow>();
         list.extend_from_slice(&vec_model);
 
@@ -172,6 +176,21 @@ impl ObjectImpl for SelectToolObject {
         signal_factory.connect_bind(move |_factory, object| clone_obj.imp().factory_bind(object));
 
         self.dropdown.set_factory(Some(&signal_factory));
+
+        let obj = self.obj().clone();
+        self.dropdown
+            .connect_notify_local(Some("selected"), move |_, _| {
+                obj.emit_by_name::<()>("selected", &[&obj.get_selected()]);
+            });
+    }
+
+    fn signals() -> &'static [glib::subclass::Signal] {
+        static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
+        SIGNALS.get_or_init(|| {
+            vec![glib::subclass::Signal::builder("selected")
+                .param_types([Option::<TreeToolRow>::static_type()])
+                .build()]
+        })
     }
 }
 

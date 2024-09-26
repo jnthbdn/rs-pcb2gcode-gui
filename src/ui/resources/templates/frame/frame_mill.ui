@@ -29,6 +29,7 @@
                         </child>
                         <child>
                             <object class="SelectToolObject" id="mill_tool">
+                                <signal name="selected" handler="tool_selected" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="show_drill">false</property>
                                 <layout>
@@ -97,6 +98,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="depth">
+                                <signal name="value-changed" handler="depth_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">3</property>
                                 <property name="min">-100.0</property>
@@ -169,6 +171,7 @@
                                         <property name="row-spacing">8</property>
                                         <child>
                                             <object class="GtkCheckButton" id="isolation_width_tool">
+                                                <signal name="toggled" handler="isolation_witdh_tool_toggled" swapped="true"/>
                                                 <property name="label" translatable="true">Use tool diameter</property>
                                                 <property name="halign">GTK_ALIGN_START</property>
                                                 <layout>
