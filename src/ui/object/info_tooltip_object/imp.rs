@@ -1,7 +1,6 @@
 #![allow(unreachable_code)]
 
 use std::cell::RefCell;
-use std::sync::OnceLock;
 
 use gtk::{glib, prelude::*, subclass::prelude::*, CompositeTemplate};
 
@@ -66,15 +65,6 @@ impl ObjectImpl for InfoToolTipObject {
         self.obj()
             .bind_property::<gtk::LinkButton>("link", &self.link_button, "uri")
             .build();
-    }
-
-    fn signals() -> &'static [glib::subclass::Signal] {
-        static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
-        SIGNALS.get_or_init(|| {
-            vec![glib::subclass::Signal::builder("value-changed")
-                .param_types([super::InfoToolTipObject::static_type()])
-                .build()]
-        })
     }
 }
 impl WidgetImpl for InfoToolTipObject {}
