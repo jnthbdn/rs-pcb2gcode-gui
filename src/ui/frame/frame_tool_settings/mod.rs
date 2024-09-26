@@ -24,7 +24,7 @@ static MAP_NAME_COLUMN: [(&str, DatabaseColumn); 11] = [
     ("diameter_shaft", DatabaseColumn::ShaftDiameter),
     ("diameter_tool", DatabaseColumn::ToolDiameter),
     ("diameter_tip", DatabaseColumn::TipDiameter),
-    ("diameter_angle", DatabaseColumn::ToolAngle),
+    ("tool_angle", DatabaseColumn::ToolAngle),
     ("pass_depth", DatabaseColumn::PassDepth),
     ("speed_spindle", DatabaseColumn::SpindleSpeed),
     ("speed_vertical", DatabaseColumn::PlungeRate),
