@@ -4,6 +4,7 @@
         <property name="orientation">horizontal</property>
         <child>
             <object class="GtkSpinButton" id="spin_button">
+                <signal name="value-changed" handler="value_changed" swapped="true"/>
                 <property name="hexpand">true</property>
                 <property name="numeric">true</property>
                 <property name="snap-to-ticks">false</property>

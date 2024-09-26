@@ -1,6 +1,6 @@
 mod imp;
 
-use gtk::{glib, subclass::prelude::ObjectSubclassIsExt, template_callbacks};
+use gtk::{glib, prelude::ObjectExt, subclass::prelude::ObjectSubclassIsExt, template_callbacks};
 
 glib::wrapper! {
     pub struct SpinButtonObject(ObjectSubclass<imp::SpinButtonObject>)
@@ -25,5 +25,10 @@ impl SpinButtonObject {
 
     pub fn has_focus(&self) -> bool {
         self.imp().has_focus()
+    }
+
+    #[template_callback]
+    pub fn value_changed(&self, _: gtk::SpinButton) {
+        self.emit_by_name("value-changed", &[self])
     }
 }
