@@ -69,13 +69,13 @@ impl SpinButtonObject {
         text_child.unwrap().has_focus()
     }
 
-    pub fn check_change(&self) {
+    fn check_change(&self) {
         let current_value = self.spin_button.value();
 
         if !self.old_value.get().eq(&current_value) {
             self.old_value.set(current_value);
             self.obj()
-                .emit_by_name::<()>("value-changed", &[&self.obj().to_value()]);
+                .emit_by_name::<()>("focus-lost-value-changed", &[&self.obj().to_value()]);
         }
     }
 }
@@ -152,9 +152,14 @@ impl ObjectImpl for SpinButtonObject {
     fn signals() -> &'static [glib::subclass::Signal] {
         static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
         SIGNALS.get_or_init(|| {
-            vec![glib::subclass::Signal::builder("value-changed")
-                .param_types([super::SpinButtonObject::static_type()])
-                .build()]
+            vec![
+                glib::subclass::Signal::builder("focus-lost-value-changed")
+                    .param_types([super::SpinButtonObject::static_type()])
+                    .build(),
+                glib::subclass::Signal::builder("value-changed")
+                    .param_types([super::SpinButtonObject::static_type()])
+                    .build(),
+            ]
         })
     }
 }

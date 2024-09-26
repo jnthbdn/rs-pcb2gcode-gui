@@ -36,7 +36,7 @@ impl EntryObject {
         if !self.old_text.borrow().eq(&current_text) {
             self.old_text.set(current_text);
             self.obj()
-                .emit_by_name::<()>("value-changed", &[&self.obj().to_value()]);
+                .emit_by_name::<()>("focus-lost-value-changed", &[&self.obj().to_value()]);
         }
     }
 }
@@ -72,7 +72,7 @@ impl ObjectImpl for EntryObject {
     fn signals() -> &'static [glib::subclass::Signal] {
         static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
         SIGNALS.get_or_init(|| {
-            vec![glib::subclass::Signal::builder("value-changed")
+            vec![glib::subclass::Signal::builder("focus-lost-value-changed")
                 .param_types([super::EntryObject::static_type()])
                 .build()]
         })

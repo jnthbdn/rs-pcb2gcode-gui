@@ -56,7 +56,7 @@
                         </child>
                         <child>
                             <object class="EntryObject" id="general_name">
-                                <signal name="value-changed" handler="entry_changed" swapped="true"/>
+                                <signal name="focus-lost-value-changed" handler="entry_changed" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="placeholder-text" translatable="true">Tool name</property>
                                 <layout>
@@ -83,7 +83,7 @@
                                 <property name="hexpand">true</property>
                                 <property name="monospace">true</property>
                                 <property name="height-request">100</property>
-                                <signal name="value-changed" handler="textview_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="textview_changed" swapped="true" />
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">2</property>
@@ -117,7 +117,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="diameter_shaft">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="min">0.00</property>
@@ -146,7 +146,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="diameter_tool">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="min">0.00</property>
@@ -174,7 +174,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="diameter_tip">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="min">0.00</property>
@@ -202,13 +202,13 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="tool_angle">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="min">10</property>
                                 <property name="max">90</property>
                                 <property name="step">1</property>
-                                <property name="postfix" translatable="true">degree</property>
+                                <property name="postfix" translatable="true">degrees</property>
                                 <layout>
                                     <property name="column">1</property>
                                     <property name="row">3</property>
@@ -241,7 +241,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="pass_depth">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">2</property>
                                 <property name="min">0.00</property>
@@ -268,7 +268,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="speed_spindle">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="min">0</property>
@@ -296,7 +296,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="speed_vertical">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="min">0</property>
@@ -325,7 +325,7 @@
                         </child>
                         <child>
                             <object class="SpinButtonObject" id="speed_horizontal">
-                                <signal name="value-changed" handler="spin_changed" swapped="true" />
+                                <signal name="focus-lost-value-changed" handler="spin_changed" swapped="true" />
                                 <property name="hexpand">true</property>
                                 <property name="digits">0</property>
                                 <property name="min">0</property>
