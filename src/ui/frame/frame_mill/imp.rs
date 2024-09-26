@@ -1,15 +1,21 @@
 #![allow(unreachable_code)]
-use std::cell::Cell;
+use std::{
+    cell::{Cell, RefCell},
+    sync::{Arc, Mutex},
+};
 
 use gtk::{glib, prelude::*, subclass::prelude::*};
 
-use crate::ui::{
-    object::{
-        browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
-        select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject,
-        textview_object::TextViewObject,
+use crate::{
+    database::database::Database,
+    ui::{
+        object::{
+            browse_file_object::BrowseFileObject, info_tooltip_object::InfoToolTipObject,
+            select_tool_object::SelectToolObject, spin_button_object::SpinButtonObject,
+            textview_object::TextViewObject,
+        },
+        READONLY_CSS_CLASS,
     },
-    READONLY_CSS_CLASS,
 };
 
 #[derive(Default, gtk::CompositeTemplate, glib::Properties)]
@@ -27,6 +33,9 @@ pub struct FrameMill {
 
     #[template_child]
     pub direction: TemplateChild<gtk::DropDown>,
+
+    #[template_child]
+    pub isolation_width_tool: TemplateChild<gtk::CheckButton>,
 
     #[template_child]
     pub isolation: TemplateChild<SpinButtonObject>,
@@ -47,9 +56,16 @@ pub struct FrameMill {
     pub post_milling: TemplateChild<TextViewObject>,
 
     pub is_unit_metric: Cell<bool>,
+
+    database: RefCell<Option<Arc<Mutex<Database>>>>,
 }
 
 impl FrameMill {
+    pub fn set_database(&self, db: Arc<Mutex<Database>>) {
+        self.database.set(Some(db.clone()));
+        self.mill_tool
+            .set_database(db.clone(), self.is_unit_metric.get());
+    }
     pub fn set_enable_voronoi(&self, is_enable: bool) {
         self.thermal_region.set_can_target(is_enable);
 
@@ -58,6 +74,54 @@ impl FrameMill {
         } else {
             self.thermal_region.add_css_class(READONLY_CSS_CLASS);
         }
+    }
+
+    pub fn set_enable_isloation_tool_width(&self, is_enable: bool) {
+        self.isolation.set_can_target(!is_enable);
+
+        if is_enable {
+            self.isolation.add_css_class(READONLY_CSS_CLASS);
+            self.set_isolation_with_tool_diameter();
+        } else {
+            self.isolation.remove_css_class(READONLY_CSS_CLASS);
+        }
+    }
+
+    pub fn set_isolation_with_tool_diameter(&self) {
+        if self.database.borrow().is_none() {
+            log::warn!("No database. Skip.");
+            return;
+        }
+
+        log::debug!("Lock database.");
+        let db = self.database.borrow();
+        let db = db.as_ref().unwrap().lock().unwrap();
+
+        match self.mill_tool.get_selected() {
+            Some(tool) => {
+                if tool.get_tool_type().is_some() && tool.get_tool_id().is_some() {
+                    let diameter = match tool.get_tool_type().unwrap() {
+                        crate::tools::ToolType::Drill => 0.0,
+                        crate::tools::ToolType::Endmill => {
+                            db.get_endmill(tool.get_tool_id().unwrap())
+                                .unwrap()
+                                .unwrap()
+                                .base_tool
+                                .tool_diameter
+                        }
+                        crate::tools::ToolType::VBit => db
+                            .get_vbit(tool.get_tool_id().unwrap())
+                            .unwrap()
+                            .unwrap()
+                            .diameter(self.depth.value()),
+                    };
+                    self.isolation.set_value(diameter);
+                }
+            }
+            None => (),
+        };
+
+        log::debug!("Drop lock database.");
     }
 }
 
@@ -90,20 +154,6 @@ impl ObjectImpl for FrameMill {
 
         self.set_enable_voronoi(false);
     }
-
-    // fn signals() -> &'static [glib::subclass::Signal] {
-    //     static SIGNALS: OnceLock<Vec<glib::subclass::Signal>> = OnceLock::new();
-    //     SIGNALS.get_or_init(|| {
-    //         vec![glib::subclass::Signal::builder("setting-changed")
-    //             .param_types([
-    //                 ToolType::static_type(),
-    //                 DatabaseColumn::static_type(),
-    //                 glib::GString::static_type(),
-    //                 u32::static_type(),
-    //             ])
-    //             .build()]
-    //     })
-    // }
 }
 impl WidgetImpl for FrameMill {}
 impl BoxImpl for FrameMill {}

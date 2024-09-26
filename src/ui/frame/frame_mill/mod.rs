@@ -9,8 +9,14 @@ use gtk::{
 };
 
 use crate::{
-    database::database::Database, settings::settings_frame_mill::SettingsFrameMill,
-    tools::ToolType, ui::bool_to_str, units::UnitString,
+    database::database::Database,
+    settings::settings_frame_mill::SettingsFrameMill,
+    tools::ToolType,
+    ui::{
+        bool_to_str,
+        object::{spin_button_object::SpinButtonObject, tree_tool_row::TreeToolRow},
+    },
+    units::UnitString,
 };
 
 glib::wrapper! {
@@ -29,12 +35,16 @@ impl FrameMill {
         let self_imp = self.imp();
 
         self_imp
+            .isolation_width_tool
+            .set_active(settings.is_isolation_width_tool());
+        self_imp.isolation.init_value(settings.isolation());
+
+        self_imp
             .mill_tool
             .select_item(settings.tool_type(), settings.tool_id());
         self_imp.overlap.init_value(settings.overlap());
         self_imp.depth.init_value(settings.depth());
         self_imp.direction.set_selected(settings.direction());
-        self_imp.isolation.init_value(settings.isolation());
         self_imp
             .invert_gerber
             .set_active(settings.is_invert_gerber());
@@ -56,6 +66,7 @@ impl FrameMill {
         settings.set_overlap(self_imp.overlap.value());
         settings.set_depth(self_imp.depth.value());
         settings.set_direction(self_imp.direction.selected());
+        settings.set_is_isolation_width_tool(self_imp.isolation_width_tool.is_active());
         settings.set_isolation(self_imp.isolation.value());
         settings.set_is_invert_gerber(self_imp.invert_gerber.is_active());
         settings.set_is_voronoi(self_imp.voronoi.is_active());
@@ -71,9 +82,7 @@ impl FrameMill {
     }
 
     pub fn set_database(&self, db: Arc<Mutex<Database>>) {
-        self.imp()
-            .mill_tool
-            .set_database(db.clone(), self.imp().is_unit_metric.get());
+        self.imp().set_database(db);
     }
 
     pub fn set_units_postfixes(&self, unit: &UnitString) {
@@ -86,6 +95,28 @@ impl FrameMill {
     #[template_callback]
     pub fn voronoi_toggled(&self, check: gtk::CheckButton) {
         self.imp().set_enable_voronoi(check.is_active());
+    }
+
+    #[template_callback]
+    pub fn isolation_witdh_tool_toggled(&self, check: gtk::CheckButton) {
+        self.imp()
+            .set_enable_isloation_tool_width(check.is_active());
+    }
+
+    #[template_callback]
+    pub fn depth_changed(&self, _: SpinButtonObject) {
+        if self.imp().isolation_width_tool.is_active() {
+            self.imp().set_isolation_with_tool_diameter();
+        }
+    }
+
+    #[template_callback]
+    pub fn tool_selected(&self, _tool: TreeToolRow) {
+        let imp = self.imp();
+
+        if imp.isolation_width_tool.is_active() {
+            imp.set_isolation_with_tool_diameter();
+        }
     }
 
     pub fn get_string_param(&self, db: Arc<Mutex<Database>>) -> Result<String, String> {
@@ -112,7 +143,7 @@ impl FrameMill {
             ToolType::VBit => {
                 let tool = db.get_vbit(mill.get_tool_id().unwrap()).unwrap().unwrap();
                 (
-                    tool.diameter(self.imp().depth.value().abs()),
+                    tool.diameter(self.imp().depth.value()),
                     tool.feed_rate,
                     tool.base_tool,
                 )
