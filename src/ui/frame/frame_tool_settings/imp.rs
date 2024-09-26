@@ -114,26 +114,7 @@ impl FrameToolSettings {
 
     pub fn check_setting_change(&self) {
         self.general_name.grab_focus();
-
-        self.general_name.imp().check_change();
-        self.general_note.imp().check_change();
-        self.diameter_shaft.imp().check_change();
-        self.diameter_tool.imp().check_change();
-        self.pass_depth.imp().check_change();
-        self.speed_spindle.imp().check_change();
-        self.speed_vertical.imp().check_change();
-        self.speed_horizontal.imp().check_change();
-
-        match self.current_tool.get() {
-            Some(tool) => match tool {
-                ToolType::VBit => {
-                    self.diameter_tip.imp().check_change();
-                    self.tool_angle.imp().check_change();
-                }
-                _ => (),
-            },
-            None => (),
-        }
+        self.general_note.grab_focus();
     }
 }
 
