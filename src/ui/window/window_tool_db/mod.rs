@@ -55,6 +55,7 @@ impl WindowToolDB {
         id: u32,
     ) {
         log::info!("Setting changed => {:?} {:?} = {new_value}", tool_type, col);
+        log::debug!("Lock database.");
         let db = self.imp().database.borrow();
         let db = db.as_ref().unwrap().lock().unwrap();
 
@@ -63,6 +64,9 @@ impl WindowToolDB {
             ToolType::Endmill => db.set_endmill_column(col, new_value.to_string(), id),
             ToolType::VBit => db.set_vbit_column(col, new_value.to_string(), id),
         };
+
+        log::debug!("Drop lock database.");
+        drop(db);
 
         if result.is_err() {
             log::error!(
@@ -79,13 +83,13 @@ impl WindowToolDB {
                 _ => (),
             };
 
-            drop(db);
             self.emit_by_name::<()>("tools-changed", &[]);
         }
     }
 
     #[template_callback]
     fn row_selected(&self, db_id: u32, tool_type: ToolType) {
+        log::debug!("Lock database.");
         let db = self.imp().database.borrow();
         let db = db.as_ref().unwrap().lock().unwrap();
 
@@ -115,6 +119,8 @@ impl WindowToolDB {
                 Err(e) => log::error!("[row_selected] Fail to get VBit ({e})"),
             },
         };
+
+        log::debug!("Drop lock database.");
     }
 
     #[template_callback]
@@ -130,6 +136,7 @@ impl WindowToolDB {
             return;
         }
 
+        log::debug!("Lock database.");
         let db = self.imp().database.borrow();
         let db = db.as_ref().unwrap().lock().unwrap();
 
@@ -150,6 +157,7 @@ impl WindowToolDB {
             )
         }
 
+        log::debug!("Drop lock database.");
         drop(db);
         self.imp().refresh_model();
         self.emit_by_name::<()>("tools-changed", &[]);
@@ -175,6 +183,7 @@ impl WindowToolDB {
                     0.0,
                 )) {
                     Ok(_) => {
+                        log::debug!("Drop lock database.");
                         drop(db);
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
@@ -207,6 +216,7 @@ impl WindowToolDB {
                     0.0,
                 )) {
                     Ok(_) => {
+                        log::debug!("Drop lock database.");
                         drop(db);
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
@@ -242,6 +252,7 @@ impl WindowToolDB {
                     0.0,
                 )) {
                     Ok(_) => {
+                        log::debug!("Drop lock database.");
                         drop(db);
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
@@ -275,6 +286,7 @@ impl WindowToolDB {
                     0.0,
                 )) {
                     Ok(_) => {
+                        log::debug!("Drop lock database.");
                         drop(db);
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
@@ -307,6 +319,7 @@ impl WindowToolDB {
                     0.0,
                 )) {
                     Ok(_) => {
+                        log::debug!("Drop lock database.");
                         drop(db);
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
@@ -342,6 +355,7 @@ impl WindowToolDB {
                     0.0,
                 )) {
                     Ok(_) => {
+                        log::debug!("Drop lock database.");
                         drop(db);
                         win.imp().refresh_model();
                         win.emit_by_name::<()>("tools-changed", &[]);
