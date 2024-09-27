@@ -1,11 +1,12 @@
 #![allow(unreachable_code)]
 
 use std::{
+    collections::VecDeque,
     io::{BufRead, BufReader},
     process::{Command, Stdio},
     sync::{
         atomic::{AtomicBool, Ordering},
-        Arc,
+        Arc, Mutex,
     },
     thread,
 };
@@ -20,7 +21,6 @@ pub struct WindowExecute {
     pub textview: TemplateChild<gtk::TextView>,
 
     process_running: Arc<AtomicBool>,
-    write_lock: Arc<AtomicBool>,
 }
 
 impl WindowExecute {
@@ -48,16 +48,17 @@ impl WindowExecute {
             return;
         }
 
+        let write_buffer: Arc<Mutex<VecDeque<(bool, String)>>> =
+            Arc::new(Mutex::new(VecDeque::new()));
+
         self.process_running.set(true);
-        self.write_lock.set(false);
 
         let mut child = child.unwrap();
         let stdout = child.stdout.take().unwrap();
         let stderr = child.stderr.take().unwrap();
 
-        let thread_write_lock = self.write_lock.clone();
+        let thread_buffer = write_buffer.clone();
         let thread_process_running = self.process_running.clone();
-        let thread_win = self.obj().clone();
         thread::spawn(move || {
             log::debug!("Start stdout thread");
             let lines = BufReader::new(stdout).lines();
@@ -68,11 +69,7 @@ impl WindowExecute {
                 }
                 match line {
                     Ok(line) => {
-                        while thread_write_lock.load(Ordering::Relaxed) {}
-                        thread_write_lock.set(true);
-                        log::info!("PCB2GCODE: {}", line);
-                        thread_win.add_line(&line);
-                        thread_write_lock.set(false);
+                        thread_buffer.lock().unwrap().push_back((false, line));
                     }
                     Err(_) => (),
                 };
@@ -81,9 +78,8 @@ impl WindowExecute {
             log::debug!("End stdout thread");
         });
 
-        let thread_write_lock = self.write_lock.clone();
         let thread_process_running = self.process_running.clone();
-        let thread_win = self.obj().clone();
+        let thread_buffer = write_buffer.clone();
         thread::spawn(move || {
             log::debug!("Start stderr thread");
             let lines = BufReader::new(stderr).lines();
@@ -94,11 +90,7 @@ impl WindowExecute {
                 }
                 match line {
                     Ok(line) => {
-                        while thread_write_lock.load(Ordering::Relaxed) {}
-                        thread_write_lock.set(true);
-                        log::error!("PCB2GCODE: {}", line);
-                        thread_win.imp().add_error_line(&line);
-                        thread_write_lock.set(false);
+                        thread_buffer.lock().unwrap().push_back((true, line));
                     }
                     Err(_) => (),
                 };
@@ -116,8 +108,36 @@ impl WindowExecute {
                 Err(e) => log::error!("pcb2gcode error \"{}\"", e),
             };
 
+            std::thread::sleep(std::time::Duration::from_secs(1));
             thread_process_running.store(false, Ordering::Relaxed);
             log::debug!("End watcher thread");
+        });
+
+        let thread_process_running = self.process_running.clone();
+        let thread_buffer = write_buffer.clone();
+        let thread_win = self.obj().clone();
+        glib::source::idle_add(move || {
+            if !thread_process_running.load(Ordering::Relaxed) {
+                return glib::ControlFlow::Break;
+            }
+
+            let mut buffer = thread_buffer.lock().unwrap();
+
+            while buffer.len() > 0 {
+                let entry = buffer.pop_front().unwrap();
+
+                if entry.0 {
+                    thread_win.add_error_line(&entry.1);
+                    log::error!("PCB2GCODE: {}", entry.1);
+                } else {
+                    thread_win.add_line(&entry.1);
+                    log::info!("PCB2GCODE: {}", entry.1);
+                }
+            }
+
+            drop(buffer);
+
+            glib::ControlFlow::Continue
         });
     }
 
@@ -127,12 +147,21 @@ impl WindowExecute {
             &format!("[ERR] {line}\n"),
             &["error"],
         );
+        self.scroll_down();
     }
 
     pub fn add_line(&self, line: &str) {
         self.textview
             .buffer()
             .insert(&mut self.textview.buffer().end_iter(), &format!("{line}\n"));
+        self.scroll_down();
+    }
+
+    pub fn scroll_down(&self) {
+        let buffer = self.textview.buffer();
+        let mark = buffer.create_mark(None, &buffer.end_iter(), false);
+        self.textview.scroll_mark_onscreen(&mark);
+        buffer.delete_mark(&mark);
     }
 }
 
