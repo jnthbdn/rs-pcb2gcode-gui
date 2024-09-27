@@ -20,10 +20,11 @@ pub struct WindowExecute {
     pub textview: TemplateChild<gtk::TextView>,
 
     process_running: Arc<AtomicBool>,
+    write_lock: Arc<AtomicBool>,
 }
 
 impl WindowExecute {
-    pub fn run(&self, params: String) {
+    pub fn run(&self, params: Vec<String>) {
         if self.process_running.load(Ordering::Relaxed) {
             log::warn!("Process already running...");
             return;
@@ -32,7 +33,7 @@ impl WindowExecute {
         self.add_line("Start pcb2gcode");
 
         let child = Command::new("pcb2gcode")
-            .args(params.split(" ").collect::<Vec<&str>>())
+            .args(params)
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn();
@@ -48,11 +49,13 @@ impl WindowExecute {
         }
 
         self.process_running.set(true);
+        self.write_lock.set(false);
 
         let mut child = child.unwrap();
         let stdout = child.stdout.take().unwrap();
         let stderr = child.stderr.take().unwrap();
 
+        let thread_write_lock = self.write_lock.clone();
         let thread_process_running = self.process_running.clone();
         let thread_win = self.obj().clone();
         thread::spawn(move || {
@@ -65,8 +68,11 @@ impl WindowExecute {
                 }
                 match line {
                     Ok(line) => {
+                        while thread_write_lock.load(Ordering::Relaxed) {}
+                        thread_write_lock.set(true);
                         log::info!("PCB2GCODE: {}", line);
-                        thread_win.add_error_line(&line);
+                        thread_win.add_line(&line);
+                        thread_write_lock.set(false);
                     }
                     Err(_) => (),
                 };
@@ -75,6 +81,7 @@ impl WindowExecute {
             log::debug!("End stdout thread");
         });
 
+        let thread_write_lock = self.write_lock.clone();
         let thread_process_running = self.process_running.clone();
         let thread_win = self.obj().clone();
         thread::spawn(move || {
@@ -87,8 +94,11 @@ impl WindowExecute {
                 }
                 match line {
                     Ok(line) => {
+                        while thread_write_lock.load(Ordering::Relaxed) {}
+                        thread_write_lock.set(true);
                         log::error!("PCB2GCODE: {}", line);
                         thread_win.imp().add_error_line(&line);
+                        thread_write_lock.set(false);
                     }
                     Err(_) => (),
                 };

@@ -52,27 +52,36 @@ impl FrameAutoleveling {
         settings.set_probe_set_zero(self_imp.probe_set_zero.text().into());
     }
 
-    pub fn get_string_param(&self) -> Result<String, String> {
-        let mut result = String::new();
+    pub fn get_params(&self) -> Result<Vec<String>, String> {
+        let mut result: Vec<String> = Vec::new();
 
-        result += &format!(
-            "--al-front={} ",
+        result.push(format!(
+            "--al-front={}",
             bool_to_str(self.imp().enable_front.is_active())
-        );
+        ));
 
-        result += &format!(
-            "--al-back={} ",
+        result.push(format!(
+            "--al-back={}",
             bool_to_str(self.imp().enable_back.is_active())
-        );
+        ));
 
         if self.imp().enable_front.is_active() || self.imp().enable_back.is_active() {
-            result += &format!("--al-x={} ", self.imp().distance_probe_x.value_str(true));
-            result += &format!("--al-y={} ", self.imp().distance_probe_y.value_str(true));
-            result += &format!("--al-probefeed={} ", self.imp().feed.value_str(true));
-            result += &format!("--al-probe-on=\"{}\" ", self.imp().probe_on.text());
-            result += &format!("--al-probe-off=\"{}\" ", self.imp().probe_off.text());
-            result += &format!(
-                "--software=\"{}\" ",
+            result.push(format!(
+                "--al-x={}",
+                self.imp().distance_probe_x.value_str(true)
+            ));
+            result.push(format!(
+                "--al-y={}",
+                self.imp().distance_probe_y.value_str(true)
+            ));
+            result.push(format!(
+                "--al-probefeed={}",
+                self.imp().feed.value_str(true)
+            ));
+            result.push(format!("--al-probe-on={}", self.imp().probe_on.text()));
+            result.push(format!("--al-probe-off={}", self.imp().probe_off.text()));
+            result.push(format!(
+                "--software={}",
                 self.imp()
                     .software
                     .selected_item()
@@ -81,12 +90,18 @@ impl FrameAutoleveling {
                     .unwrap()
                     .string()
                     .to_ascii_lowercase()
-            );
+            ));
 
             if self.imp().software.selected() == 3 {
-                result += &format!("--al-probecode=\"{}\" ", self.imp().probe_code.text());
-                result += &format!("--al-probevar=\"{}\" ", self.imp().probe_variable.text());
-                result += &format!("--al-setzzero=\"{}\" ", self.imp().probe_set_zero.text());
+                result.push(format!("--al-probecode={}", self.imp().probe_code.text()));
+                result.push(format!(
+                    "--al-probevar={}",
+                    self.imp().probe_variable.text()
+                ));
+                result.push(format!(
+                    "--al-setzzero={}",
+                    self.imp().probe_set_zero.text()
+                ));
             }
         }
 

@@ -19,7 +19,7 @@ impl WindowExecute {
             .build()
     }
 
-    pub fn open(&self, params: String) {
+    pub fn open(&self, params: Vec<String>) {
         self.present();
         self.imp().run(params);
     }

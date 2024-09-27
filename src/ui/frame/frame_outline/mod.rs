@@ -80,8 +80,8 @@ impl FrameOutline {
         self.imp().set_bridge_enable(check.is_active());
     }
 
-    pub fn get_string_param(&self, db: Arc<Mutex<Database>>) -> Result<String, String> {
-        let mut result = String::new();
+    pub fn get_params(&self, db: Arc<Mutex<Database>>) -> Result<Vec<String>, String> {
+        let mut result: Vec<String> = Vec::new();
 
         let endmill = self.imp().tool.get_selected();
 
@@ -95,18 +95,21 @@ impl FrameOutline {
             Err(e) => return Err(format!("{e}")),
         };
 
-        result += &format!(
-            "--fill-outline={} ",
+        result.push(format!(
+            "--fill-outline={}",
             bool_to_str(self.imp().fill_outline.is_active())
-        );
-        result += &format!("--cutter-diameter={} ", endmill.base_tool.tool_diameter);
-        result += &format!("--zcut={} ", self.imp().depth.value_str(true));
-        result += &format!("--cut-feed={} ", endmill.feed_rate);
-        result += &format!("--cut-vertfeed={} ", endmill.base_tool.plunge_rate);
-        result += &format!("--cut-speed={} ", endmill.base_tool.spindle_speed);
-        result += &format!("--cut-infeed={} ", endmill.base_tool.pass_depth);
-        result += &format!(
-            "--cut-side={} ",
+        ));
+        result.push(format!(
+            "--cutter-diameter={}",
+            endmill.base_tool.tool_diameter
+        ));
+        result.push(format!("--zcut={}", self.imp().depth.value_str(true)));
+        result.push(format!("--cut-feed={}", endmill.feed_rate));
+        result.push(format!("--cut-vertfeed={}", endmill.base_tool.plunge_rate));
+        result.push(format!("--cut-speed={}", endmill.base_tool.spindle_speed));
+        result.push(format!("--cut-infeed={}", endmill.base_tool.pass_depth));
+        result.push(format!(
+            "--cut-side={}",
             self.imp()
                 .side
                 .selected_item()
@@ -114,14 +117,23 @@ impl FrameOutline {
                 .unwrap()
                 .string()
                 .to_ascii_lowercase()
-        );
+        ));
 
         if self.imp().enable_bridge.is_active() {
-            result += &format!("--bridges={} ", self.imp().bridge_width.value_str(true));
-            result += &format!("--bridgesnum={} ", self.imp().bridge_number.value_str(true));
-            result += &format!("--zbridges={} ", self.imp().bridge_depth.value_str(true));
+            result.push(format!(
+                "--bridges={}",
+                self.imp().bridge_width.value_str(true)
+            ));
+            result.push(format!(
+                "--bridgesnum={}",
+                self.imp().bridge_number.value_str(true)
+            ));
+            result.push(format!(
+                "--zbridges={}",
+                self.imp().bridge_depth.value_str(true)
+            ));
         } else {
-            result += "--bridges=0 ";
+            result.push("--bridges=0".to_string());
         }
 
         Ok(result)

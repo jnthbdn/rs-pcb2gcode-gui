@@ -147,31 +147,31 @@ impl WindowMain {
         win_tool_db.borrow().as_ref().unwrap().present();
     }
 
-    fn get_pcb2gcode_params(&self) -> Result<String, String> {
-        let mut params = String::new();
+    fn get_pcb2gcode_params(&self) -> Result<Vec<String>, String> {
+        let mut params: Vec<String> = Vec::new();
 
-        params += &match self.imp().frame_input_output.get_string_param() {
-            Ok(s) => s,
+        match self.imp().frame_input_output.get_params() {
+            Ok(mut s) => params.append(&mut s),
             Err(e) => {
                 log::error!("Frame input/output: {e}");
                 return Err(format!("Input/Output options: {e}"));
             }
         };
 
-        params += &match self.imp().frame_common.get_string_param() {
-            Ok(s) => s,
+        match self.imp().frame_common.get_params() {
+            Ok(mut s) => params.append(&mut s),
             Err(e) => {
                 log::error!("Frame common: {e}");
                 return Err(format!("Common options: {e}"));
             }
         };
 
-        params += &match self
+        match self
             .imp()
             .frame_mill
-            .get_string_param(self.imp().database.clone())
+            .get_params(self.imp().database.clone())
         {
-            Ok(s) => s,
+            Ok(mut s) => params.append(&mut s),
             Err(e) => {
                 log::error!("Frame mill: {e}");
                 return Err(format!("Milling options: {e}"));
@@ -179,12 +179,12 @@ impl WindowMain {
         };
 
         if self.imp().frame_input_output.is_drill_file_available() {
-            params += &match self
+            match self
                 .imp()
                 .frame_drill
-                .get_string_param(self.imp().database.clone())
+                .get_params(self.imp().database.clone())
             {
-                Ok(s) => s,
+                Ok(mut s) => params.append(&mut s),
                 Err(e) => {
                     log::error!("Frame drill: {e}");
                     return Err(format!("Drill options: {e}"));
@@ -193,12 +193,12 @@ impl WindowMain {
         }
 
         if self.imp().frame_input_output.is_outline_file_available() {
-            params += &match self
+            match self
                 .imp()
                 .frame_outline
-                .get_string_param(self.imp().database.clone())
+                .get_params(self.imp().database.clone())
             {
-                Ok(s) => s,
+                Ok(mut s) => params.append(&mut s),
                 Err(e) => {
                     log::error!("Frame outline: {e}");
                     return Err(format!("Outline options: {e}"));
@@ -206,8 +206,8 @@ impl WindowMain {
             };
         }
 
-        params += &match self.imp().frame_autolevel.get_string_param() {
-            Ok(s) => s,
+        match self.imp().frame_autolevel.get_params() {
+            Ok(mut s) => params.append(&mut s),
             Err(e) => {
                 log::error!("Frame autolevel : {e}");
                 return Err(format!("Autolevele options: {e}"));
@@ -402,7 +402,8 @@ impl WindowMain {
                 let w = WindowCommand::new(win.upcast_ref::<gtk::Window>());
                 w.open(
                     win.get_pcb2gcode_params()
-                        .or_else(|e| Ok::<String, String>("ERROR: ".to_string() + &e))
+                        .map_err(|e| Ok::<String, String>("ERROR: ".to_string() + &e))
+                        .map(|r| r.join(" "))
                         .unwrap(),
                 );
             })

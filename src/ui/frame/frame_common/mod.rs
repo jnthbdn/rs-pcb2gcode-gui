@@ -86,44 +86,62 @@ impl FrameCommon {
         self.emit_by_name::<()>("output-unit-change", &[&check.is_active()]);
     }
 
-    pub fn get_string_param(&self) -> Result<String, String> {
-        let mut result = String::new();
+    pub fn get_params(&self) -> Result<Vec<String>, String> {
+        let mut result = Vec::new();
 
-        result += &format!(
-            "--metric={} ",
+        result.push(format!(
+            "--metric={}",
             if self.imp().input_unit_metric.is_active() {
                 "true"
             } else {
                 "false"
             }
-        );
+        ));
 
-        result += &format!(
-            "--metricoutput={} ",
+        result.push(format!(
+            "--metricoutput={}",
             bool_to_str(self.imp().output_unit_metric.is_active())
-        );
+        ));
 
-        result += &format!("--zsafe={} ", self.imp().safe_z.value_str(true));
-        result += &format!("--zchange={} ", self.imp().tool_change.value_str(true));
-        result += &format!(
-            "--zchange-absolute={} ",
+        result.push(format!("--zsafe={}", self.imp().safe_z.value_str(true)));
+        result.push(format!(
+            "--zchange={}",
+            self.imp().tool_change.value_str(true)
+        ));
+        result.push(format!(
+            "--zchange-absolute={}",
             bool_to_str(self.imp().tool_change_as_machine_coord.is_active())
-        );
-        result += &format!("--tolerance={} ", self.imp().tolerance.value_str(false));
-        result += &format!("--optimise={} ", self.imp().optimization.value_str(true));
-        result += &format!("--tile-x={} ", self.imp().tiles_x.value_str(true));
-        result += &format!("--tile-y={} ", self.imp().tiles_y.value_str(true));
-        result += &format!("--x-offset={} ", self.imp().offset_x.value_str(true));
-        result += &format!("--y-offset={} ", self.imp().offset_y.value_str(true));
-        result += &format!("--mirror-axis={} ", self.imp().mirror_x.value_str(true));
-        result += &format!(
-            "--mirror-yaxis={} ",
+        ));
+        result.push(format!(
+            "--tolerance={}",
+            self.imp().tolerance.value_str(false)
+        ));
+        result.push(format!(
+            "--optimise={}",
+            self.imp().optimization.value_str(true)
+        ));
+        result.push(format!("--tile-x={}", self.imp().tiles_x.value_str(true)));
+        result.push(format!("--tile-y={}", self.imp().tiles_y.value_str(true)));
+        result.push(format!(
+            "--x-offset={}",
+            self.imp().offset_x.value_str(true)
+        ));
+        result.push(format!(
+            "--y-offset={}",
+            self.imp().offset_y.value_str(true)
+        ));
+        result.push(format!(
+            "--mirror-axis={}",
+            self.imp().mirror_x.value_str(true)
+        ));
+        result.push(format!(
+            "--mirror-yaxis={}",
             bool_to_str(self.imp().mirror_y_instead_x.is_active())
-        );
-        result += &format!(
-            "--zero-start={} ",
+        ));
+        result.push(format!(
+            "--zero-start={}",
             bool_to_str(self.imp().zero_start.is_active())
-        );
+        ));
 
         Ok(result)
     }

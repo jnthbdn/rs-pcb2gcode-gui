@@ -98,8 +98,8 @@ impl FrameDrill {
         self.imp().set_enable_milldrilling(check.is_active());
     }
 
-    pub fn get_string_param(&self, db: Arc<Mutex<Database>>) -> Result<String, String> {
-        let mut result = String::new();
+    pub fn get_params(&self, db: Arc<Mutex<Database>>) -> Result<Vec<String>, String> {
+        let mut result: Vec<String> = Vec::new();
 
         let drill = self.imp().drill_tool.get_selected();
 
@@ -113,15 +113,15 @@ impl FrameDrill {
             Err(e) => return Err(format!("{e}")),
         };
 
-        result += &format!("--zdrill={} ", self.imp().depth.value_str(true));
-        result += &format!(
-            "--drill-feed={}{} ",
+        result.push(format!("--zdrill={}", self.imp().depth.value_str(true)));
+        result.push(format!(
+            "--drill-feed={}{}",
             drill.base_tool.plunge_rate,
             drill.base_tool.unit.measure()
-        );
-        result += &format!("--drill-speed={} ", drill.base_tool.spindle_speed);
-        result += &format!(
-            "--drill-side={} ",
+        ));
+        result.push(format!("--drill-speed={}", drill.base_tool.spindle_speed));
+        result.push(format!(
+            "--drill-side={}",
             self.imp()
                 .side
                 .selected_item()
@@ -129,7 +129,7 @@ impl FrameDrill {
                 .unwrap()
                 .string()
                 .to_ascii_lowercase()
-        );
+        ));
 
         if self.imp().enable_milldrilling.is_active() {
             let mill_tool = self.imp().milldrilling_tool.get_selected();
@@ -143,29 +143,32 @@ impl FrameDrill {
                 Err(e) => return Err(format!("{e}")),
             };
 
-            result += &format!(
-                "--min-milldrill-hole-diameter={} ",
+            result.push(format!(
+                "--min-milldrill-hole-diameter={}",
                 self.imp().milldrilling_min_diameter.value_str(true)
-            );
-            result += &format!(
-                "--milldrill-diameter={}{} ",
+            ));
+            result.push(format!(
+                "--milldrill-diameter={}{}",
                 mill_tool.base_tool.tool_diameter,
                 mill_tool.base_tool.unit.measure()
-            );
-            result += &format!(
-                "--zmilldrill={} ",
+            ));
+            result.push(format!(
+                "--zmilldrill={}",
                 self.imp().milldrilling_depth.value_str(true)
-            );
+            ));
         } else {
-            result += "--min-milldrill-hole-diameter=inf ";
+            result.push("--min-milldrill-hole-diameter=inf".to_string());
         }
 
-        result += &format!(
-            "--nog91-1={} ",
+        result.push(format!(
+            "--nog91-1={}",
             bool_to_str(self.imp().no_g91_1.is_active())
-        );
-        result += &format!("--nog81={} ", bool_to_str(self.imp().no_g81.is_active()));
-        result += "--onedrill=true ";
+        ));
+        result.push(format!(
+            "--nog81={}",
+            bool_to_str(self.imp().no_g81.is_active())
+        ));
+        result.push("--onedrill=true ".to_string());
 
         Ok(result)
     }

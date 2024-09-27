@@ -119,8 +119,8 @@ impl FrameMill {
         }
     }
 
-    pub fn get_string_param(&self, db: Arc<Mutex<Database>>) -> Result<String, String> {
-        let mut result = String::new();
+    pub fn get_params(&self, db: Arc<Mutex<Database>>) -> Result<Vec<String>, String> {
+        let mut result: Vec<String> = Vec::new();
 
         let mill = self.imp().mill_tool.get_selected();
 
@@ -150,28 +150,34 @@ impl FrameMill {
             }
         };
 
-        result += &format!("--voronoi={} ", bool_to_str(self.imp().voronoi.is_active()));
-        result += &format!("--mill-diameters={} ", diameter);
-        result += &format!("--milling-overlap={} ", self.imp().overlap.value_str(true));
-        result += &format!(
-            "--isolation-width={} ",
+        result.push(format!(
+            "--voronoi={}",
+            bool_to_str(self.imp().voronoi.is_active())
+        ));
+        result.push(format!("--mill-diameters={}", diameter));
+        result.push(format!(
+            "--milling-overlap={}",
+            self.imp().overlap.value_str(true)
+        ));
+        result.push(format!(
+            "--isolation-width={}",
             self.imp().isolation.value_str(true)
-        );
-        result += &format!(
-            "--pre-milling-gcode=\"{}\" ",
+        ));
+        result.push(format!(
+            "--pre-milling-gcode={}",
             self.imp().pre_milling.all_text()
-        );
-        result += &format!(
-            "--post-milling-gcode=\"{}\" ",
+        ));
+        result.push(format!(
+            "--post-milling-gcode={}",
             self.imp().post_milling.all_text()
-        );
-        result += &format!("--zwork={} ", self.imp().depth.value_str(true));
-        result += &format!("--mill-feed={} ", feed_rate);
-        result += &format!("--mill-vertfeed={} ", base_tool.plunge_rate);
-        result += &format!("--mill-infeed={} ", base_tool.pass_depth);
-        result += &format!("--mill-speed={} ", base_tool.spindle_speed);
-        result += &format!(
-            "--mill-feed-direction={} ",
+        ));
+        result.push(format!("--zwork={}", self.imp().depth.value_str(true)));
+        result.push(format!("--mill-feed={}", feed_rate));
+        result.push(format!("--mill-vertfeed={}", base_tool.plunge_rate));
+        result.push(format!("--mill-infeed={}", base_tool.pass_depth));
+        result.push(format!("--mill-speed={}", base_tool.spindle_speed));
+        result.push(format!(
+            "--mill-feed-direction={}",
             self.imp()
                 .direction
                 .selected_item()
@@ -179,20 +185,20 @@ impl FrameMill {
                 .unwrap()
                 .string()
                 .to_ascii_lowercase()
-        );
+        ));
 
         if self.imp().direction.selected() != 0 {
-            result += "--tsp-2opt=false ";
+            result.push("--tsp-2opt=false".to_string());
         }
 
-        result += &format!(
-            "--invert-gerbers={} ",
+        result.push(format!(
+            "--invert-gerbers={}",
             bool_to_str(self.imp().invert_gerber.is_active())
-        );
-        result += &format!(
-            "--preserve-thermal-reliefs={} ",
+        ));
+        result.push(format!(
+            "--preserve-thermal-reliefs={}",
             bool_to_str(self.imp().thermal_region.is_active())
-        );
+        ));
 
         Ok(result)
     }
