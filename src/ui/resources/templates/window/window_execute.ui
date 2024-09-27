@@ -41,11 +41,10 @@
                         <child>
                             <object class="GtkButton">
                                 <property name="label" translatable="true">Copy output</property>
+                                <signal name="clicked" handler="copy_button" swapped="true"/>
                                 <property name="hexpand">true</property>
                                 <property name="vexpand">false</property>
                                 <property name="margin-top">8</property>
-        
-                                <!-- <signal name="clicked" handler="copy_button" swapped="true"/> -->
                             </object>
                         </child>
                     </object>

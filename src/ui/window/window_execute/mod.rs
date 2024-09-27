@@ -29,6 +29,13 @@ impl WindowExecute {
         self.close();
     }
 
+    #[template_callback]
+    fn copy_button(&self, _: gtk::Button) {
+        let buffer = self.imp().textview.buffer();
+        self.clipboard()
+            .set(&buffer.text(&buffer.start_iter(), &buffer.end_iter(), false));
+    }
+
     pub fn add_error_line(&self, line: &String) {
         self.imp().add_error_line(line);
     }
