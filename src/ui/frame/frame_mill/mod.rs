@@ -180,6 +180,11 @@ impl FrameMill {
                 .string()
                 .to_ascii_lowercase()
         );
+
+        if self.imp().direction.selected() != 0 {
+            result += "--tsp-2opt=false ";
+        }
+
         result += &format!(
             "--invert-gerbers={} ",
             bool_to_str(self.imp().invert_gerber.is_active())

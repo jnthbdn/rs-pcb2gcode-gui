@@ -138,6 +138,7 @@
                                 <property name="model">
                                     <object class="GtkStringList">
                                         <items>
+                                            <item translatable="true">Any</item>
                                             <item translatable="true">Conventional</item>
                                             <item translatable="true">Climb</item>
                                         </items>
