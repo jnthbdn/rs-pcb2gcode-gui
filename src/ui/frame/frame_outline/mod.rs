@@ -106,7 +106,7 @@ impl FrameOutline {
         result += &format!("--cut-speed={} ", endmill.base_tool.spindle_speed);
         result += &format!("--cut-infeed={} ", endmill.base_tool.pass_depth);
         result += &format!(
-            "--cut-size={} ",
+            "--cut-side={} ",
             self.imp()
                 .side
                 .selected_item()
