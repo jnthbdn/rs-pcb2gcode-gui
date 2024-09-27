@@ -80,6 +80,7 @@ impl FrameAutoleveling {
                     .as_ref()
                     .unwrap()
                     .string()
+                    .to_ascii_lowercase()
             );
 
             if self.imp().software.selected() == 3 {

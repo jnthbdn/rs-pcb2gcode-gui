@@ -113,6 +113,7 @@ impl FrameOutline {
                 .and_downcast::<gtk::StringObject>()
                 .unwrap()
                 .string()
+                .to_ascii_lowercase()
         );
 
         if self.imp().enable_bridge.is_active() {

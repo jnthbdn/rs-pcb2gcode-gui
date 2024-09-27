@@ -178,6 +178,7 @@ impl FrameMill {
                 .and_downcast::<gtk::StringObject>()
                 .unwrap()
                 .string()
+                .to_ascii_lowercase()
         );
         result += &format!(
             "--invert-gerbers={} ",

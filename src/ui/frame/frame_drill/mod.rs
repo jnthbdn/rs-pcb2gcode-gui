@@ -128,6 +128,7 @@ impl FrameDrill {
                 .and_downcast::<gtk::StringObject>()
                 .unwrap()
                 .string()
+                .to_ascii_lowercase()
         );
 
         if self.imp().enable_milldrilling.is_active() {
