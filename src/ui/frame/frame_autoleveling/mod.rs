@@ -78,8 +78,14 @@ impl FrameAutoleveling {
                 "--al-probefeed={}",
                 self.imp().feed.value_str(true)
             ));
-            result.push(format!("--al-probe-on={}", self.imp().probe_on.text()));
-            result.push(format!("--al-probe-off={}", self.imp().probe_off.text()));
+
+            if !self.imp().probe_on.text().is_empty() {
+                result.push(format!("--al-probe-on={}", self.imp().probe_on.text()));
+            }
+
+            if !self.imp().probe_off.text().is_empty() {
+                result.push(format!("--al-probe-off={}", self.imp().probe_off.text()));
+            }
             result.push(format!(
                 "--software={}",
                 self.imp()
@@ -93,15 +99,23 @@ impl FrameAutoleveling {
             ));
 
             if self.imp().software.selected() == 3 {
-                result.push(format!("--al-probecode={}", self.imp().probe_code.text()));
-                result.push(format!(
-                    "--al-probevar={}",
-                    self.imp().probe_variable.text()
-                ));
-                result.push(format!(
-                    "--al-setzzero={}",
-                    self.imp().probe_set_zero.text()
-                ));
+                if !self.imp().probe_code.text().is_empty() {
+                    result.push(format!("--al-probecode={}", self.imp().probe_code.text()));
+                }
+
+                if !self.imp().probe_variable.text().is_empty() {
+                    result.push(format!(
+                        "--al-probevar={}",
+                        self.imp().probe_variable.text()
+                    ));
+                }
+
+                if !self.imp().probe_set_zero.text().is_empty() {
+                    result.push(format!(
+                        "--al-setzzero={}",
+                        self.imp().probe_set_zero.text()
+                    ));
+                }
             }
         }
 

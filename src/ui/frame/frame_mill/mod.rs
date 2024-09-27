@@ -163,14 +163,21 @@ impl FrameMill {
             "--isolation-width={}",
             self.imp().isolation.value_str(true)
         ));
-        result.push(format!(
-            "--pre-milling-gcode={}",
-            self.imp().pre_milling.all_text()
-        ));
-        result.push(format!(
-            "--post-milling-gcode={}",
-            self.imp().post_milling.all_text()
-        ));
+
+        if !self.imp().pre_milling.all_text().is_empty() {
+            result.push(format!(
+                "--pre-milling-gcode={}",
+                self.imp().pre_milling.all_text()
+            ));
+        }
+
+        if !self.imp().post_milling.all_text().is_empty() {
+            result.push(format!(
+                "--post-milling-gcode={}",
+                self.imp().post_milling.all_text()
+            ));
+        }
+
         result.push(format!("--zwork={}", self.imp().depth.value_str(true)));
         result.push(format!("--mill-feed={}", feed_rate));
         result.push(format!("--mill-vertfeed={}", base_tool.plunge_rate));
