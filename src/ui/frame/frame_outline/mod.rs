@@ -100,14 +100,27 @@ impl FrameOutline {
             bool_to_str(self.imp().fill_outline.is_active())
         ));
         result.push(format!(
-            "--cutter-diameter={}",
-            endmill.base_tool.tool_diameter
+            "--cutter-diameter={}{}",
+            endmill.base_tool.tool_diameter,
+            endmill.base_tool.unit.measure()
         ));
         result.push(format!("--zcut={}", self.imp().depth.value_str(true)));
-        result.push(format!("--cut-feed={}", endmill.feed_rate));
-        result.push(format!("--cut-vertfeed={}", endmill.base_tool.plunge_rate));
+        result.push(format!(
+            "--cut-feed={}{}",
+            endmill.feed_rate,
+            endmill.base_tool.unit.feedrate()
+        ));
+        result.push(format!(
+            "--cut-vertfeed={}{}",
+            endmill.base_tool.plunge_rate,
+            endmill.base_tool.unit.feedrate()
+        ));
         result.push(format!("--cut-speed={}", endmill.base_tool.spindle_speed));
-        result.push(format!("--cut-infeed={}", endmill.base_tool.pass_depth));
+        result.push(format!(
+            "--cut-infeed={}{}",
+            endmill.base_tool.pass_depth,
+            endmill.base_tool.unit.measure()
+        ));
         result.push(format!(
             "--cut-side={}",
             self.imp()

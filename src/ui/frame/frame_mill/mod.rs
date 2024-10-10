@@ -154,7 +154,11 @@ impl FrameMill {
             "--voronoi={}",
             bool_to_str(self.imp().voronoi.is_active())
         ));
-        result.push(format!("--mill-diameters={}", diameter));
+        result.push(format!(
+            "--mill-diameters={:.3}{}",
+            diameter,
+            base_tool.unit.measure()
+        ));
         result.push(format!(
             "--milling-overlap={}",
             self.imp().overlap.value_str(true)
@@ -179,9 +183,21 @@ impl FrameMill {
         }
 
         result.push(format!("--zwork={}", self.imp().depth.value_str(true)));
-        result.push(format!("--mill-feed={}", feed_rate));
-        result.push(format!("--mill-vertfeed={}", base_tool.plunge_rate));
-        result.push(format!("--mill-infeed={}", base_tool.pass_depth));
+        result.push(format!(
+            "--mill-feed={}{}",
+            feed_rate,
+            base_tool.unit.feedrate()
+        ));
+        result.push(format!(
+            "--mill-vertfeed={}{}",
+            base_tool.plunge_rate,
+            base_tool.unit.feedrate()
+        ));
+        result.push(format!(
+            "--mill-infeed={}{}",
+            base_tool.pass_depth,
+            base_tool.unit.measure()
+        ));
         result.push(format!("--mill-speed={}", base_tool.spindle_speed));
         result.push(format!(
             "--mill-feed-direction={}",

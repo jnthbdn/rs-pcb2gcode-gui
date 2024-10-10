@@ -117,7 +117,7 @@ impl FrameDrill {
         result.push(format!(
             "--drill-feed={}{}",
             drill.base_tool.plunge_rate,
-            drill.base_tool.unit.measure()
+            drill.base_tool.unit.feedrate()
         ));
         result.push(format!("--drill-speed={}", drill.base_tool.spindle_speed));
         result.push(format!(
@@ -157,7 +157,7 @@ impl FrameDrill {
                 self.imp().milldrilling_depth.value_str(true)
             ));
         } else {
-            result.push("--min-milldrill-hole-diameter=inf".to_string());
+            // result.push("--min-milldrill-hole-diameter=inf".to_string());
         }
 
         result.push(format!(
@@ -168,7 +168,7 @@ impl FrameDrill {
             "--nog81={}",
             bool_to_str(self.imp().no_g81.is_active())
         ));
-        result.push("--onedrill=true ".to_string());
+        result.push("--onedrill=true".to_string());
 
         Ok(result)
     }
