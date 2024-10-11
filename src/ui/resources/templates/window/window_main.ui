@@ -161,7 +161,6 @@
                                         <property name="hexpand">true</property>
                                         <child>
                                             <object class="GtkLabel">
-                                                <property name="name">preview_label</property>
                                                 <property name="halign">GTK_ALIGN_START</property>
                                                 <property name="hexpand">true</property>
                                                 <property name="margin-start">8</property>
@@ -170,25 +169,15 @@
                                             </object>
                                         </child>
                                         <child>
-                                            <object class="GtkDropDown">
+                                            <object class="GtkDropDown" id="select_image">
                                                 <property name="margin-start">8</property>
                                                 <property name="margin-end">8</property>
-                                                <property name="model">
-                                                <object class="GtkStringList">
-                                                    <items>
-                                                    <item translatable="yes">Factory</item>
-                                                    <item translatable="yes">Home</item>
-                                                    <item translatable="yes">Subway</item>
-                                                    </items>
-                                                </object>
-                                                </property>
                                             </object>
                                         </child>
                                     </object>
                                 </child>
                                 <child>
-                                    <object class="GtkPicture">
-                                        <property name="name">preview_picture</property>
+                                    <object class="GtkPicture" id="picture_preview">
                                         <property name="vexpand">true</property>
                                         <property name="hexpand">true</property>
                                         <property name="margin-start">8</property>

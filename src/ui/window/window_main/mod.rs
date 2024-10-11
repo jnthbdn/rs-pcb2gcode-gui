@@ -1,6 +1,9 @@
 mod imp;
 
-use std::fs::File;
+use std::{
+    fs::{self, File},
+    path::{Path, PathBuf},
+};
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 
@@ -232,7 +235,11 @@ impl WindowMain {
         }
 
         log::info!("pcb2gcode Params: {:?}", params);
-        WindowExecute::new(self.upcast_ref::<gtk::Window>()).open(params.unwrap());
+        let window_execute = WindowExecute::new(self.upcast_ref::<gtk::Window>());
+        window_execute.open(params.unwrap());
+
+        let self_clone = self.clone();
+        window_execute.connect_destroy(move |_| self_clone.imp().search_and_load_svg());
     }
 
     #[template_callback]
