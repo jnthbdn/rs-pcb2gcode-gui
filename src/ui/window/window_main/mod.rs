@@ -1,9 +1,6 @@
 mod imp;
 
-use std::{
-    fs::{self, File},
-    path::{Path, PathBuf},
-};
+use std::fs::File;
 
 use gtk::{gio, glib, prelude::*, subclass::prelude::ObjectSubclassIsExt};
 

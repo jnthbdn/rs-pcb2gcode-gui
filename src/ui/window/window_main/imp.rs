@@ -5,7 +5,6 @@ use std::{
     collections::HashMap,
     ffi::OsString,
     fs,
-    iter::Map,
     path::{Path, PathBuf},
     sync::{Arc, Mutex},
 };
