@@ -254,7 +254,7 @@
                         </child>
                         <child>
                             <object class="InfoToolTipObject">
-                                <property name="text_markup" translatable="true">Maximum toolpath tolerance</property>
+                                <property name="text_markup" translatable="true">Maximum toolpath tolerance.&#013;&lt;i&gt;Set to 0 to disable.&lt;/i&gt;</property>
                                 <layout>
                                     <property name="column">2</property>
                                     <property name="row">0</property>

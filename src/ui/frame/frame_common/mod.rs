@@ -112,10 +112,16 @@ impl FrameCommon {
             "--zchange-absolute={}",
             bool_to_str(self.imp().tool_change_as_machine_coord.is_active())
         ));
-        result.push(format!(
-            "--tolerance={}",
-            self.imp().tolerance.value_str(false)
-        ));
+
+        if self.imp().tolerance.value() == 0.0 {
+            result.push("--nog64".into());
+        } else {
+            result.push(format!(
+                "--tolerance={}",
+                self.imp().tolerance.value_str(false)
+            ));
+        }
+
         result.push(format!(
             "--optimise={}",
             self.imp().optimization.value_str(true)
